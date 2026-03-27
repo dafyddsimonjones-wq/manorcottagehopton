@@ -530,7 +530,7 @@ footer{background:var(--green);padding:3rem 2.5rem 1.5rem}
       <div class="foot-brand"><a href="#" class="logo" onclick="go('home');return false">Manor <em>Cottage</em></a><p>Grade&nbsp;II listed 18th-century retreat in Hopton village, overlooking Carsington Water in the Peak District, Derbyshire.</p></div>
       <div class="fcol"><h4>Explore</h4><ul><li><a href="#" onclick="go('cottage');return false">The Cottage</a></li><li><a href="#" onclick="go('explore');return false">Attractions</a></li><li><a href="#" onclick="go('getting-here');return false">Getting Here</a></li><li><a href="#" onclick="go('host');return false">Your Host</a></li><li><a href="#" onclick="go('reviews');return false">Reviews</a></li></ul></div>
       <div class="fcol"><h4>Reviews</h4><ul><li><a href="https://www.google.com/maps" target="_blank"><svg class="icon" width="13" height="13"><use href="#i-google"/></svg>Google Reviews</a></li><li><a href="https://www.tripadvisor.co.uk" target="_blank"><svg class="icon" width="13" height="13"><use href="#i-star"/></svg>TripAdvisor</a></li></ul></div>
-      <div class="fcol"><h4>Contact</h4><ul><li><a href="#" onclick="window.location='mail'+('to:')+'hello@manorcottagehopton.co.uk';return false;" style="color:var(--amber)">hello@manorcottagehopton.co.uk</a></li><li><a href="#" onclick="go('book');return false"><svg class="icon" width="13" height="13"><use href="#i-book"/></svg>Book Now</a></li></ul></div>
+      <div class="fcol"><h4>Contact</h4><ul><li><a href="#" onclick="window.location='mail'+('to:')+'hello@manorcottagehopton.co.uk';return false;" style="color:var(--amber)"><span class="__cf_email__" data-cfemail="dfb7bab3b3b09fb2beb1b0adbcb0ababbeb8bab7b0afabb0b1f1bcb0f1aab4">[email&#160;protected]</span></a></li><li><a href="#" onclick="go('book');return false"><svg class="icon" width="13" height="13"><use href="#i-book"/></svg>Book Now</a></li></ul></div>
     </div>
     <div class="foot-bottom"><span>&copy; 2025 Manor Cottage, Hopton, Derbyshire</span><span>Hosted by Libba &middot; Superhost &middot; &starf; 4.91</span><button class="admin-btn" onclick="adminEntry()" title="Admin">&#x2022;</button></div>
   </footer>
@@ -745,7 +745,7 @@ footer{background:var(--green);padding:3rem 2.5rem 1.5rem}
       <p class="body">&ldquo;Manor Cottage is a very special place. It&rsquo;s been in the family for years and I&rsquo;ve taken great care to restore it sensitively &mdash; keeping the original oak beams, the wonderful log-burning fireplace and the authentic period character, while bringing it fully up to modern standards. I genuinely believe there&rsquo;s nowhere better to experience the southern Peak District. Carsington Water is right on the doorstep, Chatsworth is a short drive, and the walking from the door is exceptional.&rdquo;</p>
       <p class="body" style="margin-top:1rem">&ldquo;I welcome families, groups of friends and multi-generational parties. Well-behaved dogs are always welcome too &mdash; there&rsquo;s plenty of outdoor space and wonderful walks straight from the cottage.&rdquo;</p>
       <div style="background:var(--cream2);border-left:3px solid var(--amber);padding:1.2rem 1.5rem;border-radius:0 var(--r) var(--r) 0;margin-top:2rem">
-        <p style="font-size:.82rem;color:var(--mid);line-height:1.6"><strong style="color:var(--green)">To get in touch with Libba:</strong><br>Email <a href="#" onclick="window.location='mail'+'to:'+'hello'+'@'+'manorcottagehopton.co.uk';return false;" style="color:var(--amber)">hello@manorcottagehopton.co.uk</a> with your query or booking request. Libba typically responds within a few hours.</p>
+        <p style="font-size:.82rem;color:var(--mid);line-height:1.6"><strong style="color:var(--green)">To get in touch with Libba:</strong><br>Email <a href="#" onclick="window.location='mail'+'to:'+'hello'+'@'+'manorcottagehopton.co.uk';return false;" style="color:var(--amber)"><span class="__cf_email__" data-cfemail="ef878a838380af828e81809d8c809b9b8e888a87809f9b8081c18c80c19a84">[email&#160;protected]</span></a> with your query or booking request. Libba typically responds within a few hours.</p>
       </div>
     </div>
   </section>
@@ -1242,6 +1242,8 @@ function go(id){
   document.getElementById("page-"+id).classList.add("active");
   window.scrollTo(0,0);
   document.querySelectorAll(".ntab,.ditem,.btab").forEach(el=>el.classList.toggle("active",el.dataset.p===id));
+  // Reapply images every time a page is shown so nothing is ever stale
+  applyAllImgs();
   const nav=document.getElementById("nav");
   if(id!=="home"){nav.classList.add("solid");}else{nav.classList.toggle("solid",window.scrollY>80);}
   loadSettings();triggerAnim(id);
@@ -1534,36 +1536,35 @@ function applyImgToSite(section,imgs){
     const hbg=document.querySelector('.hero-bg');
     if(hbg)hbg.style.backgroundImage=`linear-gradient(to bottom,rgba(0,0,0,.05) 0%,rgba(10,22,12,.5) 50%,rgba(10,22,12,.88) 100%),url("${url}")`;
   } else if(section==='gallery'){
+    // Apply to gallery-1 through gallery-N img elements
     const galImgs=document.querySelectorAll('[data-img-id^="gallery-"]');
-    imgs.forEach((u,i)=>{if(galImgs[i])galImgs[i].src=u;});
+    imgs.forEach((u,i)=>{ if(galImgs[i]) galImgs[i].src=u; });
   } else {
-    const el=document.querySelector(`[data-img-id="${section}"]`);
-    if(el)el.src=url;
+    // Apply to any element with a matching data-img-id
+    const el=document.querySelector('[data-img-id="'+section+'"]');
+    if(el) el.src=url;
   }
 }
 
 async function applyAllImgs(){
-  // Try Supabase first
+  // Always apply localStorage immediately (instant, no flicker)
+  Object.keys(IMG_DEFAULTS).forEach(section=>{
+    applyImgToSite(section, getImgsLocal(section));
+  });
+  // Then try Supabase and update if we get fresher data
   if(sb){
     try {
       const remote = await getImgsAll();
-      const sections = Object.keys(IMG_DEFAULTS);
-      sections.forEach(section=>{
+      if(!remote || !Object.keys(remote).length) return;
+      Object.keys(IMG_DEFAULTS).forEach(section=>{
         if(remote[section] && remote[section].length){
-          // Update local cache too
+          // Sync to localStorage so next load is instant
           try{localStorage.setItem('mc_imgs_'+section,JSON.stringify(remote[section]));}catch(e){}
-          applyImgToSite(section,remote[section]);
-        } else {
-          applyImgToSite(section,getImgsLocal(section));
+          applyImgToSite(section, remote[section]);
         }
       });
-      return;
-    } catch(e){}
+    } catch(e){ /* Supabase unavailable - localStorage already applied */ }
   }
-  // Fallback to localStorage
-  Object.keys(IMG_DEFAULTS).forEach(section=>{
-    applyImgToSite(section,getImgsLocal(section));
-  });
 }
 
 function initImgManager(){
@@ -1644,19 +1645,19 @@ document.addEventListener('DOMContentLoaded',()=>{
 
 // ── INIT ──
 // Wrap all DOM-dependent startup code so it fires after DOM is ready
-function initSite() {
+async function initSite() {
   loadSettings();
-  erAnim("home");
-  applyAllImgs();
+  triggerAnim("home");
+  await applyAllImgs();
 
-  // Set min dates on booking form
   const today = new Date().toISOString().split("T")[0];
   const ciEl = document.getElementById("ci");
   const coEl = document.getElementById("co");
   if (ciEl) {
     ciEl.min = today;
     ciEl.addEventListener("change", function() {
-      const d = new Date(this.value); d.setDate(d.getDate() + 1);
+      const d = new Date(this.value);
+      d.setDate(d.getDate() + 1);
       if (coEl) coEl.min = d.toISOString().split("T")[0];
       calc();
     });
