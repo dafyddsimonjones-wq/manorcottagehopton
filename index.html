@@ -1,0 +1,1473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
+<title>Manor Cottage · Peak District</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --cream:#F4EFE6;--cream2:#EBE3D3;--white:#FDFAF4;
+  --green:#243826;--green2:#35563A;--green3:#4E7A52;
+  --amber:#9A7830;--amber2:#C49A45;
+  --text:#1A1916;--mid:#4A4740;--light:#8A8680;
+  --stone:#D4CCB8;--stone2:#C0B89E;
+  --nav-h:64px;--tab-h:60px;--r:3px;
+}
+html{scroll-behavior:smooth;-webkit-tap-highlight-color:transparent}
+body{font-family:"DM Sans",sans-serif;background:var(--cream);color:var(--text);line-height:1.65;overflow-x:hidden}
+img{display:block;max-width:100%;height:auto}
+a{text-decoration:none;color:inherit}
+button{cursor:pointer;border:none;background:none;font-family:inherit}
+svg.icon{display:inline-block;vertical-align:middle;flex-shrink:0}
+
+/* NAV */
+#nav{position:fixed;top:0;left:0;right:0;z-index:200;height:var(--nav-h);display:flex;align-items:center;justify-content:space-between;padding:0 2.5rem;transition:background .3s,box-shadow .3s}
+#nav.solid{background:rgba(36,56,38,.97);backdrop-filter:blur(12px);box-shadow:0 2px 28px rgba(0,0,0,.25)}
+.logo{font-family:"Cormorant Garamond",serif;font-size:1.4rem;font-weight:400;color:#fff;letter-spacing:.04em}
+.logo em{font-style:italic;color:var(--amber2)}
+.nav-center{display:flex;gap:.2rem;align-items:center}
+.ntab{padding:.42rem 1rem;border-radius:var(--r);font-size:.76rem;font-weight:400;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.65);transition:color .2s,background .2s}
+.ntab:hover,.ntab.active{color:#fff;background:rgba(255,255,255,.1)}
+.ntab.book{background:var(--amber);color:#fff}
+.ntab.book:hover{background:var(--amber2)}
+.nav-right{display:flex;align-items:center;gap:.75rem}
+.gear-btn{display:flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:var(--r);color:rgba(255,255,255,.5);transition:color .2s,background .2s}
+.gear-btn:hover{color:#fff;background:rgba(255,255,255,.1)}
+.ham{display:none;flex-direction:column;gap:5px;padding:8px;background:rgba(255,255,255,.08);border-radius:var(--r)}
+.ham span{display:block;width:21px;height:1.5px;background:#fff;border-radius:2px;transition:transform .3s,opacity .3s}
+
+/* DRAWER */
+.drawer{display:none;position:fixed;inset:0;z-index:190;background:var(--green);flex-direction:column;padding:calc(var(--nav-h)+1.5rem) 1.5rem 2rem;gap:.3rem;overflow-y:auto}
+.drawer.open{display:flex}
+.ditem{display:flex;align-items:center;gap:.9rem;padding:.85rem 1.1rem;border-radius:var(--r);font-size:.95rem;color:rgba(255,255,255,.75);border-left:2.5px solid transparent;transition:all .2s}
+.ditem.active{color:#fff;background:rgba(255,255,255,.08);border-left-color:var(--amber2)}
+.ditem:hover{color:#fff;background:rgba(255,255,255,.06)}
+.ditem svg{opacity:.7}
+.ditem.active svg{opacity:1}
+.dsep{height:1px;background:rgba(255,255,255,.1);margin:.4rem 0}
+
+/* BOTTOM BAR */
+.bbar{display:none;position:fixed;bottom:0;left:0;right:0;z-index:200;height:var(--tab-h);background:var(--green);align-items:stretch;border-top:1px solid rgba(255,255,255,.08);padding-bottom:env(safe-area-inset-bottom)}
+.btab{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;color:rgba(255,255,255,.45);font-size:.58rem;letter-spacing:.07em;text-transform:uppercase;transition:color .2s;padding:.4rem .2rem}
+.btab svg{transition:transform .2s}
+.btab.active{color:var(--amber2)}
+.btab.active svg{transform:translateY(-1px)}
+
+/* PAGES */
+.page{display:none;min-height:100dvh;padding-top:var(--nav-h)}
+.page.active{display:block}
+
+/* UTILS */
+.lbl{font-size:.67rem;font-weight:400;letter-spacing:.24em;text-transform:uppercase;color:var(--amber)}
+.lbl-inv{color:var(--amber2)}
+.h1{font-family:"Cormorant Garamond",serif;font-size:clamp(2.8rem,6vw,5rem);font-weight:300;line-height:1.04;color:#fff}
+.h1 em,.h2 em{font-style:italic;color:var(--amber2)}
+.h2{font-family:"Cormorant Garamond",serif;font-size:clamp(1.9rem,3.5vw,2.9rem);font-weight:300;line-height:1.1;color:var(--green)}
+.h2-inv{color:#fff}
+.h3{font-family:"Cormorant Garamond",serif;font-size:1.4rem;font-weight:400;line-height:1.2}
+.body{font-size:.93rem;font-weight:300;color:var(--mid);line-height:1.8}
+.body-inv{color:rgba(255,255,255,.6)}
+.wrap{max-width:1160px;margin:0 auto;padding:0 2.5rem}
+.pad{padding:5rem 0}
+.pad-sm{padding:3.5rem 0}
+
+/* HERO */
+.hero{position:relative;height:calc(100dvh - var(--nav-h));min-height:520px;display:flex;align-items:flex-end;overflow:hidden}
+.hero-bg{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,.05) 0%,rgba(10,22,12,.5) 50%,rgba(10,22,12,.88) 100%),url("https://images.unsplash.com/photo-1559827291-72f3dc58fb31?w=1800&q=85") center/cover no-repeat;transform:scale(1.04);animation:hzoom 13s ease-out forwards}
+@keyframes hzoom{to{transform:scale(1)}}
+.hero-inner{position:relative;z-index:2;padding:0 2.5rem 4rem;width:100%}
+.eyebrow{display:inline-block;font-size:.68rem;letter-spacing:.24em;text-transform:uppercase;color:var(--amber2);margin-bottom:1rem;opacity:0;animation:fu .7s .2s ease both}
+.hero-h1{opacity:0;animation:fu .8s .4s ease both}
+.hero-sub{max-width:540px;font-size:.97rem;font-weight:300;color:rgba(255,255,255,.78);margin:1.2rem 0 2rem;opacity:0;animation:fu .8s .6s ease both}
+.pills{display:flex;flex-wrap:wrap;gap:.65rem;opacity:0;animation:fu .8s .8s ease both}
+.pill{display:flex;align-items:center;gap:.5rem;background:rgba(255,255,255,.1);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.18);border-radius:40px;padding:.3rem .85rem;font-size:.76rem;color:rgba(255,255,255,.88)}
+.pill-dot{width:4px;height:4px;border-radius:50%;background:var(--amber2);flex-shrink:0}
+.hero-btns{margin-top:2rem;display:flex;gap:.9rem;flex-wrap:wrap;opacity:0;animation:fu .8s 1s ease both}
+@keyframes fu{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+.btn{display:inline-flex;align-items:center;gap:.5rem;padding:.78rem 1.7rem;border-radius:var(--r);font-size:.76rem;font-weight:400;letter-spacing:.14em;text-transform:uppercase;transition:all .2s;cursor:pointer;border:none;font-family:inherit}
+.btn-amber{background:var(--amber);color:#fff}
+.btn-amber:hover{background:var(--amber2);transform:translateY(-1px)}
+.btn-ghost{border:1.5px solid rgba(255,255,255,.45);color:#fff;background:none}
+.btn-ghost:hover{background:rgba(255,255,255,.08)}
+.btn-dark{background:var(--green);color:#fff}
+.btn-dark:hover{background:var(--green2)}
+.btn-full{display:block;width:100%;background:var(--amber);color:#fff;padding:.95rem;border-radius:var(--r);font-size:.76rem;letter-spacing:.16em;text-transform:uppercase;text-align:center;transition:background .2s,transform .1s;border:none;cursor:pointer;font-family:inherit;font-weight:400}
+.btn-full:hover{background:var(--amber2);transform:translateY(-1px)}
+
+/* STATS STRIP */
+.strip{background:var(--green);display:flex;flex-wrap:wrap;justify-content:center}
+.sitem{display:flex;align-items:center;gap:.9rem;padding:1.5rem 2.8rem;border-right:1px solid rgba(255,255,255,.08)}
+.sitem:last-child{border:none}
+.sitem-txt{font-size:.8rem;color:rgba(255,255,255,.6);line-height:1.35}
+.sitem-txt strong{display:block;color:#fff;font-weight:500;font-size:.92rem}
+
+/* WELCOME 2-COL */
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:4.5rem;align-items:center}
+.img-stack{position:relative}
+.img-main{width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:var(--r);box-shadow:14px 18px 50px rgba(0,0,0,.18)}
+.img-accent{position:absolute;bottom:-2rem;right:-2rem;width:50%;aspect-ratio:1;object-fit:cover;border-radius:var(--r);border:4px solid var(--cream);box-shadow:6px 8px 24px rgba(0,0,0,.18)}
+.mini-grid{display:grid;grid-template-columns:1fr 1fr;gap:.65rem;margin-top:1.5rem}
+.mf{display:flex;align-items:center;gap:.6rem;font-size:.84rem;color:var(--mid)}
+.mf svg{color:var(--amber);flex-shrink:0}
+
+/* TEASER BAND */
+.teaser{background:var(--cream2);padding:4rem 0}
+
+/* ROOMS */
+.dark-hero{background:var(--green);padding:3.5rem 0 0}
+.rooms-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.4rem;margin-top:2.5rem;padding-bottom:3.5rem}
+.rcard{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:var(--r);overflow:hidden;transition:transform .3s,box-shadow .3s}
+.rcard:hover{transform:translateY(-5px);box-shadow:0 20px 50px rgba(0,0,0,.35)}
+.rcard img{width:100%;aspect-ratio:4/3;object-fit:cover}
+.rcard-body{padding:1.3rem 1.4rem}
+.rname{font-family:"Cormorant Garamond",serif;font-size:1.22rem;font-weight:400;color:#fff;margin-bottom:.3rem}
+.rdetail{font-size:.79rem;color:rgba(255,255,255,.48);line-height:1.5}
+.rtag{display:inline-block;margin-top:.7rem;font-size:.63rem;letter-spacing:.1em;color:var(--amber2);border:1px solid rgba(196,154,69,.35);padding:.2rem .65rem;border-radius:1px}
+
+/* AMENITIES */
+.amen-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(195px,1fr));gap:.9rem}
+.amen{display:flex;align-items:center;gap:.85rem;padding:1rem 1.2rem;background:var(--white);border:1px solid var(--stone);border-radius:var(--r);font-size:.85rem;color:var(--mid);transition:border-color .2s,box-shadow .2s}
+.amen:hover{border-color:var(--amber);box-shadow:0 4px 14px rgba(0,0,0,.06)}
+.amen svg{color:var(--amber);flex-shrink:0}
+
+/* GALLERY */
+.gal{display:grid;grid-template-columns:repeat(3,1fr);grid-auto-rows:195px;gap:7px;margin-top:1.5rem}
+.gal img{width:100%;height:100%;object-fit:cover;border-radius:var(--r);transition:opacity .3s}
+.gal img:hover{opacity:.85}
+.gw{grid-column:span 2}
+.gt{grid-row:span 2}
+
+/* ACTIVITIES */
+.act-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:1.4rem;margin-top:1rem}
+.acard{position:relative;border-radius:var(--r);overflow:hidden;aspect-ratio:4/3;display:block;text-decoration:none}
+.acard img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
+.acard:hover img{transform:scale(1.06)}
+.aov{position:absolute;inset:0;background:linear-gradient(to top,rgba(15,28,15,.9) 0%,transparent 55%);padding:1.3rem;display:flex;flex-direction:column;justify-content:flex-end;transition:background .3s}
+.acard:hover .aov{background:linear-gradient(to top,rgba(15,28,15,.97) 0%,rgba(0,0,0,.15) 100%)}
+.acat{font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:var(--amber2);margin-bottom:.22rem}
+.aname{font-family:"Cormorant Garamond",serif;font-size:1.32rem;color:#fff;line-height:1.2}
+.adist{font-size:.73rem;color:rgba(255,255,255,.52);margin-top:.28rem}
+.avisit{display:inline-flex;align-items:center;gap:.35rem;margin-top:.7rem;font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,0);border:1px solid rgba(255,255,255,0);padding:.28rem .7rem;border-radius:40px;transition:color .3s,border-color .3s;width:fit-content}
+.acard:hover .avisit{color:rgba(255,255,255,.85);border-color:rgba(255,255,255,.3)}
+
+/* DIVIDER */
+.div{height:1px;background:var(--stone)}
+
+/* GETTING HERE */
+.loc-grid{display:grid;grid-template-columns:1fr 1fr;gap:3.5rem;align-items:start}
+.map-box{border-radius:var(--r);overflow:hidden;aspect-ratio:4/3;box-shadow:0 8px 32px rgba(0,0,0,.12)}
+.map-box iframe{width:100%;height:100%;border:none}
+.dtable{width:100%;border-collapse:collapse}
+.dtable tr{border-bottom:1px solid var(--stone)}
+.dtable tr:last-child{border:none}
+.dtable td{padding:.85rem .4rem;font-size:.88rem;vertical-align:middle}
+.dtable td:first-child{color:var(--mid)}
+.dtable td:last-child{text-align:right;font-weight:500;color:var(--green);white-space:nowrap}
+.dcat{font-size:.63rem;letter-spacing:.16em;text-transform:uppercase;color:var(--amber);margin:1.4rem 0 .5rem}
+.transport-cards{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:1rem}
+.tcard{background:var(--white);border:1px solid var(--stone);border-radius:var(--r);padding:1.2rem 1.4rem}
+.tcard-title{font-size:.82rem;font-weight:500;color:var(--green);margin-bottom:.5rem;display:flex;align-items:center;gap:.5rem}
+.tcard p{font-size:.82rem;color:var(--mid);line-height:1.6}
+
+/* HOST PAGE */
+.host-hero{background:var(--green);padding:4rem 0}
+.host-layout{display:grid;grid-template-columns:280px 1fr;gap:4rem;align-items:start}
+.host-photo-wrap{text-align:center}
+.host-photo{width:180px;height:180px;border-radius:50%;object-fit:cover;border:4px solid rgba(255,255,255,.15);margin:0 auto 1.2rem;display:block}
+.host-photo-fallback{width:180px;height:180px;border-radius:50%;background:var(--green2);border:4px solid rgba(255,255,255,.15);margin:0 auto 1.2rem;display:flex;align-items:center;justify-content:center;font-family:"Cormorant Garamond",serif;font-size:3.5rem;font-weight:300;color:rgba(255,255,255,.7)}
+.host-badge{display:inline-flex;align-items:center;gap:.4rem;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--amber2);border:1px solid rgba(196,154,69,.35);padding:.3rem .9rem;border-radius:40px}
+.host-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:1.5rem}
+.hstat{background:rgba(255,255,255,.07);border-radius:var(--r);padding:1.1rem;text-align:center}
+.hstat-num{font-family:"Cormorant Garamond",serif;font-size:1.9rem;font-weight:300;color:#fff}
+.hstat-lbl{font-size:.7rem;color:rgba(255,255,255,.45);text-transform:uppercase;letter-spacing:.1em}
+.host-info-list{display:flex;flex-direction:column;gap:.75rem;margin-top:1.5rem}
+.hinfo{display:flex;align-items:center;gap:.75rem;font-size:.88rem;color:rgba(255,255,255,.65)}
+.hinfo svg{color:var(--amber2);flex-shrink:0}
+.host-bio{font-size:.95rem;color:rgba(255,255,255,.7);line-height:1.8;font-weight:300;margin-top:.8rem}
+
+/* REVIEWS */
+.rev-hero{background:var(--green);padding:3.5rem 0}
+.rating-row{display:flex;align-items:center;gap:1.5rem;margin-top:1rem;flex-wrap:wrap}
+.big-num{font-family:"Cormorant Garamond",serif;font-size:4.5rem;font-weight:300;color:#fff;line-height:1}
+.rating-bars{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:.8rem;margin-top:1.5rem}
+.rbar{background:rgba(255,255,255,.07);border-radius:var(--r);padding:.9rem;text-align:center}
+.rbar-n{font-family:"Cormorant Garamond",serif;font-size:1.7rem;color:#fff;font-weight:300}
+.rbar-l{font-size:.68rem;color:rgba(255,255,255,.42);text-transform:uppercase;letter-spacing:.09em}
+.rev-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:1.4rem;margin-top:2rem}
+.revcard{background:var(--white);border:1px solid var(--stone);border-radius:var(--r);padding:1.8rem}
+.rev-stars{display:flex;gap:2px;margin-bottom:.6rem}
+.rev-q{font-family:"Cormorant Garamond",serif;font-size:2.8rem;color:var(--amber);line-height:.4;margin-bottom:.9rem}
+.rev-txt{font-size:.85rem;color:var(--mid);font-weight:300;line-height:1.78;margin-bottom:1.2rem}
+.rev-auth{font-size:.8rem;font-weight:500;color:var(--text)}
+.rev-date{font-size:.7rem;color:var(--light)}
+
+/* BOOK */
+.book-card{background:var(--white);border:1px solid var(--stone);border-radius:var(--r);box-shadow:0 12px 48px rgba(0,0,0,.1);overflow:hidden;max-width:760px;margin:0 auto}
+.book-head{background:var(--green);padding:2rem 2.2rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
+.book-head h3{font-family:"Cormorant Garamond",serif;font-size:1.7rem;font-weight:300;color:#fff}
+.ptag{text-align:right;color:rgba(255,255,255,.55);font-size:.8rem}
+.ptag strong{display:block;font-family:"Cormorant Garamond",serif;font-size:2.2rem;font-weight:300;color:#fff}
+.book-body{padding:2rem 2.2rem}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;margin-bottom:1.2rem}
+.frow3{grid-template-columns:1fr 1fr 1fr}
+.fg label{display:block;font-size:.65rem;letter-spacing:.16em;text-transform:uppercase;color:var(--light);margin-bottom:.42rem}
+.fg input,.fg select,.fg textarea{width:100%;padding:.78rem 1rem;border:1px solid var(--stone);border-radius:var(--r);font-family:"DM Sans",sans-serif;font-size:.91rem;color:var(--text);background:var(--cream);outline:none;transition:border-color .2s;appearance:none;resize:vertical}
+.fg input:focus,.fg select:focus,.fg textarea:focus{border-color:var(--green2)}
+.extras{display:flex;flex-wrap:wrap;gap:.9rem;margin-bottom:1.4rem}
+.xrow{display:flex;align-items:center;gap:.5rem;font-size:.83rem;color:var(--mid);cursor:pointer}
+.xrow input[type=checkbox]{accent-color:var(--green);width:15px;height:15px}
+.summary{background:var(--cream2);border:1px solid var(--stone);border-radius:var(--r);padding:1.2rem 1.4rem;margin-bottom:1.4rem;display:none}
+.summary.show{display:block}
+.srow{display:flex;justify-content:space-between;font-size:.85rem;color:var(--mid);padding:.32rem 0;border-bottom:1px solid var(--stone)}
+.srow:last-child{border:none;font-size:.95rem;font-weight:500;color:var(--text)}
+.book-note{text-align:center;font-size:.74rem;color:var(--light);margin-top:.75rem}
+.rules{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-top:1.5rem}
+.rule{display:flex;align-items:flex-start;gap:.65rem;font-size:.83rem;color:var(--mid);padding:.85rem 1rem;background:var(--cream2);border-radius:var(--r)}
+.rule svg{color:var(--amber);flex-shrink:0;margin-top:1px}
+
+/* SETTINGS */
+.settings-wrap{max-width:960px;margin:0 auto}
+.settings-grid{display:grid;grid-template-columns:1fr 1fr;gap:2rem;margin-top:2rem}
+.settings-card{background:var(--white);border:1px solid var(--stone);border-radius:var(--r);overflow:hidden}
+.settings-card-head{background:var(--green);padding:1.1rem 1.5rem;display:flex;align-items:center;gap:.6rem}
+.settings-card-head h4{font-size:.8rem;font-weight:400;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.8)}
+.settings-card-head svg{color:var(--amber2)}
+.settings-card-body{padding:1.5rem}
+.sfg{margin-bottom:1rem}
+.sfg:last-child{margin-bottom:0}
+.sfg label{display:block;font-size:.65rem;letter-spacing:.16em;text-transform:uppercase;color:var(--light);margin-bottom:.38rem}
+.sfg input,.sfg select,.sfg textarea{width:100%;padding:.72rem .9rem;border:1px solid var(--stone);border-radius:var(--r);font-family:"DM Sans",sans-serif;font-size:.88rem;color:var(--text);background:var(--cream);outline:none;transition:border-color .2s}
+.sfg input:focus,.sfg select:focus{border-color:var(--green2)}
+.save-bar{display:flex;gap:.8rem;align-items:center;margin-top:1.5rem;padding:1.2rem 1.5rem;background:var(--cream2);border:1px solid var(--stone);border-radius:var(--r)}
+.save-status{font-size:.82rem;color:var(--green2);display:none}
+.save-status.show{display:block}
+.chat-wrap{grid-column:1/-1;background:var(--white);border:1px solid var(--stone);border-radius:var(--r);overflow:hidden}
+.chat-head{background:var(--green);padding:1.1rem 1.5rem;display:flex;align-items:center;gap:.6rem}
+.chat-head h4{font-size:.8rem;font-weight:400;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.8)}
+.chat-head span{margin-left:auto;font-size:.72rem;color:rgba(255,255,255,.4)}
+.chat-messages{height:340px;overflow-y:auto;padding:1.2rem 1.5rem;display:flex;flex-direction:column;gap:.9rem}
+.cmsg{max-width:78%;font-size:.85rem;line-height:1.65}
+.cmsg.user{align-self:flex-end;background:var(--green);color:#fff;padding:.7rem 1rem;border-radius:var(--r) var(--r) 2px var(--r)}
+.cmsg.ai{align-self:flex-start;background:var(--cream2);color:var(--text);padding:.7rem 1rem;border-radius:var(--r) var(--r) var(--r) 2px;border:1px solid var(--stone)}
+.cmsg.ai.loading{color:var(--light);font-style:italic}
+.chat-input-row{display:flex;gap:.8rem;padding:1rem 1.2rem;border-top:1px solid var(--stone);background:var(--cream)}
+.chat-input-row input{flex:1;padding:.7rem 1rem;border:1px solid var(--stone);border-radius:var(--r);font-family:"DM Sans",sans-serif;font-size:.88rem;background:var(--white);outline:none;transition:border-color .2s}
+.chat-input-row input:focus{border-color:var(--green2)}
+.chat-send{background:var(--amber);color:#fff;padding:.7rem 1.2rem;border-radius:var(--r);font-size:.76rem;font-weight:400;letter-spacing:.1em;text-transform:uppercase;border:none;cursor:pointer;font-family:inherit;transition:background .2s;white-space:nowrap}
+.chat-send:hover{background:var(--amber2)}
+.chat-send:disabled{background:var(--stone);cursor:not-allowed}
+
+/* FOOTER */
+footer{background:var(--green);padding:3rem 2.5rem 1.5rem}
+.foot-inner{max-width:1160px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:2.5rem}
+.foot-brand .logo{font-size:1.35rem;display:block;margin-bottom:.8rem}
+.foot-brand p{font-size:.82rem;color:rgba(255,255,255,.42);line-height:1.7;max-width:230px}
+.fcol h4{font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.28);margin-bottom:.9rem}
+.fcol ul{list-style:none}
+.fcol ul li{margin-bottom:.5rem}
+.fcol ul li a{display:flex;align-items:center;gap:.5rem;color:rgba(255,255,255,.48);font-size:.82rem;transition:color .2s}
+.fcol ul li a:hover{color:var(--amber2)}
+.fcol ul li a svg{flex-shrink:0;opacity:.7}
+.foot-bottom{max-width:1160px;margin:.9rem auto 0;padding-top:.9rem;border-top:1px solid rgba(255,255,255,.08);display:flex;justify-content:space-between;flex-wrap:wrap;gap:.5rem;font-size:.71rem;color:rgba(255,255,255,.25)}
+
+/* MODAL */
+.modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:300;align-items:center;justify-content:center;padding:1rem}
+.modal-bg.open{display:flex}
+.modal{background:var(--white);border-radius:var(--r);max-width:450px;width:100%;padding:2.2rem;position:relative;text-align:center;box-shadow:0 24px 80px rgba(0,0,0,.25)}
+.modal-close{position:absolute;top:.8rem;right:1rem;font-size:1.3rem;color:var(--light);line-height:1;cursor:pointer;background:none;border:none}
+.modal h3{font-family:"Cormorant Garamond",serif;font-size:2rem;font-weight:400;color:var(--green);margin-bottom:.5rem}
+.modal p{font-size:.88rem;color:var(--mid);margin-bottom:1.1rem}
+.modal-det{background:var(--cream2);border-radius:var(--r);padding:1rem 1.2rem;text-align:left;margin-bottom:1.4rem;font-size:.83rem;color:var(--mid);line-height:2}
+
+/* IMAGE MANAGER */
+.img-section-tabs{display:flex;gap:.5rem;margin-bottom:1.2rem;flex-wrap:wrap}
+.img-tab{padding:.38rem 1rem;border-radius:var(--r);font-size:.72rem;font-weight:400;letter-spacing:.1em;text-transform:uppercase;border:1px solid var(--stone);color:var(--mid);background:none;cursor:pointer;transition:all .2s;font-family:inherit}
+.img-tab.active{background:var(--green);color:#fff;border-color:var(--green)}
+.img-panel{display:none}
+.img-panel.active{display:block}
+.img-grid-preview{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:.6rem;margin-bottom:1rem}
+.img-thumb{position:relative;aspect-ratio:4/3;border-radius:var(--r);overflow:hidden;background:var(--cream2);border:1px solid var(--stone)}
+.img-thumb img{width:100%;height:100%;object-fit:cover;display:block}
+.img-thumb-del{position:absolute;top:.3rem;right:.3rem;background:rgba(0,0,0,.65);color:#fff;border:none;border-radius:2px;width:22px;height:22px;font-size:.8rem;cursor:pointer;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .2s;font-family:inherit}
+.img-thumb:hover .img-thumb-del{opacity:1}
+.img-thumb-label{position:absolute;bottom:0;left:0;right:0;background:rgba(0,0,0,.55);color:rgba(255,255,255,.8);font-size:.58rem;padding:.2rem .35rem;text-overflow:ellipsis;overflow:hidden;white-space:nowrap}
+.img-empty{font-size:.83rem;color:var(--light);text-align:center;padding:1.5rem;background:var(--cream2);border-radius:var(--r);border:1px dashed var(--stone);margin-bottom:1rem}
+.img-add-row{display:flex;gap:.65rem;align-items:flex-end;margin-top:.8rem}
+.img-add-row .sfg{flex:1;margin:0}
+.img-upload-area{border:2px dashed var(--stone);border-radius:var(--r);padding:1.2rem;text-align:center;cursor:pointer;transition:border-color .2s,background .2s;margin-bottom:.8rem;background:var(--cream)}
+.img-upload-area:hover,.img-upload-area.drag{border-color:var(--amber);background:var(--cream2)}
+.img-upload-label{font-size:.82rem;color:var(--mid);display:flex;flex-direction:column;align-items:center;gap:.4rem;cursor:pointer}
+.img-note{font-size:.73rem;color:var(--light);margin-top:.6rem;line-height:1.6}
+
+/* PASSWORD MODAL */
+.pw-modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:400;align-items:center;justify-content:center;padding:1rem}
+.pw-modal-bg.open{display:flex}
+.pw-modal{background:var(--white);border-radius:var(--r);max-width:380px;width:100%;padding:2.2rem;text-align:center;box-shadow:0 24px 80px rgba(0,0,0,.3)}
+.pw-modal h3{font-family:"Cormorant Garamond",serif;font-size:1.9rem;font-weight:400;color:var(--green);margin-bottom:.4rem}
+.pw-modal p{font-size:.84rem;color:var(--light);margin-bottom:1.4rem}
+.pw-input-wrap{position:relative;margin-bottom:1rem}
+.pw-input-wrap input{width:100%;padding:.85rem 3rem .85rem 1rem;border:1px solid var(--stone);border-radius:var(--r);font-family:"DM Sans",sans-serif;font-size:1rem;color:var(--text);background:var(--cream);outline:none;text-align:center;letter-spacing:.15em;transition:border-color .2s}
+.pw-input-wrap input:focus{border-color:var(--green2)}
+.pw-toggle{position:absolute;right:.8rem;top:50%;transform:translateY(-50%);color:var(--light);cursor:pointer;background:none;border:none;padding:.2rem}
+.pw-error{font-size:.78rem;color:#c0392b;margin-bottom:.8rem;min-height:1.1rem}
+.pw-hint{font-size:.72rem;color:var(--light);margin-top:.8rem;line-height:1.5}
+
+/* RESPONSIVE */
+@media(max-width:960px){
+  .nav-center{display:none}
+  .ham{display:flex}
+  .bbar{display:flex}
+  body{padding-bottom:var(--tab-h)}
+  .two-col{grid-template-columns:1fr;gap:2.2rem}
+  .img-accent{display:none}
+  .loc-grid{grid-template-columns:1fr}
+  .foot-inner{grid-template-columns:1fr 1fr}
+  .frow3{grid-template-columns:1fr 1fr}
+  .host-layout{grid-template-columns:1fr;gap:2rem}
+  .host-photo-wrap{display:flex;flex-direction:column;align-items:center}
+  .rules{grid-template-columns:1fr}
+  .gal{grid-auto-rows:155px}
+  .settings-grid{grid-template-columns:1fr}
+  .chat-wrap{grid-column:auto}
+}
+@media(max-width:600px){
+  :root{--nav-h:56px}
+  .wrap{padding:0 1rem}
+  .pad{padding:3.2rem 0}
+  .pad-sm{padding:2.5rem 0}
+  .hero-inner{padding:0 1rem 4.5rem}
+  .pills{gap:.45rem}
+  .pill{font-size:.7rem;padding:.28rem .7rem}
+  .hero-btns{gap:.6rem}
+  .btn{padding:.7rem 1.25rem;font-size:.72rem}
+  .sitem{padding:1rem 1.4rem;border:none;border-bottom:1px solid rgba(255,255,255,.07)}
+  .strip{flex-direction:column}
+  .strip .sitem:last-child{border:none}
+  .frow,.frow3{grid-template-columns:1fr}
+  .book-head{flex-direction:column;align-items:flex-start}
+  .ptag{text-align:left}
+  .rating-bars{grid-template-columns:repeat(2,1fr)}
+  .gal{grid-template-columns:1fr 1fr;grid-auto-rows:140px}
+  .gw{grid-column:span 2}
+  .gt{grid-row:span 1}
+  .foot-inner{grid-template-columns:1fr}
+  .foot-bottom{flex-direction:column}
+  .rooms-grid,.act-grid,.rev-grid,.amen-grid{grid-template-columns:1fr}
+  .mini-grid{grid-template-columns:1fr}
+  .transport-cards{grid-template-columns:1fr}
+  .host-stats{grid-template-columns:repeat(3,1fr)}
+}
+@media(prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+</style>
+</head>
+<body>
+
+<!-- SVG SPRITE -->
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+<symbol id="i-bed" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 20V9a2 2 0 012-2h16a2 2 0 012 2v11M2 15h20M7 9V7a1 1 0 011-1h3a1 1 0 011 1v2M13 9V7a1 1 0 011-1h3a1 1 0 011 1v2"/></symbol>
+<symbol id="i-bath" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 18h16M4 18v2M20 18v2M2 13h20v1a4 4 0 01-4 4H6a4 4 0 01-4-4v-1zM6 13V5a2 2 0 012-2 2 2 0 012 2v1"/></symbol>
+<symbol id="i-star" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></symbol>
+<symbol id="i-star-fill" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></symbol>
+<symbol id="i-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></symbol>
+<symbol id="i-key" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="7.5" cy="15.5" r="5.5"/><path d="M21 2l-9.6 9.6M15.5 7.5l3 3"/></symbol>
+<symbol id="i-paw" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="4" r="2"/><circle cx="18" cy="8" r="2"/><circle cx="20" cy="16" r="2"/><path d="M9 10a5 5 0 015 5v3.5a3.5 3.5 0 01-6.84 1.045Q6.52 17.48 4.46 16.84A3.5 3.5 0 018 13.5V13a5 5 0 015-5z"/></symbol>
+<symbol id="i-flame" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0011 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 11-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 002.5 3z"/></symbol>
+<symbol id="i-wifi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.55a11 11 0 0114.08 0M1.42 9a16 16 0 0121.16 0M8.53 16.11a6 6 0 016.95 0M12 20h.01"/></symbol>
+<symbol id="i-car" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 17H3a2 2 0 01-2-2V9a2 2 0 012-2h11l4 4v4H5z"/><circle cx="7" cy="17" r="2"/><circle cx="16" cy="17" r="2"/></symbol>
+<symbol id="i-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></symbol>
+<symbol id="i-users" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></symbol>
+<symbol id="i-mail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></symbol>
+<symbol id="i-home" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></symbol>
+<symbol id="i-mountain" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 20 15.5 4 22 20"/><polyline points="9 20 14 11 17 15"/></symbol>
+<symbol id="i-award" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></symbol>
+<symbol id="i-chat" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></symbol>
+<symbol id="i-settings" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></symbol>
+<symbol id="i-train" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="16" rx="4"/><path d="M4 11h16M12 2v9M8 20l-2 2M16 20l2 2M8 20h8"/><circle cx="9" cy="15" r="1" fill="currentColor" stroke="none"/><circle cx="15" cy="15" r="1" fill="currentColor" stroke="none"/></symbol>
+<symbol id="i-zap" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></symbol>
+<symbol id="i-bike" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="5.5" cy="17.5" r="3.5"/><circle cx="18.5" cy="17.5" r="3.5"/><path d="M15 6a1 1 0 100-2 1 1 0 000 2zm-3 11.5V14l-3-3 4-3 2 3h2"/></symbol>
+<symbol id="i-tv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="13" rx="2"/><polyline points="17 2 12 7 7 2"/></symbol>
+<symbol id="i-utensils" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 002-2V2M7 2v20M21 15V2s-5 0-5 5v4a2 2 0 002 2h3zm0 0v7"/></symbol>
+<symbol id="i-leaf" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 8C8 10 5.9 16.17 3.82 22M9.1 17.1C10.44 15.5 12 14.4 15 14c6 0 9-4 9-4s-3 9-9 9c-2.44 0-5.12-.66-6.1-1.9"/></symbol>
+<symbol id="i-compass" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></symbol>
+<symbol id="i-user" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></symbol>
+<symbol id="i-globe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></symbol>
+<symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></symbol>
+<symbol id="i-nosmoke" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="2" y1="2" x2="22" y2="22"/><path d="M12 12H2v4h14M22 12h-3M18 8a4 4 0 011.93 7.5"/></symbol>
+<symbol id="i-review" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/><line x1="9" y1="10" x2="15" y2="10"/><line x1="9" y1="14" x2="13" y2="14"/></symbol>
+<symbol id="i-book" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></symbol>
+<symbol id="i-map" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/></symbol>
+<symbol id="i-tripadvisor" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="8" cy="12" r="2"/><circle cx="16" cy="12" r="2"/><path d="M4 12h4M16 12h4"/></symbol>
+<symbol id="i-google" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10"/><path d="M12 12h9v.5A9 9 0 0112 21"/><path d="M12 12V8"/></symbol>
+</svg>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#" class="logo" onclick="go('home');return false" id="logo-secret">Manor <em>Cottage</em></a>
+  <div class="nav-center">
+    <button class="ntab active" data-p="home" onclick="go('home')">Home</button>
+    <button class="ntab" data-p="cottage" onclick="go('cottage')">The Cottage</button>
+    <button class="ntab" data-p="explore" onclick="go('explore')">Explore</button>
+    <button class="ntab" data-p="getting-here" onclick="go('getting-here')">Getting Here</button>
+    <button class="ntab" data-p="host" onclick="go('host')">Your Host</button>
+    <button class="ntab" data-p="reviews" onclick="go('reviews')">Reviews</button>
+    <button class="ntab book" data-p="book" onclick="go('book')">Book Now</button>
+  </div>
+  <div class="nav-right">
+    <button class="ham" id="ham" onclick="toggleDrawer()" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- DRAWER -->
+<div class="drawer" id="drawer">
+  <a class="ditem active" data-p="home" href="#" onclick="go('home');closeDrawer();return false"><svg class="icon" width="17" height="17"><use href="#i-home"/></svg>Home</a>
+  <a class="ditem" data-p="cottage" href="#" onclick="go('cottage');closeDrawer();return false"><svg class="icon" width="17" height="17"><use href="#i-bed"/></svg>The Cottage</a>
+  <a class="ditem" data-p="explore" href="#" onclick="go('explore');closeDrawer();return false"><svg class="icon" width="17" height="17"><use href="#i-compass"/></svg>Explore</a>
+  <a class="ditem" data-p="getting-here" href="#" onclick="go('getting-here');closeDrawer();return false"><svg class="icon" width="17" height="17"><use href="#i-map"/></svg>Getting Here</a>
+  <a class="ditem" data-p="host" href="#" onclick="go('host');closeDrawer();return false"><svg class="icon" width="17" height="17"><use href="#i-user"/></svg>Your Host</a>
+  <a class="ditem" data-p="reviews" href="#" onclick="go('reviews');closeDrawer();return false"><svg class="icon" width="17" height="17"><use href="#i-review"/></svg>Reviews</a>
+  <div class="dsep"></div>
+  <a class="ditem" data-p="book" href="#" onclick="go('book');closeDrawer();return false" style="color:var(--amber2)"><svg class="icon" width="17" height="17"><use href="#i-book"/></svg>Book Now</a>
+</div>
+
+<!-- BOTTOM BAR -->
+<div class="bbar" id="bbar">
+  <button class="btab active" data-p="home" onclick="go('home')"><svg class="icon" width="20" height="20"><use href="#i-home"/></svg>Home</button>
+  <button class="btab" data-p="cottage" onclick="go('cottage')"><svg class="icon" width="20" height="20"><use href="#i-bed"/></svg>Cottage</button>
+  <button class="btab" data-p="explore" onclick="go('explore')"><svg class="icon" width="20" height="20"><use href="#i-compass"/></svg>Explore</button>
+  <button class="btab" data-p="reviews" onclick="go('reviews')"><svg class="icon" width="20" height="20"><use href="#i-review"/></svg>Reviews</button>
+  <button class="btab" data-p="book" onclick="go('book')"><svg class="icon" width="20" height="20"><use href="#i-book"/></svg>Book</button>
+</div>
+
+<!-- PAGE: HOME -->
+<div class="page active" id="page-home">
+  <div class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-inner">
+      <span class="eyebrow" data-setting="location-sub">Hopton Village &middot; Derbyshire Peak District</span>
+      <h1 class="h1 hero-h1" data-setting="tagline">Where <em>history</em> meets the hills</h1>
+      <p class="hero-sub">An 18th-century Grade&nbsp;II listed retreat sleeping&nbsp;8, with oak beams, a log burner and Carsington Water on your doorstep.</p>
+      <div class="pills">
+        <span class="pill"><span class="pill-dot"></span>4 Bedrooms &middot; Sleeps 8</span>
+        <span class="pill"><span class="pill-dot"></span>4 En-Suite Bathrooms</span>
+        <span class="pill"><span class="pill-dot"></span>&starf; 4.91 &middot; 246 Reviews</span>
+        <span class="pill"><span class="pill-dot"></span>Dogs Welcome</span>
+      </div>
+      <div class="hero-btns">
+        <button class="btn btn-amber" onclick="go('book')">Check Availability</button>
+        <button class="btn btn-ghost" onclick="go('cottage')">Explore the Cottage</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="strip">
+    <div class="sitem"><svg class="icon" width="22" height="22" color="rgba(255,255,255,.45)"><use href="#i-bed"/></svg><div class="sitem-txt"><strong>4 Bedrooms</strong>Sleeps up to 8</div></div>
+    <div class="sitem"><svg class="icon" width="22" height="22" color="rgba(255,255,255,.45)"><use href="#i-bath"/></svg><div class="sitem-txt"><strong>4 En-Suite Baths</strong>All private</div></div>
+    <div class="sitem"><svg class="icon" width="22" height="22" color="rgba(255,255,255,.45)"><use href="#i-star"/></svg><div class="sitem-txt"><strong>4.91 Rating</strong>246 guest reviews</div></div>
+    <div class="sitem"><svg class="icon" width="22" height="22" color="rgba(255,255,255,.45)"><use href="#i-mountain"/></svg><div class="sitem-txt"><strong>Peak District</strong>10 min drive</div></div>
+    <div class="sitem"><svg class="icon" width="22" height="22" color="rgba(255,255,255,.45)"><use href="#i-key"/></svg><div class="sitem-txt"><strong>Self Check-In</strong>Key safe</div></div>
+    <div class="sitem"><svg class="icon" width="22" height="22" color="rgba(255,255,255,.45)"><use href="#i-paw"/></svg><div class="sitem-txt"><strong>Dog Friendly</strong>1&ndash;2 dogs welcome</div></div>
+  </div>
+
+  <section class="pad">
+    <div class="wrap">
+      <div class="two-col">
+        <div class="img-stack">
+          <img class="img-main" src="https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?w=800&q=85" alt="Manor Cottage interior"/>
+          <img class="img-accent" src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&q=80" alt="Log fire"/>
+        </div>
+        <div>
+          <p class="lbl">The Cottage</p>
+          <h2 class="h2" style="margin-top:.5rem">A 300-year-old wing, <em>lovingly restored</em></h2>
+          <p class="body" style="margin-top:1rem">Nestled in quiet Hopton hamlet and overlooking Carsington Water, Manor Cottage is a Grade&nbsp;II listed 18th-century wing with original oak beams and a roaring log burner &mdash; blending period character with every modern comfort.</p>
+          <p class="body" style="margin-top:.8rem">A farmhouse kitchen, spacious oak-beamed living and dining areas, four en-suite bedrooms across three floors, and a patio with sweeping rural views make this the perfect base for any group.</p>
+          <div class="mini-grid">
+            <div class="mf"><svg class="icon" width="15" height="15"><use href="#i-flame"/></svg>Log burning fire</div>
+            <div class="mf"><svg class="icon" width="15" height="15"><use href="#i-utensils"/></svg>Farmhouse kitchen</div>
+            <div class="mf"><svg class="icon" width="15" height="15"><use href="#i-wifi"/></svg>Free high-speed Wi-Fi</div>
+            <div class="mf"><svg class="icon" width="15" height="15"><use href="#i-car"/></svg>3&ndash;4 car parking</div>
+            <div class="mf"><svg class="icon" width="15" height="15"><use href="#i-leaf"/></svg>Patio &amp; lake views</div>
+            <div class="mf"><svg class="icon" width="15" height="15"><use href="#i-paw"/></svg>Dogs welcome</div>
+          </div>
+          <button class="btn btn-amber" style="margin-top:1.8rem" onclick="go('cottage')">View All Details</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="teaser">
+    <div class="wrap">
+      <p class="lbl">Peak District</p>
+      <h2 class="h2" style="margin-top:.5rem;margin-bottom:.8rem">Adventure on every <em>doorstep</em></h2>
+      <p class="body" style="max-width:560px;margin-bottom:1.8rem">Carsington Water is steps away. Chatsworth, Dovedale, Cromford Mill and Bakewell are all within 30 minutes.</p>
+      <button class="btn btn-amber" onclick="go('explore')">See What&apos;s Nearby</button>
+    </div>
+  </div>
+
+  <section class="pad-sm">
+    <div class="wrap">
+      <p class="lbl">What Guests Say</p>
+      <h2 class="h2" style="margin-top:.5rem;margin-bottom:1.8rem">Loved by <em>246 guests</em></h2>
+      <div class="rev-grid">
+        <div class="revcard"><div class="rev-q">&ldquo;</div><p class="rev-txt">Absolutely stunning cottage. The beams and log fire give it such warmth. Three generations stayed and everyone had their own space &mdash; the views over Carsington Water were unforgettable.</p><div class="rev-auth">Sarah M.</div><div class="rev-date">October 2024</div></div>
+        <div class="revcard"><div class="rev-q">&ldquo;</div><p class="rev-txt">Perfect base for the Peak District. Walked Dovedale, cycled Carsington Water and drove to Chatsworth &mdash; all in one weekend. Libba is a superb host.</p><div class="rev-auth">James &amp; Fiona T.</div><div class="rev-date">August 2024</div></div>
+        <div class="revcard"><div class="rev-q">&ldquo;</div><p class="rev-txt">We brought our two dogs and they loved it as much as we did. Quiet village, great garden. We&apos;re already planning a return trip.</p><div class="rev-auth">Mark R.</div><div class="rev-date">July 2024</div></div>
+      </div>
+      <div style="text-align:center;margin-top:1.8rem"><button class="btn btn-amber" onclick="go('reviews')">Read All Reviews</button></div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="foot-inner">
+      <div class="foot-brand"><a href="#" class="logo" onclick="go('home');return false">Manor <em>Cottage</em></a><p>Grade&nbsp;II listed 18th-century retreat in Hopton village, overlooking Carsington Water in the Peak District, Derbyshire.</p></div>
+      <div class="fcol"><h4>Explore</h4><ul><li><a href="#" onclick="go('cottage');return false">The Cottage</a></li><li><a href="#" onclick="go('explore');return false">Attractions</a></li><li><a href="#" onclick="go('getting-here');return false">Getting Here</a></li><li><a href="#" onclick="go('host');return false">Your Host</a></li><li><a href="#" onclick="go('reviews');return false">Reviews</a></li></ul></div>
+      <div class="fcol"><h4>Reviews</h4><ul><li><a href="https://www.google.com/maps" target="_blank"><svg class="icon" width="13" height="13"><use href="#i-google"/></svg>Google Reviews</a></li><li><a href="https://www.tripadvisor.co.uk" target="_blank"><svg class="icon" width="13" height="13"><use href="#i-star"/></svg>TripAdvisor</a></li></ul></div>
+      <div class="fcol"><h4>Contact</h4><ul><li><a href="/cdn-cgi/l/email-protection#751d1019191a3518141b1a07161a01011412101d1a05011a1b5b161a5b001e"><svg class="icon" width="13" height="13"><use href="#i-mail"/></svg>Email Us</a></li><li><a href="#" onclick="go('book');return false"><svg class="icon" width="13" height="13"><use href="#i-book"/></svg>Book Now</a></li></ul></div>
+    </div>
+    <div class="foot-bottom"><span>&copy; 2025 Manor Cottage, Hopton, Derbyshire</span><span>Hosted by Libba &middot; Superhost &middot; &starf; 4.91</span></div>
+  </footer>
+</div>
+
+<!-- PAGE: COTTAGE -->
+<div class="page" id="page-cottage">
+  <div class="dark-hero">
+    <div class="wrap">
+      <p class="lbl lbl-inv">Accommodation</p>
+      <h2 class="h2 h2-inv" style="margin-top:.5rem">Four <em>en-suite</em> bedrooms</h2>
+      <p class="body body-inv" style="margin-top:.7rem;max-width:560px">Each bedroom has its own private bathroom, giving total privacy for families, groups and multi-generational stays. The house sleeps up to 8, with options for extra fold-up beds for children.</p>
+      <div class="rooms-grid">
+        <div class="rcard"><img src="https://images.unsplash.com/photo-1505693314120-0d443867891c?w=500&q=80" alt="King Room"/><div class="rcard-body"><div class="rname">The King Room</div><div class="rdetail">King-size bed &middot; En-suite with bath &amp; overbath shower &middot; Space for extra bed</div><span class="rtag">1st Floor</span></div></div>
+        <div class="rcard"><img src="https://images.unsplash.com/photo-1540518614846-7eded433c457?w=500&q=80" alt="Garden Room"/><div class="rcard-body"><div class="rname">The Garden Room</div><div class="rdetail">King-size or convertible twin &middot; En-suite shower &middot; Rural views</div><span class="rtag">1st Floor</span></div></div>
+        <div class="rcard"><img src="https://images.unsplash.com/photo-1560448204-603b3fc33ddc?w=500&q=80" alt="Double Room"/><div class="rcard-body"><div class="rname">The Double Room</div><div class="rdetail">Double bed &middot; En-suite shower &middot; Period beams &middot; Space for fold-up bed</div><span class="rtag">2nd Floor</span></div></div>
+        <div class="rcard"><img src="https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?w=500&q=80" alt="Twin Room"/><div class="rcard-body"><div class="rname">The Twin Room</div><div class="rdetail">Two single beds &middot; En-suite shower &middot; Exposed beamed ceiling</div><span class="rtag">2nd Floor</span></div></div>
+      </div>
+    </div>
+  </div>
+
+  <section class="pad">
+    <div class="wrap">
+      <p class="lbl">What&apos;s Included</p>
+      <h2 class="h2" style="margin-top:.5rem;margin-bottom:1.5rem">Everything you <em>need</em></h2>
+      <div class="amen-grid">
+        <div class="amen"><svg class="icon" width="18" height="18"><use href="#i-flame"/></svg>Log burner with logs provided</div>
+        <div class="amen"><svg class="icon" width="18" height="18"><use href="#i-utensils"/></svg>Farmhouse kitchen</div>
+        <div class="amen"><svg class="icon" width="18" height="18"><use href="#i-wifi"/></svg>High-speed Wi-Fi throughout</div>
+        <div class="amen"><svg class="icon" width="18" height="18"><use href="#i-tv"/></svg>Smart TV &amp; streaming</div>
+        <div class="amen"><svg class="icon" width="18" height="18"><use href="#i-utensils"/></svg>Dishwasher &amp; washing machine</div>
+        <div class="amen"><svg class="icon" width="18" height="18"><use href="#i-utensils"/></svg>Fridge/freezer &amp; microwave</div>
+        <div class="amen"><svg class="icon" width="18" height="18"><use href="#i-car"/></svg>Free parking (3&ndash;4 cars)</div>
+        <div class="amen"><svg class="icon" width="18" height="18"><use href="#i-zap"/></svg>EV charger (on request)</div>
+        <div class="amen"><svg class="icon" width="18" height="18"><use href="#i-bike"/></svg>Secure cycle storage</div>
+        <div class="amen"><svg class="icon" width="18" height="18"><use href="#i-leaf"/></svg>Patio with rural &amp; lake views</div>
+        <div class="amen"><svg class="icon" width="18" height="18"><use href="#i-key"/></svg>Self check-in via key safe</div>
+        <div class="amen"><svg class="icon" width="18" height="18"><use href="#i-paw"/></svg>Dog friendly (&pound;40/dog/stay)</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="div"></div>
+
+  <section class="pad">
+    <div class="wrap">
+      <p class="lbl">Photo Gallery</p>
+      <h2 class="h2" style="margin-top:.5rem">A glimpse <em>inside</em></h2>
+      <div class="gal">
+        <img class="gw" src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=800&q=80" alt="Kitchen"/>
+        <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=500&q=80" alt="Exterior"/>
+        <img src="https://images.unsplash.com/photo-1613977257363-707ba9348227?w=500&q=80" alt="Living room"/>
+        <img src="https://images.unsplash.com/photo-1507089947368-19c1da9775ae?w=500&q=80" alt="Views"/>
+        <img class="gw" src="https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=800&q=80" alt="Bedroom"/>
+        <img src="https://images.unsplash.com/photo-1588854337221-4cf9fa96059c?w=500&q=80" alt="Bathroom"/>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="foot-inner">
+      <div class="foot-brand"><a href="#" class="logo" onclick="go('home');return false">Manor <em>Cottage</em></a><p>Grade&nbsp;II listed retreat in Hopton village, Derbyshire.</p></div>
+      <div class="fcol"><h4>Navigate</h4><ul><li><a href="#" onclick="go('home');return false">Home</a></li><li><a href="#" onclick="go('explore');return false">Explore</a></li><li><a href="#" onclick="go('reviews');return false">Reviews</a></li><li><a href="#" onclick="go('book');return false">Book Now</a></li></ul></div>
+      <div class="fcol"><h4>Reviews</h4><ul><li><a href="https://www.google.com/maps" target="_blank"><svg class="icon" width="13" height="13"><use href="#i-google"/></svg>Google Reviews</a></li><li><a href="https://www.tripadvisor.co.uk" target="_blank"><svg class="icon" width="13" height="13"><use href="#i-star"/></svg>TripAdvisor</a></li></ul></div>
+      <div class="fcol"><h4>Contact</h4><ul><li><a href="/cdn-cgi/l/email-protection#49212c25252609242827263b2a263d3d282e2c2126393d2627672a26673c22"><svg class="icon" width="13" height="13"><use href="#i-mail"/></svg>Email Us</a></li></ul></div>
+    </div>
+    <div class="foot-bottom"><span>&copy; 2025 Manor Cottage, Hopton</span><span>Superhost &starf; 4.91</span></div>
+  </footer>
+</div>
+
+<!-- PAGE: EXPLORE -->
+<div class="page" id="page-explore">
+  <div class="dark-hero" style="padding-bottom:3.5rem">
+    <div class="wrap" style="padding-top:3.5rem">
+      <p class="lbl lbl-inv">The Peak District</p>
+      <h2 class="h2 h2-inv" style="margin-top:.5rem">Adventure on every <em>doorstep</em></h2>
+      <p class="body body-inv" style="margin-top:.7rem;max-width:560px">Whether you love walking, cycling, history or fine food &mdash; this corner of Derbyshire has it all. Manor Cottage sits right at the heart of it.</p>
+    </div>
+  </div>
+
+  <section class="pad">
+    <div class="wrap">
+      <p class="lbl">Highlights</p>
+      <h2 class="h2" style="margin-top:.5rem;margin-bottom:1.5rem">Must-see <em>attractions</em></h2>
+      <div class="act-grid">
+        <a class="acard" href="https://www.carsingtonwater.com" target="_blank" rel="noopener"><img src="https://images.unsplash.com/photo-1533130061792-64b345e4a833?w=700&q=85" alt="Carsington Water"/><div class="aov"><div class="acat">Water Sports &amp; Walking</div><div class="aname">Carsington Water</div><div class="adist">On your doorstep &middot; Sailing, cycling, windsurfing, canoeing</div><span class="avisit"><svg class="icon" width="11" height="11"><use href="#i-globe"/></svg>Visit website</span></div></a>
+        <a class="acard" href="https://www.chatsworth.org" target="_blank" rel="noopener"><img src="https://images.unsplash.com/photo-1564944406067-9eb9af32c98a?w=700&q=80" alt="Chatsworth"/><div class="aov"><div class="acat">Historic Estate</div><div class="aname">Chatsworth House</div><div class="adist">~25 mins &middot; Grand stately home &amp; gardens</div><span class="avisit"><svg class="icon" width="11" height="11"><use href="#i-globe"/></svg>Visit website</span></div></a>
+        <a class="acard" href="https://www.nationaltrust.org.uk/visit/peak-district-derbyshire/dovedale" target="_blank" rel="noopener"><img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=700&q=80" alt="Dovedale"/><div class="aov"><div class="acat">Walking &amp; Hiking</div><div class="aname">Dovedale &amp; Manifold Valley</div><div class="adist">~20 mins &middot; Spectacular gorges &amp; Thor&apos;s Cave</div><span class="avisit"><svg class="icon" width="11" height="11"><use href="#i-globe"/></svg>Visit website</span></div></a>
+        <a class="acard" href="https://www.visitpeakdistrict.com/inspire/towns-and-villages/bakewell-p680681" target="_blank" rel="noopener"><img src="https://images.unsplash.com/photo-1549490349-8643362247b5?w=700&q=80" alt="Bakewell"/><div class="aov"><div class="acat">Market Town</div><div class="aname">Bakewell &amp; Ashbourne</div><div class="adist">~20&ndash;25 mins &middot; Shops, caf&eacute;s &amp; famous tarts</div><span class="avisit"><svg class="icon" width="11" height="11"><use href="#i-globe"/></svg>Visit website</span></div></a>
+        <a class="acard" href="https://www.cromfordmills.org.uk" target="_blank" rel="noopener"><img src="https://images.unsplash.com/photo-1588880331179-bc9b93a8cb5e?w=700&q=80" alt="Cromford Mill"/><div class="aov"><div class="acat">UNESCO Heritage</div><div class="aname">Cromford Mill</div><div class="adist">~10 mins &middot; Arkwright&apos;s world-famous mill</div><span class="avisit"><svg class="icon" width="11" height="11"><use href="#i-globe"/></svg>Visit website</span></div></a>
+        <a class="acard" href="https://www.heightsofabraham.com" target="_blank" rel="noopener"><img src="https://images.unsplash.com/photo-1558452919-08ae4aea8e29?w=700&q=80" alt="Heights of Abraham"/><div class="aov"><div class="acat">Family Adventure</div><div class="aname">Heights of Abraham</div><div class="adist">~15 mins &middot; Cable car, caverns &amp; Matlock Bath</div><span class="avisit"><svg class="icon" width="11" height="11"><use href="#i-globe"/></svg>Visit website</span></div></a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="foot-inner">
+      <div class="foot-brand"><a href="#" class="logo" onclick="go('home');return false">Manor <em>Cottage</em></a><p>Grade&nbsp;II listed retreat in Hopton village, Derbyshire.</p></div>
+      <div class="fcol"><h4>Navigate</h4><ul><li><a href="#" onclick="go('home');return false">Home</a></li><li><a href="#" onclick="go('getting-here');return false">Getting Here</a></li><li><a href="#" onclick="go('reviews');return false">Reviews</a></li><li><a href="#" onclick="go('book');return false">Book Now</a></li></ul></div>
+      <div class="fcol"><h4>Reviews</h4><ul><li><a href="https://www.google.com/maps" target="_blank"><svg class="icon" width="13" height="13"><use href="#i-google"/></svg>Google Reviews</a></li><li><a href="https://www.tripadvisor.co.uk" target="_blank"><svg class="icon" width="13" height="13"><use href="#i-star"/></svg>TripAdvisor</a></li></ul></div>
+      <div class="fcol"><h4>Contact</h4><ul><li><a href="/cdn-cgi/l/email-protection#fb939e979794bb969a95948998948f8f9a9c9e93948b8f9495d59894d58e90"><svg class="icon" width="13" height="13"><use href="#i-mail"/></svg>Email Us</a></li></ul></div>
+    </div>
+    <div class="foot-bottom"><span>&copy; 2025 Manor Cottage, Hopton</span><span>Superhost &starf; 4.91</span></div>
+  </footer>
+</div>
+
+<!-- PAGE: GETTING HERE -->
+<div class="page" id="page-getting-here">
+  <div class="dark-hero" style="padding-bottom:3.5rem">
+    <div class="wrap" style="padding-top:3.5rem">
+      <p class="lbl lbl-inv">Directions &amp; Transport</p>
+      <h2 class="h2 h2-inv" style="margin-top:.5rem">Getting to <em>Manor Cottage</em></h2>
+      <p class="body body-inv" style="margin-top:.7rem;max-width:540px">Hopton village sits at the southern edge of the Peak District, within easy reach of major road and rail connections from across the UK.</p>
+    </div>
+  </div>
+
+  <section class="pad">
+    <div class="wrap">
+      <div class="loc-grid">
+        <div>
+          <div class="map-box">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d9731.06!2d-1.5627!3d53.0850!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4879e2b6e9d55db3%3A0x8a40bbf5c7a6bc00!2sHopton%2C%20Wirksworth%2C%20Matlock%20DE4%204DF!5e0!3m2!1sen!2suk!4v1711000000000" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Manor Cottage map"></iframe>
+          </div>
+          <p style="font-size:.77rem;color:var(--light);margin-top:.6rem;display:flex;align-items:center;gap:.4rem"><svg class="icon" width="13" height="13"><use href="#i-pin"/></svg>Hopton, Wirksworth, Derbyshire &middot; DE4 4DF</p>
+
+          <div style="margin-top:2rem">
+            <p class="lbl" style="margin-bottom:.8rem">By Road</p>
+            <div class="tcard">
+              <div class="tcard-title"><svg class="icon" width="15" height="15"><use href="#i-car"/></svg>Driving Directions</div>
+              <p><strong>From the South/M1:</strong> Take the A38 north to Ripley, then the B6013 through Ambergate and Whatstandwell, following signs for Wirksworth/Carsington Water. Turn into Hopton village off the B5035.<br><br><strong>From the North/Manchester:</strong> A6 south through Buxton and Bakewell to Matlock, then the B5023 towards Wirksworth. Hopton is signed from the B5035.</p>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <p class="lbl" style="margin-bottom:.8rem">Distances</p>
+          <p class="dcat">On the Doorstep</p>
+          <table class="dtable"><tr><td><span style="display:flex;align-items:center;gap:.5rem"><svg class="icon" width="14" height="14"><use href="#i-leaf"/></svg>Carsington Water</span></td><td>2 mins</td></tr><tr><td><span style="display:flex;align-items:center;gap:.5rem"><svg class="icon" width="14" height="14"><use href="#i-pin"/></svg>Wirksworth town</span></td><td>5 mins</td></tr></table>
+          <p class="dcat">Short Drive</p>
+          <table class="dtable">
+            <tr><td>Cromford Mill (UNESCO)</td><td>10 mins</td></tr>
+            <tr><td>Peak District NP border</td><td>10 mins</td></tr>
+            <tr><td>Heights of Abraham</td><td>15 mins</td></tr>
+            <tr><td>Dovedale</td><td>20 mins</td></tr>
+            <tr><td>Bakewell</td><td>25 mins</td></tr>
+            <tr><td>Chatsworth House</td><td>25 mins</td></tr>
+            <tr><td>Alton Towers</td><td>30 mins</td></tr>
+          </table>
+
+          <p class="lbl" style="margin-top:2rem;margin-bottom:.8rem">By Rail</p>
+          <div class="transport-cards">
+            <div class="tcard">
+              <div class="tcard-title"><svg class="icon" width="15" height="15"><use href="#i-train"/></svg>Cromford Station</div>
+              <p>East Midlands Railway (Sheffield&ndash;Derby line). Approx. <strong>8 min drive</strong> from the cottage. Direct trains from Derby (~35 min) and Nottingham (~50 min).</p>
+            </div>
+            <div class="tcard">
+              <div class="tcard-title"><svg class="icon" width="15" height="15"><use href="#i-train"/></svg>Matlock Station</div>
+              <p>East Midlands Railway terminus. Approx. <strong>15 min drive</strong>. Direct services from Derby (~45 min). Taxi and bus connections available to Wirksworth.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="foot-inner">
+      <div class="foot-brand"><a href="#" class="logo" onclick="go('home');return false">Manor <em>Cottage</em></a><p>Grade&nbsp;II listed retreat in Hopton village, Derbyshire.</p></div>
+      <div class="fcol"><h4>Navigate</h4><ul><li><a href="#" onclick="go('home');return false">Home</a></li><li><a href="#" onclick="go('explore');return false">Explore</a></li><li><a href="#" onclick="go('reviews');return false">Reviews</a></li><li><a href="#" onclick="go('book');return false">Book Now</a></li></ul></div>
+      <div class="fcol"><h4>Reviews</h4><ul><li><a href="https://www.google.com/maps" target="_blank"><svg class="icon" width="13" height="13"><use href="#i-google"/></svg>Google Reviews</a></li><li><a href="https://www.tripadvisor.co.uk" target="_blank"><svg class="icon" width="13" height="13"><use href="#i-star"/></svg>TripAdvisor</a></li></ul></div>
+      <div class="fcol"><h4>Contact</h4><ul><li><a href="/cdn-cgi/l/email-protection#e78f828b8b88a78a86898895848893938680828f8897938889c98488c9928c"><svg class="icon" width="13" height="13"><use href="#i-mail"/></svg>Email Us</a></li></ul></div>
+    </div>
+    <div class="foot-bottom"><span>&copy; 2025 Manor Cottage, Hopton</span><span>Superhost &starf; 4.91</span></div>
+  </footer>
+</div>
+
+<!-- PAGE: HOST -->
+<div class="page" id="page-host">
+  <div class="host-hero">
+    <div class="wrap">
+      <div class="host-layout">
+        <div class="host-photo-wrap">
+          <img class="host-photo" src="https://a0.muscache.com/im/pictures/user/User/original/4492dd38-f27e-4cd1-8f39-f083d71c6ef6.jpeg" alt="Libba" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+          <div class="host-photo-fallback" style="display:none">L</div>
+          <div class="host-badge" style="margin-bottom:.8rem"><svg class="icon" width="13" height="13"><use href="#i-award"/></svg>Superhost</div>
+          <div style="font-size:.82rem;color:rgba(255,255,255,.5)">Member since 2016</div>
+        </div>
+        <div>
+          <p class="lbl lbl-inv">Your Host</p>
+          <h2 class="h2 h2-inv" style="margin-top:.5rem">Meet <em>Libba</em></h2>
+          <p class="host-bio" style="margin-top:1rem">I&rsquo;ve been welcoming guests to Manor Cottage since 2016 and I love sharing this part of the world. The Peak District is a truly magical place &mdash; full of history, spectacular scenery and wonderful people. Whether you&rsquo;re exploring Chatsworth, walking Dovedale or simply relaxing by the log fire, I want your stay to be truly special. I&rsquo;m always on hand if you need local recommendations or have any questions.</p>
+          <div class="host-info-list" style="margin-top:1.2rem">
+            <div class="hinfo"><svg class="icon" width="15" height="15"><use href="#i-pin"/></svg>Lives in Matlock, Derbyshire</div>
+            <div class="hinfo"><svg class="icon" width="15" height="15"><use href="#i-globe"/></svg>Speaks English and French</div>
+            <div class="hinfo"><svg class="icon" width="15" height="15"><use href="#i-clock"/></svg>Response rate 100% &middot; Typically replies within a few hours</div>
+            <div class="hinfo"><svg class="icon" width="15" height="15"><use href="#i-check"/></svg>Identity verified</div>
+          </div>
+          <div class="host-stats">
+            <div class="hstat"><div class="hstat-num">303</div><div class="hstat-lbl">Reviews</div></div>
+            <div class="hstat"><div class="hstat-num">4.9</div><div class="hstat-lbl">Rating</div></div>
+            <div class="hstat"><div class="hstat-num">9+</div><div class="hstat-lbl">Years hosting</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <section class="pad">
+    <div class="wrap" style="max-width:760px">
+      <p class="lbl">About the Cottage</p>
+      <h2 class="h2" style="margin-top:.5rem;margin-bottom:1.2rem">Why Libba <em>loves</em> Manor Cottage</h2>
+      <p class="body">&ldquo;Manor Cottage is a very special place. It&rsquo;s been in the family for years and I&rsquo;ve taken great care to restore it sensitively &mdash; keeping the original oak beams, the wonderful log-burning fireplace and the authentic period character, while bringing it fully up to modern standards. I genuinely believe there&rsquo;s nowhere better to experience the southern Peak District. Carsington Water is right on the doorstep, Chatsworth is a short drive, and the walking from the door is exceptional.&rdquo;</p>
+      <p class="body" style="margin-top:1rem">&ldquo;I welcome families, groups of friends and multi-generational parties. Well-behaved dogs are always welcome too &mdash; there&rsquo;s plenty of outdoor space and wonderful walks straight from the cottage.&rdquo;</p>
+      <div style="background:var(--cream2);border-left:3px solid var(--amber);padding:1.2rem 1.5rem;border-radius:0 var(--r) var(--r) 0;margin-top:2rem">
+        <p style="font-size:.82rem;color:var(--mid);line-height:1.6"><strong style="color:var(--green)">To get in touch with Libba:</strong><br>Email <a href="/cdn-cgi/l/email-protection#ec8489808083ac818d82839e8f8398988d8b8984839c988382c28f83c29987" style="color:var(--amber)"><span class="__cf_email__" data-cfemail="6b030e0707042b060a05041908041f1f0a0c0e03041b1f0405450804451e00">[email&#160;protected]</span></a> with your query or booking request. Libba typically responds within a few hours.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="foot-inner">
+      <div class="foot-brand"><a href="#" class="logo" onclick="go('home');return false">Manor <em>Cottage</em></a><p>Grade&nbsp;II listed retreat in Hopton village, Derbyshire.</p></div>
+      <div class="fcol"><h4>Navigate</h4><ul><li><a href="#" onclick="go('home');return false">Home</a></li><li><a href="#" onclick="go('cottage');return false">The Cottage</a></li><li><a href="#" onclick="go('reviews');return false">Reviews</a></li><li><a href="#" onclick="go('book');return false">Book Now</a></li></ul></div>
+      <div class="fcol"><h4>Reviews</h4><ul><li><a href="https://www.google.com/maps" target="_blank"><svg class="icon" width="13" height="13"><use href="#i-google"/></svg>Google Reviews</a></li><li><a href="https://www.tripadvisor.co.uk" target="_blank"><svg class="icon" width="13" height="13"><use href="#i-star"/></svg>TripAdvisor</a></li></ul></div>
+      <div class="fcol"><h4>Contact</h4><ul><li><a href="/cdn-cgi/l/email-protection#b6ded3dadad9f6dbd7d8d9c4d5d9c2c2d7d1d3ded9c6c2d9d898d5d998c3dd"><svg class="icon" width="13" height="13"><use href="#i-mail"/></svg>Email Us</a></li></ul></div>
+    </div>
+    <div class="foot-bottom"><span>&copy; 2025 Manor Cottage, Hopton</span><span>Superhost &starf; 4.91</span></div>
+  </footer>
+</div>
+
+<!-- PAGE: REVIEWS -->
+<div class="page" id="page-reviews">
+  <div class="rev-hero">
+    <div class="wrap">
+      <p class="lbl lbl-inv">Guest Reviews</p>
+      <h2 class="h2 h2-inv" style="margin-top:.5rem">Loved by every <em>guest</em></h2>
+      <div class="rating-row">
+        <div class="big-num">4.91</div>
+        <div><div style="display:flex;gap:3px;margin-bottom:.3rem"><svg class="icon" width="16" height="16" color="var(--amber2)"><use href="#i-star-fill"/></svg><svg class="icon" width="16" height="16" color="var(--amber2)"><use href="#i-star-fill"/></svg><svg class="icon" width="16" height="16" color="var(--amber2)"><use href="#i-star-fill"/></svg><svg class="icon" width="16" height="16" color="var(--amber2)"><use href="#i-star-fill"/></svg><svg class="icon" width="16" height="16" color="var(--amber2)"><use href="#i-star-fill"/></svg></div><div style="font-size:.84rem;color:rgba(255,255,255,.55)">246 verified guest reviews</div><div style="font-size:.8rem;color:rgba(255,255,255,.4)">Top 5% of eligible listings</div></div>
+      </div>
+      <div class="rating-bars">
+        <div class="rbar"><div class="rbar-n">4.9</div><div class="rbar-l">Cleanliness</div></div>
+        <div class="rbar"><div class="rbar-n">4.9</div><div class="rbar-l">Accuracy</div></div>
+        <div class="rbar"><div class="rbar-n">4.9</div><div class="rbar-l">Check-in</div></div>
+        <div class="rbar"><div class="rbar-n">4.9</div><div class="rbar-l">Communication</div></div>
+        <div class="rbar"><div class="rbar-n">4.9</div><div class="rbar-l">Location</div></div>
+        <div class="rbar"><div class="rbar-n">4.8</div><div class="rbar-l">Value</div></div>
+      </div>
+    </div>
+  </div>
+
+  <section class="pad">
+    <div class="wrap">
+      <p class="lbl">What Guests Say</p>
+      <h2 class="h2" style="margin-top:.5rem;margin-bottom:1.5rem">Recent <em>reviews</em></h2>
+      <div class="rev-grid">
+        <div class="revcard"><div class="rev-stars"><svg class="icon" width="13" height="13" color="var(--amber2)"><use href="#i-star-fill"/></svg><svg class="icon" width="13" height="13" color="var(--amber2)"><use href="#i-star-fill"/></svg><svg class="icon" width="13" height="13" color="var(--amber2)"><use href="#i-star-fill"/></svg><svg class="icon" width="13" height="13" color="var(--amber2)"><use href="#i-star-fill"/></svg><svg class="icon" width="13" height="13" color="var(--amber2)"><use href="#i-star-fill"/></svg></div><div class="rev-q">&ldquo;</div><p class="rev-txt">Absolutely stunning cottage. The beams and log fire give it such warmth and character. Three generations staying and everyone had their own space. The view over Carsington Water at sunrise was unforgettable.</p><div class="rev-auth">Sarah M.</div><div class="rev-date">October 2024</div></div>
+        <div class="revcard"><div class="rev-stars"><svg class="icon" width="13" height="13" color="var(--amber2)"><use href="#i-star-fill"/></svg><svg class="icon" width="13" height="13" color="var(--amber2)"><use href="#i-star-fill"/></svg><svg class="icon" width="13" height="13" color="var(--amber2)"><use href="#i-star-fill"/></svg><svg class="icon" width="13" height="13" color="var(--amber2)"><use href="#i-star-fill"/></svg><svg class="icon" width="13" height="13" color="var(--amber2)"><use href="#i-star-fill"/></svg></div><div class="rev-q">&ldquo;</div><p class="rev-txt">Perfect base for the Peak District. Walked to Dovedale, cycled Carsington Water, and drove to Chatsworth all in the same weekend. Cosy, immaculate and Libba is a superb host.</p><div class="rev-auth">James &amp; Fiona T.</div><div class="rev-date">August 2024</div></div>
+        <div class="revcard"><div class="rev-stars"><svg class="icon" width="13" height="13" color="var(--amber2)"><use href="#i-star-fill"/></svg><svg class="icon" width="13" height="13" color="var(--amber2)"><use href="#i-star-fill"/></svg><svg class="icon" width="13" height="13" color="var(--amber2)"><use href="#i-star-fill"/></svg><svg class="icon" width="13" height="13" color="var(--amber2)"><use href="#i-star-fill"/></svg><svg class="icon" width="13" height="13" color="var(--amber2)"><use href="#i-star-fill"/></svg></div><div class="rev-q">&ldquo;</div><p class="rev-txt">We brought our two labs and they loved it as much as we did. Plenty of room, great garden and the village is quiet and lovely. Already looking at dates to return.</p><div class="rev-auth">Mark R.</div><div class="rev-date">July 2024</div></div>
+        <div class="revcard"><div class="rev-stars"><svg class="icon" width="13" height="13" color="var(--amber2)"><use href="#i-star-fill"/></svg><svg class="icon" width="13" height="13" color="var(--amber2)"><use href="#i-star-fill"/></svg><svg class="icon" width="13" height="13" color="var(--amber2)"><use href="#i-star-fill"/></svg><svg class="icon" width="13" height="13" color="var(--amber2)"><use href="#i-star-fill"/></svg><svg class="icon" width="13" height="13" color="var(--amber2)"><use href="#i-star-fill"/></svg></div><div class="rev-q">&ldquo;</div><p class="rev-txt">One of the best cottages we&rsquo;ve stayed in. The restoration keeps all the character &mdash; low beams, wonky walls, original fireplaces &mdash; while making it extremely comfortable.</p><div class="rev-auth">Catherine W.</div><div class="rev-date">June 2024</div></div>
+        <div class="revcard"><div class="rev-stars"><svg class="icon" width="13" height="13" color="var(--amber2)"><use href="#i-star-fill"/></svg><svg class="icon" width="13" height="13" color="var(--amber2)"><use href="#i-star-fill"/></svg><svg class="icon" width="13" height="13" color="var(--amber2)"><use href="#i-star-fill"/></svg><svg class="icon" width="13" height="13" color="var(--amber2)"><use href="#i-star-fill"/></svg><svg class="icon" width="13" height="13" color="var(--amber2)"><use href="#i-star-fill"/></svg></div><div class="rev-q">&ldquo;</div><p class="rev-txt">Four families with children &mdash; the cottage handled all of us. Four bathrooms is such a luxury. The kitchen is well-stocked and Carsington Water is brilliant for a full day out.</p><div class="rev-auth">The Hendersons</div><div class="rev-date">May 2024</div></div>
+        <div class="revcard"><div class="rev-stars"><svg class="icon" width="13" height="13" color="var(--amber2)"><use href="#i-star-fill"/></svg><svg class="icon" width="13" height="13" color="var(--amber2)"><use href="#i-star-fill"/></svg><svg class="icon" width="13" height="13" color="var(--amber2)"><use href="#i-star-fill"/></svg><svg class="icon" width="13" height="13" color="var(--amber2)"><use href="#i-star-fill"/></svg><svg class="icon" width="13" height="13" color="var(--stone2)"><use href="#i-star-fill"/></svg></div><div class="rev-q">&ldquo;</div><p class="rev-txt">Excellent for walkers &mdash; we did a different route every day without the car. Full of charm and very well equipped. Libba was responsive and helpful throughout.</p><div class="rev-auth">David &amp; Ros K.</div><div class="rev-date">April 2024</div></div>
+      </div>
+      <div style="text-align:center;margin-top:2.5rem;background:var(--cream2);border-radius:var(--r);padding:2rem">
+        <p style="font-size:.9rem;color:var(--mid);margin-bottom:1.2rem">Leave us a review on one of these platforms</p>
+        <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap">
+          <a href="https://www.google.com/maps" target="_blank" class="btn btn-dark"><svg class="icon" width="15" height="15"><use href="#i-google"/></svg>Google Reviews</a>
+          <a href="https://www.tripadvisor.co.uk" target="_blank" class="btn btn-dark"><svg class="icon" width="15" height="15"><use href="#i-star"/></svg>TripAdvisor</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="foot-inner">
+      <div class="foot-brand"><a href="#" class="logo" onclick="go('home');return false">Manor <em>Cottage</em></a><p>Grade&nbsp;II listed retreat in Hopton village, Derbyshire.</p></div>
+      <div class="fcol"><h4>Navigate</h4><ul><li><a href="#" onclick="go('home');return false">Home</a></li><li><a href="#" onclick="go('cottage');return false">The Cottage</a></li><li><a href="#" onclick="go('explore');return false">Explore</a></li><li><a href="#" onclick="go('book');return false">Book Now</a></li></ul></div>
+      <div class="fcol"><h4>Reviews</h4><ul><li><a href="https://www.google.com/maps" target="_blank"><svg class="icon" width="13" height="13"><use href="#i-google"/></svg>Google Reviews</a></li><li><a href="https://www.tripadvisor.co.uk" target="_blank"><svg class="icon" width="13" height="13"><use href="#i-star"/></svg>TripAdvisor</a></li></ul></div>
+      <div class="fcol"><h4>Contact</h4><ul><li><a href="/cdn-cgi/l/email-protection#d4bcb1b8b8bb94b9b5babba6b7bba0a0b5b3b1bcbba4a0bbbafab7bbfaa1bf"><svg class="icon" width="13" height="13"><use href="#i-mail"/></svg>Email Us</a></li></ul></div>
+    </div>
+    <div class="foot-bottom"><span>&copy; 2025 Manor Cottage, Hopton</span><span>Superhost &starf; 4.91</span></div>
+  </footer>
+</div>
+
+<!-- PAGE: BOOK -->
+<div class="page" id="page-book">
+  <section class="pad">
+    <div class="wrap">
+      <p class="lbl">Reserve Your Stay</p>
+      <h2 class="h2" style="margin-top:.5rem;margin-bottom:1.5rem">Check <em>availability</em></h2>
+      <div class="book-card">
+        <div class="book-head"><h3 id="book-prop-name">Manor Cottage, Hopton</h3><div class="ptag"><strong id="book-price">From &pound;200</strong>per night</div></div>
+        <div class="book-body">
+          <div class="frow"><div class="fg"><label>Check-in Date</label><input type="date" id="ci" onchange="calc()"/></div><div class="fg"><label>Check-out Date</label><input type="date" id="co" onchange="calc()"/></div></div>
+          <div class="frow frow3"><div class="fg"><label>Guests</label><select id="guests" onchange="calc()"><option value="2">2 guests</option><option value="4">4 guests</option><option value="6">6 guests</option><option value="8" selected>8 guests</option></select></div><div class="fg"><label>Your Name</label><input type="text" id="gname" placeholder="Full name"/></div><div class="fg"><label>Email</label><input type="email" id="gemail" placeholder="your@email.com"/></div></div>
+          <div class="fg" style="margin-bottom:1.2rem"><label>Message (optional)</label><textarea id="gmsg" rows="3" placeholder="Any questions or special requests&hellip;"></textarea></div>
+          <div class="extras">
+            <label class="xrow"><input type="checkbox" id="dog1" onchange="calc()">1 Dog (+&pound;40)</label>
+            <label class="xrow"><input type="checkbox" id="dog2" onchange="calc()">2nd Dog (+&pound;40)</label>
+            <label class="xrow"><input type="checkbox" id="ev">EV Charging (request)</label>
+            <label class="xrow"><input type="checkbox" id="xbed">Extra child bed (+&pound;20/night)</label>
+          </div>
+          <div class="summary" id="summary">
+            <div class="srow"><span>Nightly rate</span><span id="s-rate">&mdash;</span></div>
+            <div class="srow"><span id="s-nl">Nights</span><span id="s-nights">&mdash;</span></div>
+            <div class="srow"><span>Cleaning fee</span><span id="s-clean">&pound;80</span></div>
+            <div class="srow" id="s-dog-r" style="display:none"><span>Dog supplement</span><span id="s-dog">&mdash;</span></div>
+            <div class="srow"><span><strong>Estimated total</strong></span><span id="s-total"><strong>&mdash;</strong></span></div>
+          </div>
+          <button class="btn-full" onclick="submitBook()">Send Booking Request</button>
+          <p class="book-note">Check-in from 4pm &middot; Check-out by 10am &middot; No payment until confirmed</p>
+        </div>
+      </div>
+
+      <div style="margin-top:2.5rem;max-width:760px;margin-left:auto;margin-right:auto">
+        <p class="lbl">House Rules</p>
+        <h3 class="h3" style="color:var(--green);margin-top:.5rem;margin-bottom:1.2rem">Good to <em>know</em></h3>
+        <div class="rules">
+          <div class="rule"><svg class="icon" width="16" height="16"><use href="#i-clock"/></svg><div><strong>Check-in</strong><br>4:00 pm &ndash; 10:00 pm</div></div>
+          <div class="rule"><svg class="icon" width="16" height="16"><use href="#i-clock"/></svg><div><strong>Check-out</strong><br>Before 10:00 am</div></div>
+          <div class="rule"><svg class="icon" width="16" height="16"><use href="#i-users"/></svg><div><strong>Maximum guests</strong><br>8 guests</div></div>
+          <div class="rule"><svg class="icon" width="16" height="16"><use href="#i-paw"/></svg><div><strong>Pets</strong><br>1&ndash;2 dogs, &pound;40/dog, kept downstairs</div></div>
+          <div class="rule"><svg class="icon" width="16" height="16"><use href="#i-nosmoke"/></svg><div><strong>No smoking</strong><br>Strictly no smoking inside</div></div>
+          <div class="rule"><svg class="icon" width="16" height="16"><use href="#i-key"/></svg><div><strong>Self check-in</strong><br>Key safe &mdash; code sent on booking</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="foot-inner">
+      <div class="foot-brand"><a href="#" class="logo" onclick="go('home');return false">Manor <em>Cottage</em></a><p>Grade&nbsp;II listed retreat in Hopton village, Derbyshire.</p></div>
+      <div class="fcol"><h4>Navigate</h4><ul><li><a href="#" onclick="go('home');return false">Home</a></li><li><a href="#" onclick="go('cottage');return false">The Cottage</a></li><li><a href="#" onclick="go('explore');return false">Explore</a></li><li><a href="#" onclick="go('reviews');return false">Reviews</a></li></ul></div>
+      <div class="fcol"><h4>Reviews</h4><ul><li><a href="https://www.google.com/maps" target="_blank"><svg class="icon" width="13" height="13"><use href="#i-google"/></svg>Google Reviews</a></li><li><a href="https://www.tripadvisor.co.uk" target="_blank"><svg class="icon" width="13" height="13"><use href="#i-star"/></svg>TripAdvisor</a></li></ul></div>
+      <div class="fcol"><h4>Contact</h4><ul><li><a href="/cdn-cgi/l/email-protection#c9a1aca5a5a689a4a8a7a6bbaaa6bdbda8aeaca1a6b9bda6a7e7aaa6e7bca2"><svg class="icon" width="13" height="13"><use href="#i-mail"/></svg>Email Us</a></li></ul></div>
+    </div>
+    <div class="foot-bottom"><span>&copy; 2025 Manor Cottage, Hopton</span><span>Superhost &starf; 4.91</span></div>
+  </footer>
+</div>
+
+<!-- PAGE: SETTINGS -->
+<div class="page" id="page-settings">
+  <section class="pad">
+    <div class="wrap">
+      <div class="settings-wrap">
+        <p class="lbl">Admin</p>
+        <h2 class="h2" style="margin-top:.5rem;margin-bottom:.5rem">Site <em>Settings</em></h2>
+        <p class="body" style="margin-bottom:.5rem">Update your property details, pricing and contact info below. Changes are saved to your browser and applied instantly to the site.</p>
+        <div class="save-bar">
+          <button class="btn btn-amber" onclick="saveSettings()">Save All Changes</button>
+          <button class="btn" style="border:1px solid var(--stone);color:var(--mid)" onclick="resetSettings()">Reset to Defaults</button>
+          <span class="save-status" id="save-status">&#10003; Changes saved successfully</span>
+        </div>
+
+        <div class="settings-grid">
+          <!-- Property -->
+          <div class="settings-card">
+            <div class="settings-card-head"><svg class="icon" width="15" height="15"><use href="#i-home"/></svg><h4>Property Details</h4></div>
+            <div class="settings-card-body">
+              <div class="sfg"><label>Property Name</label><input type="text" id="s-propname" value="Manor Cottage"/></div>
+              <div class="sfg"><label>Tagline (Hero heading)</label><input type="text" id="s-tagline" value="Where history meets the hills"/></div>
+              <div class="sfg"><label>Location Subtitle</label><input type="text" id="s-locsub" value="Hopton Village &middot; Derbyshire Peak District"/></div>
+              <div class="sfg"><label>Max Guests</label><input type="number" id="s-maxguests" value="8" min="1" max="20"/></div>
+            </div>
+          </div>
+
+          <!-- Pricing -->
+          <div class="settings-card">
+            <div class="settings-card-head"><svg class="icon" width="15" height="15"><use href="#i-star"/></svg><h4>Pricing</h4></div>
+            <div class="settings-card-body">
+              <div class="sfg"><label>Nightly Rate (&pound;)</label><input type="number" id="s-rate" value="200" min="0"/></div>
+              <div class="sfg"><label>Cleaning Fee (&pound;)</label><input type="number" id="s-clean" value="80" min="0"/></div>
+              <div class="sfg"><label>Dog Supplement (&pound;/dog)</label><input type="number" id="s-dogfee" value="40" min="0"/></div>
+              <div class="sfg"><label>Extra Child Bed (&pound;/night)</label><input type="number" id="s-bedfee" value="20" min="0"/></div>
+            </div>
+          </div>
+
+          <!-- Policies -->
+          <div class="settings-card">
+            <div class="settings-card-head"><svg class="icon" width="15" height="15"><use href="#i-clock"/></svg><h4>Policies</h4></div>
+            <div class="settings-card-body">
+              <div class="sfg"><label>Check-in Time</label><input type="text" id="s-checkin" value="4:00 pm &ndash; 10:00 pm"/></div>
+              <div class="sfg"><label>Check-out Time</label><input type="text" id="s-checkout" value="Before 10:00 am"/></div>
+              <div class="sfg"><label>Min Stay (nights)</label><input type="number" id="s-minstay" value="2" min="1"/></div>
+              <div class="sfg"><label>Max Dogs Allowed</label><select id="s-maxdogs"><option value="0">No dogs</option><option value="1">1 dog</option><option value="2" selected>2 dogs</option></select></div>
+            </div>
+          </div>
+
+          <!-- Contact -->
+          <div class="settings-card">
+            <div class="settings-card-head"><svg class="icon" width="15" height="15"><use href="#i-mail"/></svg><h4>Contact Details</h4></div>
+            <div class="settings-card-body">
+              <div class="sfg"><label>Host Name</label><input type="text" id="s-hostname" value="Libba"/></div>
+              <div class="sfg"><label>Email Address</label><input type="email" id="s-email" value="hello@manorcottagehopton.co.uk"/></div>
+              <div class="sfg"><label>Google Reviews URL</label><input type="url" id="s-googleurl" placeholder="https://g.page/your-listing/review"/></div>
+              <div class="sfg"><label>TripAdvisor URL</label><input type="url" id="s-taurl" placeholder="https://www.tripadvisor.co.uk/..."/></div>
+            </div>
+          </div>
+
+          <!-- Image Manager -->
+          <div class="settings-card" style="grid-column:1/-1">
+            <div class="settings-card-head"><svg class="icon" width="15" height="15"><use href="#i-leaf"/></svg><h4>Image Manager</h4></div>
+            <div class="settings-card-body">
+              <p style="font-size:.82rem;color:var(--mid);margin-bottom:1.2rem">Add, replace or remove images for each section of the site. Paste a URL or upload a file directly. Changes apply immediately.</p>
+
+              <div class="img-section-tabs">
+                <button class="img-tab active" onclick="switchImgTab('hero',this)">Hero Background</button>
+                <button class="img-tab" onclick="switchImgTab('gallery',this)">Gallery (Cottage tab)</button>
+                <button class="img-tab" onclick="switchImgTab('room1',this)">Room 1 — King</button>
+                <button class="img-tab" onclick="switchImgTab('room2',this)">Room 2 — Garden</button>
+                <button class="img-tab" onclick="switchImgTab('room3',this)">Room 3 — Double</button>
+                <button class="img-tab" onclick="switchImgTab('room4',this)">Room 4 — Twin</button>
+              </div>
+
+              <!-- Hero -->
+              <div class="img-panel active" id="ip-hero">
+                <p style="font-size:.8rem;color:var(--mid);margin-bottom:.8rem">This is the full-screen background image on the homepage.</p>
+                <div id="hero-preview" class="img-grid-preview"></div>
+                <label class="img-upload-area" id="hero-drop">
+                  <input type="file" accept="image/*" onchange="handleFileUpload(event,'hero')"/>
+                  <span class="img-upload-label">
+                    <svg class="icon" width="22" height="22"><use href="#i-leaf"/></svg>
+                    <strong>Click to upload</strong> or drag &amp; drop an image file
+                  </span>
+                </label>
+                <div class="img-add-row">
+                  <div class="sfg"><label>Or paste an image URL</label><input type="url" id="hero-url-in" placeholder="https://..." /></div>
+                  <button class="btn btn-amber" onclick="addImgUrl('hero')">Add</button>
+                </div>
+                <p class="img-note">Recommended: landscape image, at least 1800px wide. Free sources: <a href="https://unsplash.com" target="_blank" style="color:var(--amber)">Unsplash</a> or upload your own cottage photos.</p>
+              </div>
+
+              <!-- Gallery -->
+              <div class="img-panel" id="ip-gallery">
+                <p style="font-size:.8rem;color:var(--mid);margin-bottom:.8rem">These images appear in the photo gallery on The Cottage tab. Add up to 8 images — the first two display wider.</p>
+                <div id="gallery-preview" class="img-grid-preview"></div>
+                <label class="img-upload-area" id="gallery-drop">
+                  <input type="file" accept="image/*" multiple onchange="handleFileUpload(event,'gallery')"/>
+                  <span class="img-upload-label">
+                    <svg class="icon" width="22" height="22"><use href="#i-leaf"/></svg>
+                    <strong>Click to upload</strong> or drag &amp; drop (multiple files OK)
+                  </span>
+                </label>
+                <div class="img-add-row">
+                  <div class="sfg"><label>Or paste an image URL</label><input type="url" id="gallery-url-in" placeholder="https://..."/></div>
+                  <button class="btn btn-amber" onclick="addImgUrl('gallery')">Add</button>
+                </div>
+              </div>
+
+              <!-- Rooms -->
+              <div class="img-panel" id="ip-room1">
+                <p style="font-size:.8rem;color:var(--mid);margin-bottom:.8rem">Photo for <strong>The King Room</strong> shown on The Cottage tab.</p>
+                <div id="room1-preview" class="img-grid-preview"></div>
+                <label class="img-upload-area"><input type="file" accept="image/*" onchange="handleFileUpload(event,'room1')"/><span class="img-upload-label"><svg class="icon" width="22" height="22"><use href="#i-leaf"/></svg><strong>Click to upload</strong> a bedroom photo</span></label>
+                <div class="img-add-row"><div class="sfg"><label>Or paste URL</label><input type="url" id="room1-url-in" placeholder="https://..."/></div><button class="btn btn-amber" onclick="addImgUrl('room1')">Add</button></div>
+              </div>
+              <div class="img-panel" id="ip-room2">
+                <p style="font-size:.8rem;color:var(--mid);margin-bottom:.8rem">Photo for <strong>The Garden Room</strong>.</p>
+                <div id="room2-preview" class="img-grid-preview"></div>
+                <label class="img-upload-area"><input type="file" accept="image/*" onchange="handleFileUpload(event,'room2')"/><span class="img-upload-label"><svg class="icon" width="22" height="22"><use href="#i-leaf"/></svg><strong>Click to upload</strong></span></label>
+                <div class="img-add-row"><div class="sfg"><label>Or paste URL</label><input type="url" id="room2-url-in" placeholder="https://..."/></div><button class="btn btn-amber" onclick="addImgUrl('room2')">Add</button></div>
+              </div>
+              <div class="img-panel" id="ip-room3">
+                <p style="font-size:.8rem;color:var(--mid);margin-bottom:.8rem">Photo for <strong>The Double Room</strong>.</p>
+                <div id="room3-preview" class="img-grid-preview"></div>
+                <label class="img-upload-area"><input type="file" accept="image/*" onchange="handleFileUpload(event,'room3')"/><span class="img-upload-label"><svg class="icon" width="22" height="22"><use href="#i-leaf"/></svg><strong>Click to upload</strong></span></label>
+                <div class="img-add-row"><div class="sfg"><label>Or paste URL</label><input type="url" id="room3-url-in" placeholder="https://..."/></div><button class="btn btn-amber" onclick="addImgUrl('room3')">Add</button></div>
+              </div>
+              <div class="img-panel" id="ip-room4">
+                <p style="font-size:.8rem;color:var(--mid);margin-bottom:.8rem">Photo for <strong>The Twin Room</strong>.</p>
+                <div id="room4-preview" class="img-grid-preview"></div>
+                <label class="img-upload-area"><input type="file" accept="image/*" onchange="handleFileUpload(event,'room4')"/><span class="img-upload-label"><svg class="icon" width="22" height="22"><use href="#i-leaf"/></svg><strong>Click to upload</strong></span></label>
+                <div class="img-add-row"><div class="sfg"><label>Or paste URL</label><input type="url" id="room4-url-in" placeholder="https://..."/></div><button class="btn btn-amber" onclick="addImgUrl('room4')">Add</button></div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Password -->
+          <div class="settings-card" style="grid-column:1/-1">
+            <div class="settings-card-head"><svg class="icon" width="15" height="15"><use href="#i-key"/></svg><h4>Change Admin Password</h4></div>
+            <div class="settings-card-body" style="display:grid;grid-template-columns:1fr 1fr;gap:1rem">
+              <div class="sfg"><label>New Password</label><input type="password" id="s-newpw" placeholder="Enter new password to change it" autocomplete="new-password"/></div>
+              <div class="sfg"><label>Confirm New Password</label><input type="password" id="s-confirmpw" placeholder="Repeat new password" autocomplete="new-password"/></div>
+              <p style="grid-column:1/-1;font-size:.78rem;color:var(--light)">Default password is <strong>manorcottage2025</strong> — change it here. Must be at least 8 characters. Saved to this browser only.</p>
+            </div>
+          </div>
+
+          <!-- Claude Chatbox -->
+          <div class="chat-wrap">
+            <div class="chat-head">
+              <svg class="icon" width="16" height="16" color="var(--amber2)"><use href="#i-chat"/></svg>
+              <h4>Ask Claude for Help</h4>
+              <span>Ask how to update or change anything on your website</span>
+            </div>
+            <div class="chat-messages" id="chat-msgs">
+              <div class="cmsg ai">Hello! I&rsquo;m here to help you manage Manor Cottage&rsquo;s website. You can ask me how to update prices, change descriptions, add photos, connect a booking system, or anything else about the site. What would you like to know?</div>
+            </div>
+            <div class="chat-input-row">
+              <input type="text" id="chat-in" placeholder="e.g. How do I change the nightly rate?" onkeydown="if(event.key==='Enter')sendChat()"/>
+              <button class="chat-send" id="chat-btn" onclick="sendChat()">Send</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- PASSWORD MODAL -->
+<div class="pw-modal-bg" id="pw-modal">
+  <div class="pw-modal">
+    <div style="font-size:2rem;margin-bottom:.5rem;color:var(--amber)">
+      <svg class="icon" width="32" height="32"><use href="#i-key"/></svg>
+    </div>
+    <h3>Admin Access</h3>
+    <p>Enter the admin password to continue</p>
+    <div class="pw-input-wrap">
+      <input type="password" id="pw-input" placeholder="Password" onkeydown="if(event.key==='Enter')checkPw()" autocomplete="current-password"/>
+      <button class="pw-toggle" onclick="togglePwVis()" id="pw-eye" title="Show/hide">
+        <svg class="icon" width="16" height="16" id="pw-eye-icon"><use href="#i-wifi"/></svg>
+      </button>
+    </div>
+    <div class="pw-error" id="pw-error"></div>
+    <button class="btn-full" onclick="checkPw()">Enter Admin</button>
+    <p class="pw-hint">Access this area by clicking the Manor Cottage logo 5 times quickly</p>
+  </div>
+</div>
+
+<div class="modal-bg" id="modal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">&#x2715;</button>
+    <div style="font-size:2.5rem;margin-bottom:.5rem">&#x2705;</div>
+    <h3>Request Sent!</h3>
+    <p>We&rsquo;ll confirm availability and send full booking details within a few hours.</p>
+    <div class="modal-det" id="modal-det"></div>
+    <button class="btn-full" onclick="closeModal()">Close</button>
+  </div>
+</div>
+
+<script>
+// ── PASSWORD AUTH ──
+function hashStr(s){let h=0;for(let i=0;i<s.length;i++)h=Math.imul(31,h)+s.charCodeAt(i)|0;return h.toString(16);}
+function getStoredPwHash(){try{return localStorage.getItem("mc_pw_hash")||hashStr("manorcottage2025");}catch(e){return hashStr("manorcottage2025");}}
+let adminUnlocked=false;
+
+function showPwModal(){
+  document.getElementById("pw-input").value="";
+  document.getElementById("pw-error").textContent="";
+  document.getElementById("pw-modal").classList.add("open");
+  setTimeout(()=>document.getElementById("pw-input").focus(),120);
+}
+function checkPw(){
+  const val=document.getElementById("pw-input").value;
+  const err=document.getElementById("pw-error");
+  if(!val){err.textContent="Please enter the password.";return;}
+  if(hashStr(val)===getStoredPwHash()){
+    adminUnlocked=true;
+    document.getElementById("pw-modal").classList.remove("open");
+    goAdmin();
+  } else {
+    err.textContent="Incorrect password. Please try again.";
+    document.getElementById("pw-input").value="";
+    document.getElementById("pw-input").focus();
+    const inp=document.getElementById("pw-input");
+    inp.style.borderColor="#c0392b";
+    setTimeout(()=>inp.style.borderColor="",1200);
+  }
+}
+function togglePwVis(){
+  const inp=document.getElementById("pw-input");
+  inp.type=inp.type==="password"?"text":"password";
+}
+
+// ── SECRET LOGO TRIGGER (click logo 5 times within 2s) ──
+let logoClicks=0,logoTimer=null;
+window.addEventListener("DOMContentLoaded",()=>{
+  const logo=document.getElementById("logo-secret");
+  if(!logo)return;
+  logo.addEventListener("click",function(){
+    logoClicks++;
+    clearTimeout(logoTimer);
+    if(logoClicks>=5){
+      logoClicks=0;
+      setTimeout(()=>{adminUnlocked?goAdmin():showPwModal();},60);
+    } else {
+      logoTimer=setTimeout(()=>{logoClicks=0;},1800);
+    }
+  });
+});
+
+function goAdmin(){
+  document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+  document.getElementById("page-settings").classList.add("active");
+  window.scrollTo(0,0);
+  document.querySelectorAll(".ntab,.ditem,.btab").forEach(el=>el.classList.remove("active"));
+  document.getElementById("nav").classList.add("solid");
+  loadSettings();
+  triggerAnim("settings");
+  setTimeout(initImgManager, 50);
+}
+
+// ── SETTINGS ──
+const DEFAULTS={propname:"Manor Cottage",tagline:"Where history meets the hills",locsub:"Hopton Village · Derbyshire Peak District",rate:200,clean:80,dogfee:40,bedfee:20,checkin:"4:00 pm – 10:00 pm",checkout:"Before 10:00 am",minstay:2,maxdogs:2,maxguests:8,hostname:"Libba",email:"hello@manorcottagehopton.co.uk",googleurl:"",taurl:""};
+let cfg=Object.assign({},DEFAULTS);
+
+function loadSettings(){
+  try{const s=localStorage.getItem("mc_settings");if(s)cfg=Object.assign({},DEFAULTS,JSON.parse(s));}catch(e){}
+  applySettings();
+  const g=id=>document.getElementById(id);
+  if(!g("s-propname"))return;
+  g("s-propname").value=cfg.propname;
+  g("s-tagline").value=cfg.tagline;
+  g("s-locsub").value=cfg.locsub;
+  g("s-rate").value=cfg.rate;
+  g("s-clean").value=cfg.clean;
+  g("s-dogfee").value=cfg.dogfee;
+  g("s-bedfee").value=cfg.bedfee;
+  g("s-checkin").value=cfg.checkin;
+  g("s-checkout").value=cfg.checkout;
+  g("s-minstay").value=cfg.minstay;
+  g("s-maxdogs").value=cfg.maxdogs;
+  g("s-maxguests").value=cfg.maxguests;
+  g("s-hostname").value=cfg.hostname;
+  g("s-email").value=cfg.email;
+  g("s-googleurl").value=cfg.googleurl||"";
+  g("s-taurl").value=cfg.taurl||"";
+  g("s-newpw").value="";
+  g("s-confirmpw").value="";
+}
+function applySettings(){
+  const pn=document.getElementById("book-prop-name");if(pn)pn.textContent=cfg.propname+", Hopton";
+  const bp=document.getElementById("book-price");if(bp)bp.textContent="From £"+cfg.rate;
+}
+function saveSettings(){
+  const g=id=>document.getElementById(id);
+  cfg.propname=g("s-propname").value||DEFAULTS.propname;
+  cfg.tagline=g("s-tagline").value||DEFAULTS.tagline;
+  cfg.locsub=g("s-locsub").value||DEFAULTS.locsub;
+  cfg.rate=+g("s-rate").value||DEFAULTS.rate;
+  cfg.clean=+g("s-clean").value||DEFAULTS.clean;
+  cfg.dogfee=+g("s-dogfee").value||DEFAULTS.dogfee;
+  cfg.bedfee=+g("s-bedfee").value||DEFAULTS.bedfee;
+  cfg.checkin=g("s-checkin").value||DEFAULTS.checkin;
+  cfg.checkout=g("s-checkout").value||DEFAULTS.checkout;
+  cfg.minstay=+g("s-minstay").value||DEFAULTS.minstay;
+  cfg.maxdogs=+g("s-maxdogs").value;
+  cfg.maxguests=+g("s-maxguests").value||DEFAULTS.maxguests;
+  cfg.hostname=g("s-hostname").value||DEFAULTS.hostname;
+  cfg.email=g("s-email").value||DEFAULTS.email;
+  cfg.googleurl=g("s-googleurl").value;
+  cfg.taurl=g("s-taurl").value;
+  // Password change
+  const np=g("s-newpw").value.trim(),cp=g("s-confirmpw").value.trim();
+  if(np){
+    if(np.length<8){alert("Password must be at least 8 characters.");return;}
+    if(np!==cp){alert("Passwords do not match.");return;}
+    try{localStorage.setItem("mc_pw_hash",hashStr(np));}catch(e){}
+    g("s-newpw").value="";g("s-confirmpw").value="";
+  }
+  try{localStorage.setItem("mc_settings",JSON.stringify(cfg));}catch(e){}
+  applySettings();
+  const st=document.getElementById("save-status");
+  st.classList.add("show");setTimeout(()=>st.classList.remove("show"),3000);
+}
+function resetSettings(){
+  if(!confirm("Reset all settings to defaults?"))return;
+  cfg=Object.assign({},DEFAULTS);
+  try{localStorage.removeItem("mc_settings");}catch(e){}
+  loadSettings();
+}
+
+// ── NAVIGATION ──
+function go(id){
+  if(id==="settings"){adminUnlocked?goAdmin():showPwModal();return;}
+  document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+  document.getElementById("page-"+id).classList.add("active");
+  window.scrollTo(0,0);
+  document.querySelectorAll(".ntab,.ditem,.btab").forEach(el=>el.classList.toggle("active",el.dataset.p===id));
+  const nav=document.getElementById("nav");
+  if(id!=="home"){nav.classList.add("solid");}else{nav.classList.toggle("solid",window.scrollY>80);}
+  loadSettings();triggerAnim(id);
+}
+window.addEventListener("scroll",()=>{
+  if(document.querySelector(".page.active")?.id==="page-home")
+    document.getElementById("nav").classList.toggle("solid",window.scrollY>80);
+});
+
+// ── DRAWER ──
+function toggleDrawer(){
+  const d=document.getElementById("drawer"),open=d.classList.toggle("open");
+  const s=document.querySelectorAll(".ham span");
+  s[0].style.transform=open?"translateY(7px) rotate(45deg)":"";
+  s[1].style.opacity=open?"0":"1";
+  s[2].style.transform=open?"translateY(-7px) rotate(-45deg)":"";
+}
+function closeDrawer(){
+  document.getElementById("drawer").classList.remove("open");
+  document.querySelectorAll(".ham span").forEach(s=>{s.style.transform="";s.style.opacity="";});
+}
+
+// ── BOOKING CALC ──
+const today=new Date().toISOString().split("T")[0];
+document.getElementById("ci").min=today;
+document.getElementById("co").min=today;
+document.getElementById("ci").addEventListener("change",function(){
+  const d=new Date(this.value);d.setDate(d.getDate()+1);
+  document.getElementById("co").min=d.toISOString().split("T")[0];calc();
+});
+function calc(){
+  const ci=document.getElementById("ci").value,co=document.getElementById("co").value;
+  if(!ci||!co)return;
+  const nights=Math.round((new Date(co)-new Date(ci))/86400000);
+  if(nights<=0)return;
+  let dogs=0;
+  if(document.getElementById("dog1").checked)dogs+=cfg.dogfee;
+  if(document.getElementById("dog2").checked)dogs+=cfg.dogfee;
+  const total=nights*cfg.rate+cfg.clean+dogs;
+  document.getElementById("s-rate").textContent="£"+cfg.rate+"/night";
+  document.getElementById("s-nl").textContent=nights+" night"+(nights>1?"s":"");
+  document.getElementById("s-nights").textContent="£"+(nights*cfg.rate);
+  document.getElementById("s-clean").textContent="£"+cfg.clean;
+  document.getElementById("s-total").innerHTML="<strong>£"+total+"</strong>";
+  const dr=document.getElementById("s-dog-r");
+  dr.style.display=dogs>0?"flex":"none";
+  document.getElementById("s-dog").textContent="£"+dogs;
+  document.getElementById("summary").classList.add("show");
+}
+function submitBook(){
+  const ci=document.getElementById("ci").value,co=document.getElementById("co").value;
+  const name=document.getElementById("gname").value.trim();
+  if(!ci||!co){alert("Please select your check-in and check-out dates.");return;}
+  if(!name){alert("Please enter your name.");return;}
+  const nights=Math.round((new Date(co)-new Date(ci))/86400000);
+  const fmt=d=>new Date(d).toLocaleDateString("en-GB",{weekday:"short",day:"numeric",month:"long",year:"numeric"});
+  document.getElementById("modal-det").innerHTML=
+    "<strong>Guest:</strong> "+name+"<br>"+
+    "<strong>Check-in:</strong> "+fmt(ci)+" (from 4pm)<br>"+
+    "<strong>Check-out:</strong> "+fmt(co)+" (by 10am)<br>"+
+    "<strong>Duration:</strong> "+nights+" night"+(nights>1?"s":"")+"<br>"+
+    "<strong>Guests:</strong> "+document.getElementById("guests").value;
+  document.getElementById("modal").classList.add("open");
+}
+function closeModal(){document.getElementById("modal").classList.remove("open");}
+
+// ── SCROLL ANIMATIONS ──
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.style.opacity="1";e.target.style.transform="translateY(0)";}});
+},{threshold:0.07});
+function triggerAnim(pageId){
+  const pg=document.getElementById("page-"+pageId);if(!pg)return;
+  pg.querySelectorAll(".rcard,.amen,.acard,.revcard,.rbar,.hstat,.tcard,.settings-card").forEach(el=>{
+    el.style.opacity="0";el.style.transform="translateY(16px)";
+    el.style.transition="opacity .4s ease, transform .4s ease";
+    obs.observe(el);
+  });
+}
+
+// ── CLAUDE CHAT ──
+let chatHistory=[];
+async function sendChat(){
+  const inp=document.getElementById("chat-in");
+  const msg=inp.value.trim();if(!msg)return;
+  chatHistory.push({role:"user",content:msg});
+  renderChat();inp.value="";
+  document.getElementById("chat-btn").disabled=true;
+  const loader=document.createElement("div");loader.className="cmsg ai loading";loader.textContent="Thinking…";
+  document.getElementById("chat-msgs").appendChild(loader);scrollChat();
+  try{
+    const res=await fetch("https://api.anthropic.com/v1/messages",{
+      method:"POST",headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({model:"claude-sonnet-4-20250514",max_tokens:1000,
+        system:"You are a helpful assistant for the owner of Manor Cottage, a holiday cottage website in Hopton, Peak District, Derbyshire. Help the owner (Libba) manage their website practically and concisely. Topics: updating prices, descriptions, connecting Supercontrol or Beds24 booking widgets, photos, house rules, contact details, SEO, general website management. Be brief and specific.",
+        messages:chatHistory})
+    });
+    loader.remove();
+    const data=await res.json();
+    const reply=data.content?.find(b=>b.type==="text")?.text||"Sorry, I couldn’t process that. Please try again.";
+    chatHistory.push({role:"assistant",content:reply});renderChat();
+  }catch(err){
+    loader.remove();
+    const eDiv=document.createElement("div");eDiv.className="cmsg ai";eDiv.textContent="Connection error. Please try again.";
+    document.getElementById("chat-msgs").appendChild(eDiv);scrollChat();
+  }
+  document.getElementById("chat-btn").disabled=false;
+}
+function renderChat(){
+  const box=document.getElementById("chat-msgs");
+  box.innerHTML='<div class="cmsg ai">Hello! I’m here to help you manage Manor Cottage’s website. Ask me how to update prices, change descriptions, connect a booking system, or anything else.</div>';
+  chatHistory.forEach(m=>{const d=document.createElement("div");d.className="cmsg "+(m.role==="user"?"user":"ai");d.textContent=m.content;box.appendChild(d);});
+  scrollChat();
+}
+function scrollChat(){const b=document.getElementById("chat-msgs");b.scrollTop=b.scrollHeight;}
+
+// ── IMAGE MANAGER ──
+// Default images per section (fallbacks)
+const IMG_DEFAULTS = {
+  hero: ["https://images.unsplash.com/photo-1559827291-72f3dc58fb31?w=1800&q=85"],
+  gallery: [
+    "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=800&q=80",
+    "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=500&q=80",
+    "https://images.unsplash.com/photo-1613977257363-707ba9348227?w=500&q=80",
+    "https://images.unsplash.com/photo-1507089947368-19c1da9775ae?w=500&q=80",
+    "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=800&q=80",
+    "https://images.unsplash.com/photo-1588854337221-4cf9fa96059c?w=500&q=80"
+  ],
+  room1: ["https://images.unsplash.com/photo-1505693314120-0d443867891c?w=500&q=80"],
+  room2: ["https://images.unsplash.com/photo-1540518614846-7eded433c457?w=500&q=80"],
+  room3: ["https://images.unsplash.com/photo-1560448204-603b3fc33ddc?w=500&q=80"],
+  room4: ["https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?w=500&q=80"]
+};
+
+function getImgs(section) {
+  try {
+    const s = localStorage.getItem("mc_imgs_" + section);
+    return s ? JSON.parse(s) : [...IMG_DEFAULTS[section]];
+  } catch(e) { return [...IMG_DEFAULTS[section]]; }
+}
+function saveImgs(section, arr) {
+  try { localStorage.setItem("mc_imgs_" + section, JSON.stringify(arr)); } catch(e) {}
+}
+
+function renderImgPreview(section) {
+  const container = document.getElementById(section + "-preview");
+  if (!container) return;
+  const imgs = getImgs(section);
+  const maxOne = section === "hero" || section.startsWith("room");
+  if (imgs.length === 0) {
+    container.innerHTML = '<div class="img-empty">No images added yet — upload one below or paste a URL.</div>';
+    return;
+  }
+  container.innerHTML = imgs.map((url, i) => `
+    <div class="img-thumb">
+      <img src="${url}" alt="Image ${i+1}" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 4 3%22><rect width=%224%22 height=%223%22 fill=%22%23d4ccb8%22/></svg>'"/>
+      <button class="img-thumb-del" onclick="deleteImg('${section}',${i})" title="Remove">&times;</button>
+      <span class="img-thumb-label">${i === 0 ? (section === 'hero' ? 'Active hero' : 'Active') : 'Image ' + (i+1)}</span>
+    </div>`).join("");
+}
+
+function deleteImg(section, idx) {
+  const imgs = getImgs(section);
+  imgs.splice(idx, 1);
+  saveImgs(section, imgs);
+  renderImgPreview(section);
+  applyImgsToSite(section, imgs);
+}
+
+function addImgUrl(section) {
+  const inp = document.getElementById(section + "-url-in");
+  const url = inp.value.trim();
+  if (!url || !url.startsWith("http")) { alert("Please enter a valid image URL starting with https://"); return; }
+  const maxOne = section === "hero" || section.startsWith("room");
+  let imgs = getImgs(section);
+  if (maxOne) imgs = [url]; else imgs.push(url);
+  saveImgs(section, imgs);
+  renderImgPreview(section);
+  applyImgsToSite(section, imgs);
+  inp.value = "";
+}
+
+function handleFileUpload(e, section) {
+  const files = Array.from(e.target.files);
+  if (!files.length) return;
+  const maxOne = section === "hero" || section.startsWith("room");
+  let imgs = maxOne ? [] : getImgs(section);
+  let loaded = 0;
+  files.forEach(file => {
+    const reader = new FileReader();
+    reader.onload = ev => {
+      if (maxOne) { imgs = [ev.target.result]; }
+      else { imgs.push(ev.target.result); }
+      loaded++;
+      if (loaded === files.length) {
+        saveImgs(section, imgs);
+        renderImgPreview(section);
+        applyImgsToSite(section, imgs);
+      }
+    };
+    reader.readAsDataURL(file);
+  });
+  e.target.value = "";
+}
+
+function applyImgsToSite(section, imgs) {
+  if (!imgs.length) return;
+  if (section === "hero") {
+    const hbg = document.querySelector(".hero-bg");
+    if (hbg) hbg.style.backgroundImage = `linear-gradient(to bottom,rgba(0,0,0,.05) 0%,rgba(10,22,12,.5) 50%,rgba(10,22,12,.88) 100%),url("${imgs[0]}")`;
+  }
+  if (section === "gallery") {
+    const galImgs = document.querySelectorAll("#page-cottage .gal img");
+    imgs.forEach((url, i) => { if (galImgs[i]) galImgs[i].src = url; });
+  }
+  if (section.startsWith("room")) {
+    const idx = parseInt(section.replace("room","")) - 1;
+    const roomImgs = document.querySelectorAll(".rcard img");
+    if (roomImgs[idx]) roomImgs[idx].src = imgs[0];
+  }
+}
+
+function applyAllImgs() {
+  Object.keys(IMG_DEFAULTS).forEach(section => {
+    applyImgsToSite(section, getImgs(section));
+  });
+}
+
+function switchImgTab(section, btn) {
+  document.querySelectorAll(".img-tab").forEach(t => t.classList.remove("active"));
+  document.querySelectorAll(".img-panel").forEach(p => p.classList.remove("active"));
+  btn.classList.add("active");
+  document.getElementById("ip-" + section).classList.add("active");
+  renderImgPreview(section);
+}
+
+function initImgManager() {
+  // Render initial tab
+  renderImgPreview("hero");
+  // Apply all saved images to the live site
+  applyAllImgs();
+  // Drag-and-drop on upload areas
+  ["hero","gallery","room1","room2","room3","room4"].forEach(section => {
+    const area = document.getElementById(section + "-drop");
+    if (!area) return;
+    area.addEventListener("dragover", e => { e.preventDefault(); area.classList.add("drag"); });
+    area.addEventListener("dragleave", () => area.classList.remove("drag"));
+    area.addEventListener("drop", e => {
+      e.preventDefault(); area.classList.remove("drag");
+      const files = Array.from(e.dataTransfer.files).filter(f => f.type.startsWith("image/"));
+      if (files.length) {
+        const fakeEvt = { target: { files, value: "" } };
+        handleFileUpload(fakeEvt, section);
+      }
+    });
+  });
+}
+
+// ── INIT ──
+loadSettings();
+triggerAnim("home");
+applyAllImgs();
+</script>
+</body>
+</html>
