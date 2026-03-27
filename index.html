@@ -1242,7 +1242,7 @@ function go(id){
   document.getElementById("page-"+id).classList.add("active");
   window.scrollTo(0,0);
   document.querySelectorAll(".ntab,.ditem,.btab").forEach(el=>el.classList.toggle("active",el.dataset.p===id));
-  // Reapply images every time a page is shown so nothing is ever stale
+  // Reapply images every time a page is shown (synchronous)
   applyAllImgs();
   const nav=document.getElementById("nav");
   if(id!=="home"){nav.classList.add("solid");}else{nav.classList.toggle("solid",window.scrollY>80);}
@@ -1390,237 +1390,229 @@ const IMG_DEFAULTS = {
   'host-photo':     ['https://a0.muscache.com/im/pictures/user/User/original/4492dd38-f27e-4cd1-8f39-f083d71c6ef6.jpeg'],
 };
 
-function getImgsLocal(section){
-  try{const s=localStorage.getItem('mc_imgs_'+section);return s?JSON.parse(s):[...IMG_DEFAULTS[section]];}
-  catch(e){return[...IMG_DEFAULTS[section]];}
+// ── STORAGE ──
+function getImgsLocal(section) {
+  try {
+    const s = localStorage.getItem('mc_imgs_' + section);
+    return s ? JSON.parse(s) : [...IMG_DEFAULTS[section]];
+  } catch(e) { return [...IMG_DEFAULTS[section]]; }
 }
-function getImgs(section){ return getImgsLocal(section); }
+function getImgs(section) { return getImgsLocal(section); }
 
-function saveImgs(section,arr){
-  // Always save locally
-  try{localStorage.setItem('mc_imgs_'+section,JSON.stringify(arr));}catch(e){}
-  // Also push to Supabase in background
-  saveImgsRemote(section,arr);
+function saveImgs(section, arr) {
+  try { localStorage.setItem('mc_imgs_' + section, JSON.stringify(arr)); } catch(e) {}
+  // Push to Supabase in background (fire and forget)
+  if (sb) saveImgsRemote(section, arr).catch(function(){});
 }
 
-function buildImgPanel(section){
-  const meta = IMG_META[section];
-  const imgs = getImgs(section);
-  const dropId = 'drop-'+section;
+// ── APPLY IMAGES TO PAGE ── fully synchronous ──
+function applyImgToSite(section, imgs) {
+  if (!imgs || !imgs.length) return;
+  if (section === 'hero') {
+    var hbg = document.querySelector('.hero-bg');
+    if (hbg) hbg.style.backgroundImage = 'linear-gradient(to bottom,rgba(0,0,0,.05) 0%,rgba(10,22,12,.5) 50%,rgba(10,22,12,.88) 100%),url("' + imgs[0] + '")';
+  } else if (section === 'gallery') {
+    var galImgs = document.querySelectorAll('[data-img-id^="gallery-"]');
+    for (var i = 0; i < galImgs.length; i++) {
+      if (imgs[i]) galImgs[i].src = imgs[i];
+    }
+  } else {
+    var el = document.querySelector('[data-img-id="' + section + '"]');
+    if (el) el.src = imgs[0];
+  }
+}
 
-  let thumbs = '';
-  if(imgs.length===0){
+// Synchronous — applies all sections immediately from localStorage
+function applyAllImgs() {
+  var sections = Object.keys(IMG_DEFAULTS);
+  for (var i = 0; i < sections.length; i++) {
+    applyImgToSite(sections[i], getImgsLocal(sections[i]));
+  }
+}
+
+// Separate async function to refresh from Supabase then reapply
+async function refreshFromSupabase() {
+  if (!sb) return;
+  try {
+    var remote = await getImgsAll();
+    if (!remote || !Object.keys(remote).length) return;
+    var sections = Object.keys(IMG_DEFAULTS);
+    for (var i = 0; i < sections.length; i++) {
+      var s = sections[i];
+      if (remote[s] && remote[s].length) {
+        try { localStorage.setItem('mc_imgs_' + s, JSON.stringify(remote[s])); } catch(e) {}
+        applyImgToSite(s, remote[s]);
+      }
+    }
+  } catch(e) {}
+}
+
+// ── ADMIN IMAGE MANAGER UI ──
+var currentImgSection = 'hero';
+
+function buildImgPanel(section) {
+  var meta = IMG_META[section];
+  var imgs = getImgsLocal(section);
+  var dropId = 'drop-' + section;
+  var multi = meta.multi ? ' multiple' : '';
+
+  var thumbs;
+  if (!imgs.length) {
     thumbs = '<div class="img-empty">No image — upload one or paste a URL below.</div>';
   } else {
-    thumbs = '<div class="img-grid-preview">' +
-      imgs.map((url,i)=>`
-        <div class="img-thumb">
-          <img src="${url}" alt="img ${i+1}" onerror="this.parentElement.style.background='var(--cream2)'"/>
-          <button class="img-thumb-del" onclick="deleteImg('${section}',${i})" title="Remove">&times;</button>
-          <span class="img-thumb-label">${meta.multi ? 'Image '+(i+1) : 'Current photo'}</span>
-        </div>`).join('') +
-      '</div>';
+    thumbs = '<div class="img-grid-preview">';
+    for (var i = 0; i < imgs.length; i++) {
+      thumbs += '<div class="img-thumb">' +
+        '<img src="' + imgs[i] + '" alt="img ' + (i+1) + '" onerror="this.parentElement.style.background=\'var(--cream2)\'"/>' +
+        '<button class="img-thumb-del" onclick="deleteImg(\'' + section + '\',' + i + ')" title="Remove">&times;</button>' +
+        '<span class="img-thumb-label">' + (meta.multi ? 'Image ' + (i+1) : 'Current photo') + '</span>' +
+        '</div>';
+    }
+    thumbs += '</div>';
   }
 
-  const multi = meta.multi ? ' multiple' : '';
+  var resetBtn = (imgs.length > 0 && !meta.multi)
+    ? '<button class="btn" style="border:1px solid var(--stone);color:var(--mid);white-space:nowrap" onclick="resetImgDefault(\'' + section + '\')">Reset default</button>'
+    : '';
 
-  return `
-    <p style="font-size:.8rem;color:var(--mid);margin-bottom:.9rem">${meta.desc}</p>
-    ${thumbs}
-    <div style="background:rgba(154,120,48,.07);border:1px solid rgba(154,120,48,.2);border-radius:var(--r);padding:.65rem .9rem;margin-bottom:.8rem;display:flex;align-items:flex-start;gap:.5rem">
-      <svg class="icon" width="13" height="13" style="color:var(--amber);flex-shrink:0;margin-top:2px"><use href="#i-star"/></svg>
-      <p style="font-size:.73rem;color:var(--mid);line-height:1.55"><strong>Best way:</strong> Upload your photo to <a href="https://cloudinary.com/users/register_free" target="_blank" style="color:var(--amber)">Cloudinary</a> first, then paste the URL below &mdash; so <em>everyone</em> visiting the site sees it, not just you on this device.</p>
-    </div>
-    <div class="img-add-row" style="margin-top:0">
-      <div class="sfg" style="margin:0;flex:1">
-        <label>Paste Cloudinary URL (or any public image URL)</label>
-        <input type="url" id="url-in-${section}" placeholder="https://res.cloudinary.com/your-account/image/upload/..." onkeydown="if(event.key==='Enter')addImgUrl('${section}')"/>
-      </div>
-      <button class="btn btn-amber" onclick="addImgUrl('${section}')">Add</button>
-      ${imgs.length>0&&!meta.multi?'<button class="btn" style="border:1px solid var(--stone);color:var(--mid);white-space:nowrap" onclick="resetImgDefault(\'' + section + '\')">Reset default</button>':''}
-    </div>
-    <details style="margin-top:.9rem">
-      <summary style="font-size:.74rem;color:var(--light);cursor:pointer;user-select:none">&#9654;&nbsp; Upload from this device instead <span style="color:var(--amber);opacity:.7">(this browser only &mdash; others won&rsquo;t see it)</span></summary>
-      <div style="margin-top:.7rem">
-        <label class="img-upload-area" id="${dropId}">
-          <input type="file" accept="image/*"${multi} onchange="handleFileUpload(event,'${section}')"/>
-          <span class="img-upload-label">
-            <svg class="icon" width="22" height="22" style="color:var(--stone2)"><use href="#i-leaf"/></svg>
-            <strong>Click to upload${meta.multi?' (multiple OK)':''}</strong> or drag &amp; drop
-          </span>
-        </label>
-        <p style="font-size:.72rem;color:var(--light);margin-top:.3rem">&#9888;&nbsp;Direct uploads are stored in your browser only. Use Cloudinary above for images everyone can see.</p>
-      </div>
-    </details>`;
+  return '<p style="font-size:.8rem;color:var(--mid);margin-bottom:.9rem">' + meta.desc + '</p>' +
+    thumbs +
+    '<div style="background:rgba(154,120,48,.07);border:1px solid rgba(154,120,48,.2);border-radius:var(--r);padding:.65rem .9rem;margin-bottom:.8rem;display:flex;align-items:flex-start;gap:.5rem">' +
+    '<svg class="icon" width="13" height="13" style="color:var(--amber);flex-shrink:0;margin-top:2px"><use href="#i-star"/></svg>' +
+    '<p style="font-size:.73rem;color:var(--mid);line-height:1.55"><strong>Best way:</strong> Upload your photo to <a href="https://cloudinary.com/users/register_free" target="_blank" style="color:var(--amber)">Cloudinary</a> first, then paste the URL below so <em>everyone</em> visiting the site sees it.</p>' +
+    '</div>' +
+    '<div class="img-add-row" style="margin-top:0">' +
+    '<div class="sfg" style="margin:0;flex:1"><label>Paste Cloudinary URL (or any public image URL)</label>' +
+    '<input type="url" id="url-in-' + section + '" placeholder="https://res.cloudinary.com/your-account/image/upload/..." onkeydown="if(event.key===\'Enter\')addImgUrl(\'' + section + '\')"/></div>' +
+    '<button class="btn btn-amber" onclick="addImgUrl(\'' + section + '\')">Add</button>' +
+    resetBtn +
+    '</div>' +
+    '<details style="margin-top:.9rem"><summary style="font-size:.74rem;color:var(--light);cursor:pointer;user-select:none">&#9654;&nbsp; Upload from this device instead <span style="color:var(--amber);opacity:.7">(this browser only)</span></summary>' +
+    '<div style="margin-top:.7rem"><label class="img-upload-area" id="' + dropId + '">' +
+    '<input type="file" accept="image/*"' + multi + ' onchange="handleFileUpload(event,\'' + section + '\')">' +
+    '<span class="img-upload-label"><svg class="icon" width="22" height="22" style="color:var(--stone2)"><use href="#i-leaf"/></svg>' +
+    '<strong>Click to upload' + (meta.multi ? ' (multiple OK)' : '') + '</strong> or drag &amp; drop</span></label>' +
+    '<p style="font-size:.72rem;color:var(--light);margin-top:.3rem">&#9888;&nbsp;Direct uploads are stored in your browser only. Use Cloudinary above for images everyone can see.</p>' +
+    '</div></details>';
 }
 
-function renderImgPanel(section){
-  const area = document.getElementById('img-panel-area');
-  if(area) area.innerHTML = buildImgPanel(section);
-  // re-bind drag-drop
-  setTimeout(()=>{
-    const drop = document.getElementById('drop-'+section);
-    if(!drop)return;
-    drop.addEventListener('dragover',e=>{e.preventDefault();drop.classList.add('drag');});
-    drop.addEventListener('dragleave',()=>drop.classList.remove('drag'));
-    drop.addEventListener('drop',e=>{
-      e.preventDefault();drop.classList.remove('drag');
-      const files=Array.from(e.dataTransfer.files).filter(f=>f.type.startsWith('image/'));
-      if(files.length){handleFileUpload({target:{files,value:''}},section);}
+function renderImgPanel(section) {
+  var area = document.getElementById('img-panel-area');
+  if (area) area.innerHTML = buildImgPanel(section);
+  setTimeout(function() {
+    var drop = document.getElementById('drop-' + section);
+    if (!drop) return;
+    drop.addEventListener('dragover', function(e) { e.preventDefault(); drop.classList.add('drag'); });
+    drop.addEventListener('dragleave', function() { drop.classList.remove('drag'); });
+    drop.addEventListener('drop', function(e) {
+      e.preventDefault(); drop.classList.remove('drag');
+      var files = Array.from(e.dataTransfer.files).filter(function(f) { return f.type.startsWith('image/'); });
+      if (files.length) handleFileUpload({target:{files:files,value:''}}, section);
     });
-  },30);
+  }, 30);
 }
 
-function switchImgTab(section,btn){
-  document.querySelectorAll('.img-tab').forEach(t=>t.classList.remove('active'));
+function switchImgTab(section, btn) {
+  document.querySelectorAll('.img-tab').forEach(function(t) { t.classList.remove('active'); });
   btn.classList.add('active');
   currentImgSection = section;
   renderImgPanel(section);
 }
 
-let currentImgSection = 'hero';
-
-function deleteImg(section,idx){
-  const imgs=getImgs(section);
-  imgs.splice(idx,1);
-  saveImgs(section,imgs);
-  applyImgToSite(section,imgs);
+function deleteImg(section, idx) {
+  var imgs = getImgsLocal(section);
+  imgs.splice(idx, 1);
+  saveImgs(section, imgs);
+  applyImgToSite(section, imgs);
   renderImgPanel(section);
 }
 
-function resetImgDefault(section){
-  if(!confirm('Reset to default placeholder image?'))return;
-  try{localStorage.removeItem('mc_imgs_'+section);}catch(e){}
-  applyImgToSite(section,[...IMG_DEFAULTS[section]]);
+function resetImgDefault(section) {
+  if (!confirm('Reset to default placeholder image?')) return;
+  try { localStorage.removeItem('mc_imgs_' + section); } catch(e) {}
+  var defaults = [...IMG_DEFAULTS[section]];
+  applyImgToSite(section, defaults);
   renderImgPanel(section);
 }
 
-function addImgUrl(section){
-  const inp=document.getElementById('url-in-'+section);
-  const url=(inp.value||'').trim();
-  if(!url||!url.startsWith('http')){alert('Please enter a valid URL starting with https://');return;}
-  const meta=IMG_META[section];
-  let imgs=meta.multi?getImgs(section):[];
-  imgs=[...imgs,url];
-  saveImgs(section,imgs);
-  applyImgToSite(section,imgs);
+function addImgUrl(section) {
+  var inp = document.getElementById('url-in-' + section);
+  var url = (inp ? inp.value : '').trim();
+  if (!url || !url.startsWith('http')) { alert('Please enter a valid URL starting with https://'); return; }
+  var meta = IMG_META[section];
+  var imgs = meta.multi ? getImgsLocal(section) : [];
+  imgs = imgs.concat([url]);
+  saveImgs(section, imgs);
+  applyImgToSite(section, imgs);
   renderImgPanel(section);
 }
 
-function handleFileUpload(e,section){
-  const files=Array.from(e.target.files||[]);
-  if(!files.length)return;
-  const meta=IMG_META[section];
-  let existing=meta.multi?getImgs(section):[];
-  let loaded=0;
-  files.forEach(file=>{
-    const reader=new FileReader();
-    reader.onload=ev=>{
+function handleFileUpload(e, section) {
+  var files = Array.from(e.target.files || []);
+  if (!files.length) return;
+  var meta = IMG_META[section];
+  var existing = meta.multi ? getImgsLocal(section) : [];
+  var loaded = 0;
+  files.forEach(function(file) {
+    var reader = new FileReader();
+    reader.onload = function(ev) {
       existing.push(ev.target.result);
       loaded++;
-      if(loaded===files.length){
-        saveImgs(section,existing);
-        applyImgToSite(section,existing);
+      if (loaded === files.length) {
+        saveImgs(section, existing);
+        applyImgToSite(section, existing);
         renderImgPanel(section);
       }
     };
     reader.readAsDataURL(file);
   });
-  if(e.target&&'value' in e.target)e.target.value='';
+  if (e.target && 'value' in e.target) e.target.value = '';
 }
 
-function applyImgToSite(section,imgs){
-  if(!imgs||!imgs.length)return;
-  const url=imgs[0];
-  if(section==='hero'){
-    const hbg=document.querySelector('.hero-bg');
-    if(hbg)hbg.style.backgroundImage=`linear-gradient(to bottom,rgba(0,0,0,.05) 0%,rgba(10,22,12,.5) 50%,rgba(10,22,12,.88) 100%),url("${url}")`;
-  } else if(section==='gallery'){
-    // Apply to gallery-1 through gallery-N img elements
-    const galImgs=document.querySelectorAll('[data-img-id^="gallery-"]');
-    imgs.forEach((u,i)=>{ if(galImgs[i]) galImgs[i].src=u; });
+function checkSupabaseStatus() {
+  var bar = document.getElementById('sb-status-bar');
+  if (!bar) return;
+  if (!sb) {
+    bar.style.background = 'rgba(192,56,40,.08)';
+    bar.style.border = '1px solid rgba(192,56,40,.2)';
+    bar.innerHTML = '<span style="display:flex;align-items:center;gap:.4rem;color:#c03828"><svg class="icon" width="13" height="13"><use href="#i-star"/></svg><strong>Supabase not connected</strong> &mdash; images are browser-only. Add your credentials to the HTML to sync across all devices.</span>';
   } else {
-    // Apply to any element with a matching data-img-id
-    const el=document.querySelector('[data-img-id="'+section+'"]');
-    if(el) el.src=url;
+    bar.style.background = 'rgba(53,86,58,.08)';
+    bar.style.border = '1px solid rgba(53,86,58,.2)';
+    bar.innerHTML = '<span style="display:flex;align-items:center;gap:.4rem;color:var(--green2)"><svg class="icon" width="13" height="13"><use href="#i-check"/></svg><strong>Supabase connected</strong> &mdash; images sync to all devices automatically.</span>' +
+      '<button class="btn btn-amber" onclick="migrateToSupabase()" style="font-size:.72rem;padding:.4rem 1rem">Push this browser\'s images to Supabase</button>';
   }
 }
 
-async function applyAllImgs(){
-  // Always apply localStorage immediately (instant, no flicker)
-  Object.keys(IMG_DEFAULTS).forEach(section=>{
-    applyImgToSite(section, getImgsLocal(section));
-  });
-  // Then try Supabase and update if we get fresher data
-  if(sb){
-    try {
-      const remote = await getImgsAll();
-      if(!remote || !Object.keys(remote).length) return;
-      Object.keys(IMG_DEFAULTS).forEach(section=>{
-        if(remote[section] && remote[section].length){
-          // Sync to localStorage so next load is instant
-          try{localStorage.setItem('mc_imgs_'+section,JSON.stringify(remote[section]));}catch(e){}
-          applyImgToSite(section, remote[section]);
-        }
-      });
-    } catch(e){ /* Supabase unavailable - localStorage already applied */ }
+async function migrateToSupabase() {
+  if (!sb) { alert('Supabase is not connected.'); return; }
+  var sections = Object.keys(IMG_DEFAULTS);
+  var migrated = 0, skipped = 0;
+  var btn = document.querySelector('[onclick="migrateToSupabase()"]');
+  if (btn) { btn.textContent = 'Migrating...'; btn.disabled = true; }
+  for (var i = 0; i < sections.length; i++) {
+    var section = sections[i];
+    var local = getImgsLocal(section);
+    if (JSON.stringify(local) === JSON.stringify(IMG_DEFAULTS[section])) { skipped++; continue; }
+    var ok = await saveImgsRemote(section, local);
+    if (ok) migrated++;
+  }
+  if (btn) btn.disabled = false;
+  var bar = document.getElementById('sb-status-bar');
+  if (bar) {
+    bar.innerHTML += '<p style="width:100%;font-size:.76rem;color:var(--green2);margin-top:.3rem">&#10003; Done &mdash; ' + migrated + ' image set' + (migrated !== 1 ? 's' : '') + ' pushed to Supabase. Everyone visiting the site will now see your images.</p>';
   }
 }
 
-function initImgManager(){
-  currentImgSection='hero';
-  document.querySelectorAll('.img-tab').forEach((t,i)=>t.classList.toggle('active',i===0));
+function initImgManager() {
+  currentImgSection = 'hero';
+  document.querySelectorAll('.img-tab').forEach(function(t, i) { t.classList.toggle('active', i === 0); });
   renderImgPanel('hero');
   checkSupabaseStatus();
-}
-
-function checkSupabaseStatus(){
-  const bar = document.getElementById('sb-status-bar');
-  if(!bar) return;
-  if(!sb){
-    bar.style.background='rgba(192,56,40,.08)';
-    bar.style.border='1px solid rgba(192,56,40,.2)';
-    bar.innerHTML=`
-      <span style="display:flex;align-items:center;gap:.4rem;color:#c03828">
-        <svg class="icon" width="13" height="13"><use href="#i-star"/></svg>
-        <strong>Supabase not connected</strong> &mdash; images are browser-only right now. Add your credentials to the HTML file to sync across all devices.
-      </span>`;
-  } else {
-    bar.style.background='rgba(53,86,58,.08)';
-    bar.style.border='1px solid rgba(53,86,58,.2)';
-    bar.innerHTML=`
-      <span style="display:flex;align-items:center;gap:.4rem;color:var(--green2)">
-        <svg class="icon" width="13" height="13"><use href="#i-check"/></svg>
-        <strong>Supabase connected</strong> &mdash; images sync to all devices automatically.
-      </span>
-      <button class="btn btn-amber" onclick="migrateToSupabase()" style="font-size:.72rem;padding:.4rem 1rem">
-        <svg class="icon" width="12" height="12"><use href="#i-globe"/></svg>
-        Push this browser&rsquo;s images to Supabase
-      </button>`;
-  }
-}
-
-async function migrateToSupabase(){
-  if(!sb){alert('Supabase is not connected.');return;}
-  const sections = Object.keys(IMG_DEFAULTS);
-  let migrated=0, skipped=0;
-  const btn = document.querySelector('[onclick="migrateToSupabase()"]');
-  if(btn){btn.textContent='Migrating...';btn.disabled=true;}
-  for(const section of sections){
-    const local = getImgsLocal(section);
-    const isDefault = JSON.stringify(local) === JSON.stringify(IMG_DEFAULTS[section]);
-    if(isDefault){ skipped++; continue; }
-    const ok = await saveImgsRemote(section, local);
-    if(ok) migrated++;
-  }
-  if(btn){btn.disabled=false;}
-  const bar = document.getElementById('sb-status-bar');
-  if(bar){
-    bar.innerHTML+=`<p style="width:100%;font-size:.76rem;color:var(--green2);margin-top:.3rem">
-      &#10003; Done — ${migrated} image set${migrated!==1?'s':''} pushed to Supabase${skipped>0?' ('+skipped+' unchanged sections skipped)':''}.
-      Everyone visiting the site will now see your images.
-    </p>`;
-  }
+  // Force reapply all images so admin and site are in sync
+  applyAllImgs();
+  // Also try to refresh from Supabase in background
+  refreshFromSupabase();
 }
 
 // ── INIT ──
@@ -1645,10 +1637,12 @@ document.addEventListener('DOMContentLoaded',()=>{
 
 // ── INIT ──
 // Wrap all DOM-dependent startup code so it fires after DOM is ready
-async function initSite() {
+function initSite() {
   loadSettings();
   triggerAnim("home");
-  await applyAllImgs();
+  applyAllImgs();
+  // Try Supabase refresh in background
+  refreshFromSupabase();
 
   const today = new Date().toISOString().split("T")[0];
   const ciEl = document.getElementById("ci");
