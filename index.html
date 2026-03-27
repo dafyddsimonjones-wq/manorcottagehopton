@@ -15,7 +15,7 @@
   --amber:#9A7830;--amber2:#C49A45;
   --text:#1A1916;--mid:#4A4740;--light:#8A8680;
   --stone:#D4CCB8;--stone2:#C0B89E;
-  --nav-h:64px;--tab-h:60px;--r:3px;
+  --nav-h:64px;--tab-h:60px;--r:3px;--nav-bg:rgba(36,56,38,.97);
 }
 html{scroll-behavior:smooth;-webkit-tap-highlight-color:transparent}
 body{font-family:"DM Sans",sans-serif;background:var(--cream);color:var(--text);line-height:1.65;overflow-x:hidden}
@@ -25,8 +25,8 @@ button{cursor:pointer;border:none;background:none;font-family:inherit}
 svg.icon{display:inline-block;vertical-align:middle;flex-shrink:0}
 
 /* NAV */
-#nav{position:fixed;top:0;left:0;right:0;z-index:200;height:var(--nav-h);display:flex;align-items:center;justify-content:space-between;padding:0 2.5rem;transition:background .3s,box-shadow .3s}
-#nav.solid{background:rgba(36,56,38,.97);backdrop-filter:blur(12px);box-shadow:0 2px 28px rgba(0,0,0,.25)}
+#nav{position:fixed;top:0;left:0;right:0;z-index:200;height:var(--nav-h);display:flex;align-items:center;justify-content:space-between;padding:0 2.5rem;background:var(--nav-bg);box-shadow:0 2px 28px rgba(0,0,0,.25);transition:background .3s,box-shadow .3s}
+#nav.solid{background:var(--nav-bg);backdrop-filter:blur(12px);box-shadow:0 2px 28px rgba(0,0,0,.25)}
 .logo{font-family:"Cormorant Garamond",serif;font-size:1.4rem;font-weight:400;color:#fff;letter-spacing:.04em}
 .logo em{font-style:italic;color:var(--amber2)}
 .nav-center{display:flex;gap:.2rem;align-items:center}
@@ -478,8 +478,8 @@ footer{background:var(--green);padding:3rem 2.5rem 1.5rem}
     <div class="wrap">
       <div class="two-col">
         <div class="img-stack">
-          <img class="img-main" src="https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?w=800&q=85" alt="Manor Cottage interior"/>
-          <img class="img-accent" src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&q=80" alt="Log fire"/>
+          <img data-img-id="welcome-main" class="img-main" src="https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?w=800&q=85" alt="Manor Cottage interior"/>
+          <img data-img-id="welcome-accent" class="img-accent" src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&q=80" alt="Log fire"/>
         </div>
         <div>
           <p class="lbl">The Cottage</p>
@@ -541,10 +541,10 @@ footer{background:var(--green);padding:3rem 2.5rem 1.5rem}
       <h2 class="h2 h2-inv" style="margin-top:.5rem">Four <em>en-suite</em> bedrooms</h2>
       <p class="body body-inv" style="margin-top:.7rem;max-width:560px">Each bedroom has its own private bathroom, giving total privacy for families, groups and multi-generational stays. The house sleeps up to 8, with options for extra fold-up beds for children.</p>
       <div class="rooms-grid">
-        <div class="rcard"><img src="https://images.unsplash.com/photo-1505693314120-0d443867891c?w=500&q=80" alt="King Room"/><div class="rcard-body"><div class="rname">The King Room</div><div class="rdetail">King-size bed &middot; En-suite with bath &amp; overbath shower &middot; Space for extra bed</div><span class="rtag">1st Floor</span></div></div>
-        <div class="rcard"><img src="https://images.unsplash.com/photo-1540518614846-7eded433c457?w=500&q=80" alt="Garden Room"/><div class="rcard-body"><div class="rname">The Garden Room</div><div class="rdetail">King-size or convertible twin &middot; En-suite shower &middot; Rural views</div><span class="rtag">1st Floor</span></div></div>
-        <div class="rcard"><img src="https://images.unsplash.com/photo-1560448204-603b3fc33ddc?w=500&q=80" alt="Double Room"/><div class="rcard-body"><div class="rname">The Double Room</div><div class="rdetail">Double bed &middot; En-suite shower &middot; Period beams &middot; Space for fold-up bed</div><span class="rtag">2nd Floor</span></div></div>
-        <div class="rcard"><img src="https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?w=500&q=80" alt="Twin Room"/><div class="rcard-body"><div class="rname">The Twin Room</div><div class="rdetail">Two single beds &middot; En-suite shower &middot; Exposed beamed ceiling</div><span class="rtag">2nd Floor</span></div></div>
+        <div class="rcard"><img data-img-id="room1" src="https://images.unsplash.com/photo-1505693314120-0d443867891c?w=500&q=80" alt="King Room"/><div class="rcard-body"><div class="rname">The King Room</div><div class="rdetail">King-size bed &middot; En-suite with bath &amp; overbath shower &middot; Space for extra bed</div><span class="rtag">1st Floor</span></div></div>
+        <div class="rcard"><img data-img-id="room2" src="https://images.unsplash.com/photo-1540518614846-7eded433c457?w=500&q=80" alt="Garden Room"/><div class="rcard-body"><div class="rname">The Garden Room</div><div class="rdetail">King-size or convertible twin &middot; En-suite shower &middot; Rural views</div><span class="rtag">1st Floor</span></div></div>
+        <div class="rcard"><img data-img-id="room3" src="https://images.unsplash.com/photo-1560448204-603b3fc33ddc?w=500&q=80" alt="Double Room"/><div class="rcard-body"><div class="rname">The Double Room</div><div class="rdetail">Double bed &middot; En-suite shower &middot; Period beams &middot; Space for fold-up bed</div><span class="rtag">2nd Floor</span></div></div>
+        <div class="rcard"><img data-img-id="room4" src="https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?w=500&q=80" alt="Twin Room"/><div class="rcard-body"><div class="rname">The Twin Room</div><div class="rdetail">Two single beds &middot; En-suite shower &middot; Exposed beamed ceiling</div><span class="rtag">2nd Floor</span></div></div>
       </div>
     </div>
   </div>
@@ -577,12 +577,12 @@ footer{background:var(--green);padding:3rem 2.5rem 1.5rem}
       <p class="lbl">Photo Gallery</p>
       <h2 class="h2" style="margin-top:.5rem">A glimpse <em>inside</em></h2>
       <div class="gal">
-        <img class="gw" src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=800&q=80" alt="Kitchen"/>
-        <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=500&q=80" alt="Exterior"/>
-        <img src="https://images.unsplash.com/photo-1613977257363-707ba9348227?w=500&q=80" alt="Living room"/>
-        <img src="https://images.unsplash.com/photo-1507089947368-19c1da9775ae?w=500&q=80" alt="Views"/>
-        <img class="gw" src="https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=800&q=80" alt="Bedroom"/>
-        <img src="https://images.unsplash.com/photo-1588854337221-4cf9fa96059c?w=500&q=80" alt="Bathroom"/>
+        <img data-img-id="gallery-1" class="gw" src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=800&q=80" alt="Kitchen"/>
+        <img data-img-id="gallery-2" src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=500&q=80" alt="Exterior"/>
+        <img data-img-id="gallery-3" src="https://images.unsplash.com/photo-1613977257363-707ba9348227?w=500&q=80" alt="Living room"/>
+        <img data-img-id="gallery-4" src="https://images.unsplash.com/photo-1507089947368-19c1da9775ae?w=500&q=80" alt="Views"/>
+        <img data-img-id="gallery-5" class="gw" src="https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=800&q=80" alt="Bedroom"/>
+        <img data-img-id="gallery-6" src="https://images.unsplash.com/photo-1588854337221-4cf9fa96059c?w=500&q=80" alt="Bathroom"/>
       </div>
     </div>
   </section>
@@ -613,12 +613,12 @@ footer{background:var(--green);padding:3rem 2.5rem 1.5rem}
       <p class="lbl">Highlights</p>
       <h2 class="h2" style="margin-top:.5rem;margin-bottom:1.5rem">Must-see <em>attractions</em></h2>
       <div class="act-grid">
-        <a class="acard" href="https://www.carsingtonwater.com" target="_blank" rel="noopener"><img src="https://images.unsplash.com/photo-1533130061792-64b345e4a833?w=700&q=85" alt="Carsington Water"/><div class="aov"><div class="acat">Water Sports &amp; Walking</div><div class="aname">Carsington Water</div><div class="adist">On your doorstep &middot; Sailing, cycling, windsurfing, canoeing</div><span class="avisit"><svg class="icon" width="11" height="11"><use href="#i-globe"/></svg>Visit website</span></div></a>
-        <a class="acard" href="https://www.chatsworth.org" target="_blank" rel="noopener"><img src="https://images.unsplash.com/photo-1564944406067-9eb9af32c98a?w=700&q=80" alt="Chatsworth"/><div class="aov"><div class="acat">Historic Estate</div><div class="aname">Chatsworth House</div><div class="adist">~25 mins &middot; Grand stately home &amp; gardens</div><span class="avisit"><svg class="icon" width="11" height="11"><use href="#i-globe"/></svg>Visit website</span></div></a>
-        <a class="acard" href="https://www.nationaltrust.org.uk/visit/peak-district-derbyshire/dovedale" target="_blank" rel="noopener"><img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=700&q=80" alt="Dovedale"/><div class="aov"><div class="acat">Walking &amp; Hiking</div><div class="aname">Dovedale &amp; Manifold Valley</div><div class="adist">~20 mins &middot; Spectacular gorges &amp; Thor&apos;s Cave</div><span class="avisit"><svg class="icon" width="11" height="11"><use href="#i-globe"/></svg>Visit website</span></div></a>
-        <a class="acard" href="https://www.visitpeakdistrict.com/inspire/towns-and-villages/bakewell-p680681" target="_blank" rel="noopener"><img src="https://images.unsplash.com/photo-1549490349-8643362247b5?w=700&q=80" alt="Bakewell"/><div class="aov"><div class="acat">Market Town</div><div class="aname">Bakewell &amp; Ashbourne</div><div class="adist">~20&ndash;25 mins &middot; Shops, caf&eacute;s &amp; famous tarts</div><span class="avisit"><svg class="icon" width="11" height="11"><use href="#i-globe"/></svg>Visit website</span></div></a>
-        <a class="acard" href="https://www.cromfordmills.org.uk" target="_blank" rel="noopener"><img src="https://images.unsplash.com/photo-1588880331179-bc9b93a8cb5e?w=700&q=80" alt="Cromford Mill"/><div class="aov"><div class="acat">UNESCO Heritage</div><div class="aname">Cromford Mill</div><div class="adist">~10 mins &middot; Arkwright&apos;s world-famous mill</div><span class="avisit"><svg class="icon" width="11" height="11"><use href="#i-globe"/></svg>Visit website</span></div></a>
-        <a class="acard" href="https://www.heightsofabraham.com" target="_blank" rel="noopener"><img src="https://images.unsplash.com/photo-1558452919-08ae4aea8e29?w=700&q=80" alt="Heights of Abraham"/><div class="aov"><div class="acat">Family Adventure</div><div class="aname">Heights of Abraham</div><div class="adist">~15 mins &middot; Cable car, caverns &amp; Matlock Bath</div><span class="avisit"><svg class="icon" width="11" height="11"><use href="#i-globe"/></svg>Visit website</span></div></a>
+        <a class="acard" href="https://www.carsingtonwater.com" target="_blank" rel="noopener"><img data-img-id="explore-1" src="https://images.unsplash.com/photo-1533130061792-64b345e4a833?w=700&q=85" alt="Carsington Water"/><div class="aov"><div class="acat">Water Sports &amp; Walking</div><div class="aname">Carsington Water</div><div class="adist">On your doorstep &middot; Sailing, cycling, windsurfing, canoeing</div><span class="avisit"><svg class="icon" width="11" height="11"><use href="#i-globe"/></svg>Visit website</span></div></a>
+        <a class="acard" href="https://www.chatsworth.org" target="_blank" rel="noopener"><img data-img-id="explore-2" src="https://images.unsplash.com/photo-1564944406067-9eb9af32c98a?w=700&q=80" alt="Chatsworth"/><div class="aov"><div class="acat">Historic Estate</div><div class="aname">Chatsworth House</div><div class="adist">~25 mins &middot; Grand stately home &amp; gardens</div><span class="avisit"><svg class="icon" width="11" height="11"><use href="#i-globe"/></svg>Visit website</span></div></a>
+        <a class="acard" href="https://www.nationaltrust.org.uk/visit/peak-district-derbyshire/dovedale" target="_blank" rel="noopener"><img data-img-id="explore-3" src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=700&q=80" alt="Dovedale"/><div class="aov"><div class="acat">Walking &amp; Hiking</div><div class="aname">Dovedale &amp; Manifold Valley</div><div class="adist">~20 mins &middot; Spectacular gorges &amp; Thor&apos;s Cave</div><span class="avisit"><svg class="icon" width="11" height="11"><use href="#i-globe"/></svg>Visit website</span></div></a>
+        <a class="acard" href="https://www.visitpeakdistrict.com/inspire/towns-and-villages/bakewell-p680681" target="_blank" rel="noopener"><img data-img-id="explore-4" src="https://images.unsplash.com/photo-1549490349-8643362247b5?w=700&q=80" alt="Bakewell"/><div class="aov"><div class="acat">Market Town</div><div class="aname">Bakewell &amp; Ashbourne</div><div class="adist">~20&ndash;25 mins &middot; Shops, caf&eacute;s &amp; famous tarts</div><span class="avisit"><svg class="icon" width="11" height="11"><use href="#i-globe"/></svg>Visit website</span></div></a>
+        <a class="acard" href="https://www.cromfordmills.org.uk" target="_blank" rel="noopener"><img data-img-id="explore-5" src="https://images.unsplash.com/photo-1588880331179-bc9b93a8cb5e?w=700&q=80" alt="Cromford Mill"/><div class="aov"><div class="acat">UNESCO Heritage</div><div class="aname">Cromford Mill</div><div class="adist">~10 mins &middot; Arkwright&apos;s world-famous mill</div><span class="avisit"><svg class="icon" width="11" height="11"><use href="#i-globe"/></svg>Visit website</span></div></a>
+        <a class="acard" href="https://www.heightsofabraham.com" target="_blank" rel="noopener"><img data-img-id="explore-6" src="https://images.unsplash.com/photo-1558452919-08ae4aea8e29?w=700&q=80" alt="Heights of Abraham"/><div class="aov"><div class="acat">Family Adventure</div><div class="aname">Heights of Abraham</div><div class="adist">~15 mins &middot; Cable car, caverns &amp; Matlock Bath</div><span class="avisit"><svg class="icon" width="11" height="11"><use href="#i-globe"/></svg>Visit website</span></div></a>
       </div>
     </div>
   </section>
@@ -710,7 +710,7 @@ footer{background:var(--green);padding:3rem 2.5rem 1.5rem}
     <div class="wrap">
       <div class="host-layout">
         <div class="host-photo-wrap">
-          <img class="host-photo" src="https://a0.muscache.com/im/pictures/user/User/original/4492dd38-f27e-4cd1-8f39-f083d71c6ef6.jpeg" alt="Libba" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+          <img data-img-id="host-photo" class="host-photo" src="https://a0.muscache.com/im/pictures/user/User/original/4492dd38-f27e-4cd1-8f39-f083d71c6ef6.jpeg" alt="Libba" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
           <div class="host-photo-fallback" style="display:none">L</div>
           <div class="host-badge" style="margin-bottom:.8rem"><svg class="icon" width="13" height="13"><use href="#i-award"/></svg>Superhost</div>
           <div style="font-size:.82rem;color:rgba(255,255,255,.5)">Member since 2016</div>
@@ -891,6 +891,7 @@ footer{background:var(--green);padding:3rem 2.5rem 1.5rem}
               <div class="sfg"><label>Tagline (Hero heading)</label><input type="text" id="s-tagline" value="Where history meets the hills"/></div>
               <div class="sfg"><label>Location Subtitle</label><input type="text" id="s-locsub" value="Hopton Village &middot; Derbyshire Peak District"/></div>
               <div class="sfg"><label>Max Guests</label><input type="number" id="s-maxguests" value="8" min="1" max="20"/></div>
+              <div class="sfg"><label>Navigation Bar Colour</label><div style="display:flex;gap:.6rem;align-items:center"><input type="color" id="s-navcol" value="#243826" style="width:44px;height:36px;padding:2px;border:1px solid var(--stone);border-radius:var(--r);cursor:pointer;background:var(--cream)"/><input type="text" id="s-navcol-hex" value="#243826" placeholder="#243826" style="flex:1" oninput="syncNavColHex()"/></div></div>
             </div>
           </div>
 
@@ -929,84 +930,39 @@ footer{background:var(--green);padding:3rem 2.5rem 1.5rem}
 
           <!-- Image Manager -->
           <div class="settings-card" style="grid-column:1/-1">
-            <div class="settings-card-head"><svg class="icon" width="15" height="15"><use href="#i-leaf"/></svg><h4>Image Manager</h4></div>
+            <div class="settings-card-head"><svg class="icon" width="15" height="15"><use href="#i-leaf"/></svg><h4>Image Manager &mdash; All Site Photos</h4></div>
             <div class="settings-card-body">
-              <p style="font-size:.82rem;color:var(--mid);margin-bottom:1.2rem">Add, replace or remove images for each section of the site. Paste a URL or upload a file directly. Changes apply immediately.</p>
+              <p style="font-size:.82rem;color:var(--mid);margin-bottom:1.2rem">Replace any photo on the site. Upload your own file or paste a URL. Changes apply instantly and are saved for next time.</p>
 
-              <div class="img-section-tabs">
-                <button class="img-tab active" onclick="switchImgTab('hero',this)">Hero Background</button>
-                <button class="img-tab" onclick="switchImgTab('gallery',this)">Gallery (Cottage tab)</button>
-                <button class="img-tab" onclick="switchImgTab('room1',this)">Room 1 — King</button>
-                <button class="img-tab" onclick="switchImgTab('room2',this)">Room 2 — Garden</button>
-                <button class="img-tab" onclick="switchImgTab('room3',this)">Room 3 — Double</button>
-                <button class="img-tab" onclick="switchImgTab('room4',this)">Room 4 — Twin</button>
-              </div>
-
-              <!-- Hero -->
-              <div class="img-panel active" id="ip-hero">
-                <p style="font-size:.8rem;color:var(--mid);margin-bottom:.8rem">This is the full-screen background image on the homepage.</p>
-                <div id="hero-preview" class="img-grid-preview"></div>
-                <label class="img-upload-area" id="hero-drop">
-                  <input type="file" accept="image/*" onchange="handleFileUpload(event,'hero')"/>
-                  <span class="img-upload-label">
-                    <svg class="icon" width="22" height="22"><use href="#i-leaf"/></svg>
-                    <strong>Click to upload</strong> or drag &amp; drop an image file
-                  </span>
-                </label>
-                <div class="img-add-row">
-                  <div class="sfg"><label>Or paste an image URL</label><input type="url" id="hero-url-in" placeholder="https://..." /></div>
-                  <button class="btn btn-amber" onclick="addImgUrl('hero')">Add</button>
-                </div>
-                <p class="img-note">Recommended: landscape image, at least 1800px wide. Free sources: <a href="https://unsplash.com" target="_blank" style="color:var(--amber)">Unsplash</a> or upload your own cottage photos.</p>
+              <div class="img-section-tabs" id="img-tabs">
+                <button class="img-tab active" onclick="switchImgTab('hero',this)">Hero</button>
+                <button class="img-tab" onclick="switchImgTab('welcome-main',this)">Welcome (main)</button>
+                <button class="img-tab" onclick="switchImgTab('welcome-accent',this)">Welcome (inset)</button>
+                <button class="img-tab" onclick="switchImgTab('gallery',this)">Gallery</button>
+                <button class="img-tab" onclick="switchImgTab('room1',this)">Room 1</button>
+                <button class="img-tab" onclick="switchImgTab('room2',this)">Room 2</button>
+                <button class="img-tab" onclick="switchImgTab('room3',this)">Room 3</button>
+                <button class="img-tab" onclick="switchImgTab('room4',this)">Room 4</button>
+                <button class="img-tab" onclick="switchImgTab('explore-1',this)">Carsington</button>
+                <button class="img-tab" onclick="switchImgTab('explore-2',this)">Chatsworth</button>
+                <button class="img-tab" onclick="switchImgTab('explore-3',this)">Dovedale</button>
+                <button class="img-tab" onclick="switchImgTab('explore-4',this)">Bakewell</button>
+                <button class="img-tab" onclick="switchImgTab('explore-5',this)">Cromford</button>
+                <button class="img-tab" onclick="switchImgTab('explore-6',this)">Heights</button>
+                <button class="img-tab" onclick="switchImgTab('host-photo',this)">Host Photo</button>
               </div>
 
-              <!-- Gallery -->
-              <div class="img-panel" id="ip-gallery">
-                <p style="font-size:.8rem;color:var(--mid);margin-bottom:.8rem">These images appear in the photo gallery on The Cottage tab. Add up to 8 images — the first two display wider.</p>
-                <div id="gallery-preview" class="img-grid-preview"></div>
-                <label class="img-upload-area" id="gallery-drop">
-                  <input type="file" accept="image/*" multiple onchange="handleFileUpload(event,'gallery')"/>
-                  <span class="img-upload-label">
-                    <svg class="icon" width="22" height="22"><use href="#i-leaf"/></svg>
-                    <strong>Click to upload</strong> or drag &amp; drop (multiple files OK)
-                  </span>
-                </label>
-                <div class="img-add-row">
-                  <div class="sfg"><label>Or paste an image URL</label><input type="url" id="gallery-url-in" placeholder="https://..."/></div>
-                  <button class="btn btn-amber" onclick="addImgUrl('gallery')">Add</button>
-                </div>
+              <div id="img-panel-area">
+                <!-- rendered by JS -->
               </div>
 
-              <!-- Rooms -->
-              <div class="img-panel" id="ip-room1">
-                <p style="font-size:.8rem;color:var(--mid);margin-bottom:.8rem">Photo for <strong>The King Room</strong> shown on The Cottage tab.</p>
-                <div id="room1-preview" class="img-grid-preview"></div>
-                <label class="img-upload-area"><input type="file" accept="image/*" onchange="handleFileUpload(event,'room1')"/><span class="img-upload-label"><svg class="icon" width="22" height="22"><use href="#i-leaf"/></svg><strong>Click to upload</strong> a bedroom photo</span></label>
-                <div class="img-add-row"><div class="sfg"><label>Or paste URL</label><input type="url" id="room1-url-in" placeholder="https://..."/></div><button class="btn btn-amber" onclick="addImgUrl('room1')">Add</button></div>
+              <div style="margin-top:1.2rem;padding:1rem;background:var(--cream2);border-radius:var(--r)">
+                <p style="font-size:.78rem;color:var(--mid)"><strong>Tips:</strong> Use landscape photos (wider than tall) for best results. Free high-quality photos: <a href="https://unsplash.com" target="_blank" style="color:var(--amber)">Unsplash.com</a>. Your own photos can be dragged straight onto the upload area. Max recommended file size: 3MB per image.</p>
               </div>
-              <div class="img-panel" id="ip-room2">
-                <p style="font-size:.8rem;color:var(--mid);margin-bottom:.8rem">Photo for <strong>The Garden Room</strong>.</p>
-                <div id="room2-preview" class="img-grid-preview"></div>
-                <label class="img-upload-area"><input type="file" accept="image/*" onchange="handleFileUpload(event,'room2')"/><span class="img-upload-label"><svg class="icon" width="22" height="22"><use href="#i-leaf"/></svg><strong>Click to upload</strong></span></label>
-                <div class="img-add-row"><div class="sfg"><label>Or paste URL</label><input type="url" id="room2-url-in" placeholder="https://..."/></div><button class="btn btn-amber" onclick="addImgUrl('room2')">Add</button></div>
-              </div>
-              <div class="img-panel" id="ip-room3">
-                <p style="font-size:.8rem;color:var(--mid);margin-bottom:.8rem">Photo for <strong>The Double Room</strong>.</p>
-                <div id="room3-preview" class="img-grid-preview"></div>
-                <label class="img-upload-area"><input type="file" accept="image/*" onchange="handleFileUpload(event,'room3')"/><span class="img-upload-label"><svg class="icon" width="22" height="22"><use href="#i-leaf"/></svg><strong>Click to upload</strong></span></label>
-                <div class="img-add-row"><div class="sfg"><label>Or paste URL</label><input type="url" id="room3-url-in" placeholder="https://..."/></div><button class="btn btn-amber" onclick="addImgUrl('room3')">Add</button></div>
-              </div>
-              <div class="img-panel" id="ip-room4">
-                <p style="font-size:.8rem;color:var(--mid);margin-bottom:.8rem">Photo for <strong>The Twin Room</strong>.</p>
-                <div id="room4-preview" class="img-grid-preview"></div>
-                <label class="img-upload-area"><input type="file" accept="image/*" onchange="handleFileUpload(event,'room4')"/><span class="img-upload-label"><svg class="icon" width="22" height="22"><use href="#i-leaf"/></svg><strong>Click to upload</strong></span></label>
-                <div class="img-add-row"><div class="sfg"><label>Or paste URL</label><input type="url" id="room4-url-in" placeholder="https://..."/></div><button class="btn btn-amber" onclick="addImgUrl('room4')">Add</button></div>
-              </div>
-
             </div>
           </div>
 
-          <!-- Password -->
+          <!-- Password -->          <!-- Password -->
           <div class="settings-card" style="grid-column:1/-1">
             <div class="settings-card-head"><svg class="icon" width="15" height="15"><use href="#i-key"/></svg><h4>Change Admin Password</h4></div>
             <div class="settings-card-body" style="display:grid;grid-template-columns:1fr 1fr;gap:1rem">
@@ -1131,7 +1087,7 @@ function goAdmin(){
 }
 
 // ── SETTINGS ──
-const DEFAULTS={propname:"Manor Cottage",tagline:"Where history meets the hills",locsub:"Hopton Village · Derbyshire Peak District",rate:200,clean:80,dogfee:40,bedfee:20,checkin:"4:00 pm – 10:00 pm",checkout:"Before 10:00 am",minstay:2,maxdogs:2,maxguests:8,hostname:"Libba",email:"hello@manorcottagehopton.co.uk",googleurl:"",taurl:""};
+const DEFAULTS={navcol:"#243826",propname:"Manor Cottage",tagline:"Where history meets the hills",locsub:"Hopton Village · Derbyshire Peak District",rate:200,clean:80,dogfee:40,bedfee:20,checkin:"4:00 pm – 10:00 pm",checkout:"Before 10:00 am",minstay:2,maxdogs:2,maxguests:8,hostname:"Libba",email:"hello@manorcottagehopton.co.uk",googleurl:"",taurl:""};
 let cfg=Object.assign({},DEFAULTS);
 
 function loadSettings(){
@@ -1161,6 +1117,7 @@ function loadSettings(){
 function applySettings(){
   const pn=document.getElementById("book-prop-name");if(pn)pn.textContent=cfg.propname+", Hopton";
   const bp=document.getElementById("book-price");if(bp)bp.textContent="From £"+cfg.rate;
+  if(cfg.navcol){document.documentElement.style.setProperty('--nav-bg',hexToRgba(cfg.navcol,.97));}
 }
 function saveSettings(){
   const g=id=>document.getElementById(id);
@@ -1323,146 +1280,209 @@ function renderChat(){
 function scrollChat(){const b=document.getElementById("chat-msgs");b.scrollTop=b.scrollHeight;}
 
 // ── IMAGE MANAGER ──
-// Default images per section (fallbacks)
-const IMG_DEFAULTS = {
-  hero: ["https://images.unsplash.com/photo-1559827291-72f3dc58fb31?w=1800&q=85"],
-  gallery: [
-    "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=800&q=80",
-    "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=500&q=80",
-    "https://images.unsplash.com/photo-1613977257363-707ba9348227?w=500&q=80",
-    "https://images.unsplash.com/photo-1507089947368-19c1da9775ae?w=500&q=80",
-    "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=800&q=80",
-    "https://images.unsplash.com/photo-1588854337221-4cf9fa96059c?w=500&q=80"
-  ],
-  room1: ["https://images.unsplash.com/photo-1505693314120-0d443867891c?w=500&q=80"],
-  room2: ["https://images.unsplash.com/photo-1540518614846-7eded433c457?w=500&q=80"],
-  room3: ["https://images.unsplash.com/photo-1560448204-603b3fc33ddc?w=500&q=80"],
-  room4: ["https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?w=500&q=80"]
+const IMG_META = {
+  'hero':           {label:'Hero Background',    multi:false, desc:'Full-screen homepage background. Landscape, at least 1800px wide.'},
+  'welcome-main':   {label:'Welcome — Main',     multi:false, desc:'Large photo on the homepage welcome section.'},
+  'welcome-accent': {label:'Welcome — Inset',    multi:false, desc:'Small overlapping accent photo on homepage.'},
+  'gallery':        {label:'Gallery Photos',     multi:true,  desc:'Photos shown in the gallery on The Cottage tab. Up to 8 images.'},
+  'room1':          {label:'Room 1 — King',      multi:false, desc:'The King Room bedroom photo.'},
+  'room2':          {label:'Room 2 — Garden',    multi:false, desc:'The Garden Room bedroom photo.'},
+  'room3':          {label:'Room 3 — Double',    multi:false, desc:'The Double Room bedroom photo.'},
+  'room4':          {label:'Room 4 — Twin',      multi:false, desc:'The Twin Room bedroom photo.'},
+  'explore-1':      {label:'Explore — Carsington Water', multi:false, desc:'Carsington Water activity card photo.'},
+  'explore-2':      {label:'Explore — Chatsworth',       multi:false, desc:'Chatsworth House activity card photo.'},
+  'explore-3':      {label:'Explore — Dovedale',         multi:false, desc:'Dovedale activity card photo.'},
+  'explore-4':      {label:'Explore — Bakewell',         multi:false, desc:'Bakewell activity card photo.'},
+  'explore-5':      {label:'Explore — Cromford',         multi:false, desc:'Cromford Mill activity card photo.'},
+  'explore-6':      {label:'Explore — Heights',          multi:false, desc:'Heights of Abraham activity card photo.'},
+  'host-photo':     {label:'Host Photo',         multi:false, desc:'Libba's profile photo on the Your Host tab.'},
 };
 
-function getImgs(section) {
-  try {
-    const s = localStorage.getItem("mc_imgs_" + section);
-    return s ? JSON.parse(s) : [...IMG_DEFAULTS[section]];
-  } catch(e) { return [...IMG_DEFAULTS[section]]; }
+const IMG_DEFAULTS = {
+  'hero':           ['https://images.unsplash.com/photo-1559827291-72f3dc58fb31?w=1800&q=85'],
+  'welcome-main':   ['https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?w=800&q=85'],
+  'welcome-accent': ['https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&q=80'],
+  'gallery':        ['https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=800&q=80','https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=500&q=80','https://images.unsplash.com/photo-1613977257363-707ba9348227?w=500&q=80','https://images.unsplash.com/photo-1507089947368-19c1da9775ae?w=500&q=80','https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=800&q=80','https://images.unsplash.com/photo-1588854337221-4cf9fa96059c?w=500&q=80'],
+  'room1':          ['https://images.unsplash.com/photo-1505693314120-0d443867891c?w=500&q=80'],
+  'room2':          ['https://images.unsplash.com/photo-1540518614846-7eded433c457?w=500&q=80'],
+  'room3':          ['https://images.unsplash.com/photo-1560448204-603b3fc33ddc?w=500&q=80'],
+  'room4':          ['https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?w=500&q=80'],
+  'explore-1':      ['https://images.unsplash.com/photo-1533130061792-64b345e4a833?w=700&q=85'],
+  'explore-2':      ['https://images.unsplash.com/photo-1564944406067-9eb9af32c98a?w=700&q=80'],
+  'explore-3':      ['https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=700&q=80'],
+  'explore-4':      ['https://images.unsplash.com/photo-1549490349-8643362247b5?w=700&q=80'],
+  'explore-5':      ['https://images.unsplash.com/photo-1588880331179-bc9b93a8cb5e?w=700&q=80'],
+  'explore-6':      ['https://images.unsplash.com/photo-1558452919-08ae4aea8e29?w=700&q=80'],
+  'host-photo':     ['https://a0.muscache.com/im/pictures/user/User/original/4492dd38-f27e-4cd1-8f39-f083d71c6ef6.jpeg'],
+};
+
+function getImgs(section){
+  try{const s=localStorage.getItem('mc_imgs_'+section);return s?JSON.parse(s):[...IMG_DEFAULTS[section]];}
+  catch(e){return[...IMG_DEFAULTS[section]];}
 }
-function saveImgs(section, arr) {
-  try { localStorage.setItem("mc_imgs_" + section, JSON.stringify(arr)); } catch(e) {}
+function saveImgs(section,arr){
+  try{localStorage.setItem('mc_imgs_'+section,JSON.stringify(arr));}catch(e){}
 }
 
-function renderImgPreview(section) {
-  const container = document.getElementById(section + "-preview");
-  if (!container) return;
+function buildImgPanel(section){
+  const meta = IMG_META[section];
   const imgs = getImgs(section);
-  const maxOne = section === "hero" || section.startsWith("room");
-  if (imgs.length === 0) {
-    container.innerHTML = '<div class="img-empty">No images added yet — upload one below or paste a URL.</div>';
-    return;
+  const dropId = 'drop-'+section;
+
+  let thumbs = '';
+  if(imgs.length===0){
+    thumbs = '<div class="img-empty">No image — upload one or paste a URL below.</div>';
+  } else {
+    thumbs = '<div class="img-grid-preview">' +
+      imgs.map((url,i)=>`
+        <div class="img-thumb">
+          <img src="${url}" alt="img ${i+1}" onerror="this.parentElement.style.background='var(--cream2)'"/>
+          <button class="img-thumb-del" onclick="deleteImg('${section}',${i})" title="Remove">&times;</button>
+          <span class="img-thumb-label">${meta.multi ? 'Image '+(i+1) : 'Current photo'}</span>
+        </div>`).join('') +
+      '</div>';
   }
-  container.innerHTML = imgs.map((url, i) => `
-    <div class="img-thumb">
-      <img src="${url}" alt="Image ${i+1}" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 4 3%22><rect width=%224%22 height=%223%22 fill=%22%23d4ccb8%22/></svg>'"/>
-      <button class="img-thumb-del" onclick="deleteImg('${section}',${i})" title="Remove">&times;</button>
-      <span class="img-thumb-label">${i === 0 ? (section === 'hero' ? 'Active hero' : 'Active') : 'Image ' + (i+1)}</span>
-    </div>`).join("");
+
+  const multi = meta.multi ? ' multiple' : '';
+
+  return `
+    <p style="font-size:.8rem;color:var(--mid);margin-bottom:.9rem">${meta.desc}</p>
+    ${thumbs}
+    <label class="img-upload-area" id="${dropId}">
+      <input type="file" accept="image/*"${multi} onchange="handleFileUpload(event,'${section}')"/>
+      <span class="img-upload-label">
+        <svg class="icon" width="24" height="24" style="color:var(--stone2)"><use href="#i-leaf"/></svg>
+        <strong>Click to upload${meta.multi?' (multiple OK)':''}</strong> or drag &amp; drop here
+      </span>
+    </label>
+    <div class="img-add-row">
+      <div class="sfg" style="margin:0;flex:1"><label>Or paste an image URL</label><input type="url" id="url-in-${section}" placeholder="https://..." onkeydown="if(event.key==='Enter')addImgUrl('${section}')"/></div>
+      <button class="btn btn-amber" onclick="addImgUrl('${section}')">Add</button>
+      ${imgs.length>0&&!meta.multi?'<button class="btn" style="border:1px solid var(--stone);color:var(--mid);white-space:nowrap" onclick="resetImgDefault(''+section+'')">Reset default</button>':''}
+    </div>`;
 }
 
-function deleteImg(section, idx) {
-  const imgs = getImgs(section);
-  imgs.splice(idx, 1);
-  saveImgs(section, imgs);
-  renderImgPreview(section);
-  applyImgsToSite(section, imgs);
+function renderImgPanel(section){
+  const area = document.getElementById('img-panel-area');
+  if(area) area.innerHTML = buildImgPanel(section);
+  // re-bind drag-drop
+  setTimeout(()=>{
+    const drop = document.getElementById('drop-'+section);
+    if(!drop)return;
+    drop.addEventListener('dragover',e=>{e.preventDefault();drop.classList.add('drag');});
+    drop.addEventListener('dragleave',()=>drop.classList.remove('drag'));
+    drop.addEventListener('drop',e=>{
+      e.preventDefault();drop.classList.remove('drag');
+      const files=Array.from(e.dataTransfer.files).filter(f=>f.type.startsWith('image/'));
+      if(files.length){handleFileUpload({target:{files,value:''}},section);}
+    });
+  },30);
 }
 
-function addImgUrl(section) {
-  const inp = document.getElementById(section + "-url-in");
-  const url = inp.value.trim();
-  if (!url || !url.startsWith("http")) { alert("Please enter a valid image URL starting with https://"); return; }
-  const maxOne = section === "hero" || section.startsWith("room");
-  let imgs = getImgs(section);
-  if (maxOne) imgs = [url]; else imgs.push(url);
-  saveImgs(section, imgs);
-  renderImgPreview(section);
-  applyImgsToSite(section, imgs);
-  inp.value = "";
+function switchImgTab(section,btn){
+  document.querySelectorAll('.img-tab').forEach(t=>t.classList.remove('active'));
+  btn.classList.add('active');
+  currentImgSection = section;
+  renderImgPanel(section);
 }
 
-function handleFileUpload(e, section) {
-  const files = Array.from(e.target.files);
-  if (!files.length) return;
-  const maxOne = section === "hero" || section.startsWith("room");
-  let imgs = maxOne ? [] : getImgs(section);
-  let loaded = 0;
-  files.forEach(file => {
-    const reader = new FileReader();
-    reader.onload = ev => {
-      if (maxOne) { imgs = [ev.target.result]; }
-      else { imgs.push(ev.target.result); }
+let currentImgSection = 'hero';
+
+function deleteImg(section,idx){
+  const imgs=getImgs(section);
+  imgs.splice(idx,1);
+  saveImgs(section,imgs);
+  applyImgToSite(section,imgs);
+  renderImgPanel(section);
+}
+
+function resetImgDefault(section){
+  if(!confirm('Reset to default placeholder image?'))return;
+  try{localStorage.removeItem('mc_imgs_'+section);}catch(e){}
+  applyImgToSite(section,[...IMG_DEFAULTS[section]]);
+  renderImgPanel(section);
+}
+
+function addImgUrl(section){
+  const inp=document.getElementById('url-in-'+section);
+  const url=(inp.value||'').trim();
+  if(!url||!url.startsWith('http')){alert('Please enter a valid URL starting with https://');return;}
+  const meta=IMG_META[section];
+  let imgs=meta.multi?getImgs(section):[];
+  imgs=[...imgs,url];
+  saveImgs(section,imgs);
+  applyImgToSite(section,imgs);
+  renderImgPanel(section);
+}
+
+function handleFileUpload(e,section){
+  const files=Array.from(e.target.files||[]);
+  if(!files.length)return;
+  const meta=IMG_META[section];
+  let existing=meta.multi?getImgs(section):[];
+  let loaded=0;
+  files.forEach(file=>{
+    const reader=new FileReader();
+    reader.onload=ev=>{
+      existing.push(ev.target.result);
       loaded++;
-      if (loaded === files.length) {
-        saveImgs(section, imgs);
-        renderImgPreview(section);
-        applyImgsToSite(section, imgs);
+      if(loaded===files.length){
+        saveImgs(section,existing);
+        applyImgToSite(section,existing);
+        renderImgPanel(section);
       }
     };
     reader.readAsDataURL(file);
   });
-  e.target.value = "";
+  if(e.target&&'value' in e.target)e.target.value='';
 }
 
-function applyImgsToSite(section, imgs) {
-  if (!imgs.length) return;
-  if (section === "hero") {
-    const hbg = document.querySelector(".hero-bg");
-    if (hbg) hbg.style.backgroundImage = `linear-gradient(to bottom,rgba(0,0,0,.05) 0%,rgba(10,22,12,.5) 50%,rgba(10,22,12,.88) 100%),url("${imgs[0]}")`;
-  }
-  if (section === "gallery") {
-    const galImgs = document.querySelectorAll("#page-cottage .gal img");
-    imgs.forEach((url, i) => { if (galImgs[i]) galImgs[i].src = url; });
-  }
-  if (section.startsWith("room")) {
-    const idx = parseInt(section.replace("room","")) - 1;
-    const roomImgs = document.querySelectorAll(".rcard img");
-    if (roomImgs[idx]) roomImgs[idx].src = imgs[0];
+function applyImgToSite(section,imgs){
+  if(!imgs||!imgs.length)return;
+  const url=imgs[0];
+  if(section==='hero'){
+    const hbg=document.querySelector('.hero-bg');
+    if(hbg)hbg.style.backgroundImage=`linear-gradient(to bottom,rgba(0,0,0,.05) 0%,rgba(10,22,12,.5) 50%,rgba(10,22,12,.88) 100%),url("${url}")`;
+  } else if(section==='gallery'){
+    const galImgs=document.querySelectorAll('[data-img-id^="gallery-"]');
+    imgs.forEach((u,i)=>{if(galImgs[i])galImgs[i].src=u;});
+  } else {
+    const el=document.querySelector(`[data-img-id="${section}"]`);
+    if(el)el.src=url;
   }
 }
 
-function applyAllImgs() {
-  Object.keys(IMG_DEFAULTS).forEach(section => {
-    applyImgsToSite(section, getImgs(section));
+function applyAllImgs(){
+  Object.keys(IMG_DEFAULTS).forEach(section=>{
+    applyImgToSite(section,getImgs(section));
   });
 }
 
-function switchImgTab(section, btn) {
-  document.querySelectorAll(".img-tab").forEach(t => t.classList.remove("active"));
-  document.querySelectorAll(".img-panel").forEach(p => p.classList.remove("active"));
-  btn.classList.add("active");
-  document.getElementById("ip-" + section).classList.add("active");
-  renderImgPreview(section);
-}
-
-function initImgManager() {
-  // Render initial tab
-  renderImgPreview("hero");
-  // Apply all saved images to the live site
+function initImgManager(){
+  currentImgSection='hero';
+  document.querySelectorAll('.img-tab').forEach((t,i)=>t.classList.toggle('active',i===0));
+  renderImgPanel('hero');
   applyAllImgs();
-  // Drag-and-drop on upload areas
-  ["hero","gallery","room1","room2","room3","room4"].forEach(section => {
-    const area = document.getElementById(section + "-drop");
-    if (!area) return;
-    area.addEventListener("dragover", e => { e.preventDefault(); area.classList.add("drag"); });
-    area.addEventListener("dragleave", () => area.classList.remove("drag"));
-    area.addEventListener("drop", e => {
-      e.preventDefault(); area.classList.remove("drag");
-      const files = Array.from(e.dataTransfer.files).filter(f => f.type.startsWith("image/"));
-      if (files.length) {
-        const fakeEvt = { target: { files, value: "" } };
-        handleFileUpload(fakeEvt, section);
-      }
-    });
-  });
 }
+
+// ── INIT ──function hexToRgba(hex,a){
+  const r=parseInt(hex.slice(1,3),16),g=parseInt(hex.slice(3,5),16),b=parseInt(hex.slice(5,7),16);
+  return `rgba(${r},${g},${b},${a})`;
+}
+function syncNavColHex(){
+  const hex=document.getElementById('s-navcol-hex').value.trim();
+  if(/^#[0-9a-fA-F]{6}$/.test(hex)){
+    document.getElementById('s-navcol').value=hex;
+    document.documentElement.style.setProperty('--nav-bg',hexToRgba(hex,.97));
+  }
+}
+document.addEventListener('DOMContentLoaded',()=>{
+  const cp=document.getElementById('s-navcol');
+  if(cp)cp.addEventListener('input',function(){
+    document.getElementById('s-navcol-hex').value=this.value;
+    document.documentElement.style.setProperty('--nav-bg',hexToRgba(this.value,.97));
+  });
+});
 
 // ── INIT ──
 loadSettings();
