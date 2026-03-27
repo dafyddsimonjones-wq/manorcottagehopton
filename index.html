@@ -1646,4 +1646,29 @@ document.addEventListener('DOMContentLoaded',()=>{
 // Wrap all DOM-dependent startup code so it fires after DOM is ready
 function initSite() {
   loadSettings();
-  trigg
+  erAnim("home");
+  applyAllImgs();
+
+  // Set min dates on booking form
+  const today = new Date().toISOString().split("T")[0];
+  const ciEl = document.getElementById("ci");
+  const coEl = document.getElementById("co");
+  if (ciEl) {
+    ciEl.min = today;
+    ciEl.addEventListener("change", function() {
+      const d = new Date(this.value); d.setDate(d.getDate() + 1);
+      if (coEl) coEl.min = d.toISOString().split("T")[0];
+      calc();
+    });
+  }
+  if (coEl) coEl.min = today;
+}
+
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", initSite);
+} else {
+  initSite();
+}
+</script>
+</body>
+</html>
