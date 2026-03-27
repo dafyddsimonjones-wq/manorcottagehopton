@@ -272,7 +272,9 @@ footer{background:var(--green);padding:3rem 2.5rem 1.5rem}
 .fcol ul li a{display:flex;align-items:center;gap:.5rem;color:rgba(255,255,255,.48);font-size:.82rem;transition:color .2s}
 .fcol ul li a:hover{color:var(--amber2)}
 .fcol ul li a svg{flex-shrink:0;opacity:.7}
-.foot-bottom{max-width:1160px;margin:.9rem auto 0;padding-top:.9rem;border-top:1px solid rgba(255,255,255,.08);display:flex;justify-content:space-between;flex-wrap:wrap;gap:.5rem;font-size:.71rem;color:rgba(255,255,255,.25)}
+.foot-bottom{max-width:1160px;margin:.9rem auto 0;padding-top:.9rem;border-top:1px solid rgba(255,255,255,.08);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.5rem;font-size:.71rem;color:rgba(255,255,255,.25)}
+.admin-btn{font-size:.62rem;color:rgba(255,255,255,.15);background:none;border:none;cursor:pointer;font-family:inherit;letter-spacing:.08em;padding:.2rem .4rem;border-radius:2px;transition:color .2s,background .2s}
+.admin-btn:hover{color:rgba(255,255,255,.45);background:rgba(255,255,255,.06)}
 
 /* MODAL */
 .modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:300;align-items:center;justify-content:center;padding:1rem}
@@ -529,7 +531,7 @@ footer{background:var(--green);padding:3rem 2.5rem 1.5rem}
       <div class="fcol"><h4>Reviews</h4><ul><li><a href="https://www.google.com/maps" target="_blank"><svg class="icon" width="13" height="13"><use href="#i-google"/></svg>Google Reviews</a></li><li><a href="https://www.tripadvisor.co.uk" target="_blank"><svg class="icon" width="13" height="13"><use href="#i-star"/></svg>TripAdvisor</a></li></ul></div>
       <div class="fcol"><h4>Contact</h4><ul><li><a href="/cdn-cgi/l/email-protection#751d1019191a3518141b1a07161a01011412101d1a05011a1b5b161a5b001e"><svg class="icon" width="13" height="13"><use href="#i-mail"/></svg>Email Us</a></li><li><a href="#" onclick="go('book');return false"><svg class="icon" width="13" height="13"><use href="#i-book"/></svg>Book Now</a></li></ul></div>
     </div>
-    <div class="foot-bottom"><span>&copy; 2025 Manor Cottage, Hopton, Derbyshire</span><span>Hosted by Libba &middot; Superhost &middot; &starf; 4.91</span></div>
+    <div class="foot-bottom"><span>&copy; 2025 Manor Cottage, Hopton, Derbyshire</span><span>Hosted by Libba &middot; Superhost &middot; &starf; 4.91</span><button class="admin-btn" onclick="adminEntry()" title="Admin">&#x2022;</button></div>
   </footer>
 </div>
 
@@ -594,7 +596,7 @@ footer{background:var(--green);padding:3rem 2.5rem 1.5rem}
       <div class="fcol"><h4>Reviews</h4><ul><li><a href="https://www.google.com/maps" target="_blank"><svg class="icon" width="13" height="13"><use href="#i-google"/></svg>Google Reviews</a></li><li><a href="https://www.tripadvisor.co.uk" target="_blank"><svg class="icon" width="13" height="13"><use href="#i-star"/></svg>TripAdvisor</a></li></ul></div>
       <div class="fcol"><h4>Contact</h4><ul><li><a href="/cdn-cgi/l/email-protection#49212c25252609242827263b2a263d3d282e2c2126393d2627672a26673c22"><svg class="icon" width="13" height="13"><use href="#i-mail"/></svg>Email Us</a></li></ul></div>
     </div>
-    <div class="foot-bottom"><span>&copy; 2025 Manor Cottage, Hopton</span><span>Superhost &starf; 4.91</span></div>
+    <div class="foot-bottom"><span>&copy; 2025 Manor Cottage, Hopton</span><span>Superhost &starf; 4.91</span><button class="admin-btn" onclick="adminEntry()" title="Admin">&#x2022;</button></div>
   </footer>
 </div>
 
@@ -630,7 +632,7 @@ footer{background:var(--green);padding:3rem 2.5rem 1.5rem}
       <div class="fcol"><h4>Reviews</h4><ul><li><a href="https://www.google.com/maps" target="_blank"><svg class="icon" width="13" height="13"><use href="#i-google"/></svg>Google Reviews</a></li><li><a href="https://www.tripadvisor.co.uk" target="_blank"><svg class="icon" width="13" height="13"><use href="#i-star"/></svg>TripAdvisor</a></li></ul></div>
       <div class="fcol"><h4>Contact</h4><ul><li><a href="/cdn-cgi/l/email-protection#fb939e979794bb969a95948998948f8f9a9c9e93948b8f9495d59894d58e90"><svg class="icon" width="13" height="13"><use href="#i-mail"/></svg>Email Us</a></li></ul></div>
     </div>
-    <div class="foot-bottom"><span>&copy; 2025 Manor Cottage, Hopton</span><span>Superhost &starf; 4.91</span></div>
+    <div class="foot-bottom"><span>&copy; 2025 Manor Cottage, Hopton</span><span>Superhost &starf; 4.91</span><button class="admin-btn" onclick="adminEntry()" title="Admin">&#x2022;</button></div>
   </footer>
 </div>
 
@@ -700,7 +702,7 @@ footer{background:var(--green);padding:3rem 2.5rem 1.5rem}
       <div class="fcol"><h4>Reviews</h4><ul><li><a href="https://www.google.com/maps" target="_blank"><svg class="icon" width="13" height="13"><use href="#i-google"/></svg>Google Reviews</a></li><li><a href="https://www.tripadvisor.co.uk" target="_blank"><svg class="icon" width="13" height="13"><use href="#i-star"/></svg>TripAdvisor</a></li></ul></div>
       <div class="fcol"><h4>Contact</h4><ul><li><a href="/cdn-cgi/l/email-protection#e78f828b8b88a78a86898895848893938680828f8897938889c98488c9928c"><svg class="icon" width="13" height="13"><use href="#i-mail"/></svg>Email Us</a></li></ul></div>
     </div>
-    <div class="foot-bottom"><span>&copy; 2025 Manor Cottage, Hopton</span><span>Superhost &starf; 4.91</span></div>
+    <div class="foot-bottom"><span>&copy; 2025 Manor Cottage, Hopton</span><span>Superhost &starf; 4.91</span><button class="admin-btn" onclick="adminEntry()" title="Admin">&#x2022;</button></div>
   </footer>
 </div>
 
@@ -754,7 +756,7 @@ footer{background:var(--green);padding:3rem 2.5rem 1.5rem}
       <div class="fcol"><h4>Reviews</h4><ul><li><a href="https://www.google.com/maps" target="_blank"><svg class="icon" width="13" height="13"><use href="#i-google"/></svg>Google Reviews</a></li><li><a href="https://www.tripadvisor.co.uk" target="_blank"><svg class="icon" width="13" height="13"><use href="#i-star"/></svg>TripAdvisor</a></li></ul></div>
       <div class="fcol"><h4>Contact</h4><ul><li><a href="/cdn-cgi/l/email-protection#b6ded3dadad9f6dbd7d8d9c4d5d9c2c2d7d1d3ded9c6c2d9d898d5d998c3dd"><svg class="icon" width="13" height="13"><use href="#i-mail"/></svg>Email Us</a></li></ul></div>
     </div>
-    <div class="foot-bottom"><span>&copy; 2025 Manor Cottage, Hopton</span><span>Superhost &starf; 4.91</span></div>
+    <div class="foot-bottom"><span>&copy; 2025 Manor Cottage, Hopton</span><span>Superhost &starf; 4.91</span><button class="admin-btn" onclick="adminEntry()" title="Admin">&#x2022;</button></div>
   </footer>
 </div>
 
@@ -808,7 +810,7 @@ footer{background:var(--green);padding:3rem 2.5rem 1.5rem}
       <div class="fcol"><h4>Reviews</h4><ul><li><a href="https://www.google.com/maps" target="_blank"><svg class="icon" width="13" height="13"><use href="#i-google"/></svg>Google Reviews</a></li><li><a href="https://www.tripadvisor.co.uk" target="_blank"><svg class="icon" width="13" height="13"><use href="#i-star"/></svg>TripAdvisor</a></li></ul></div>
       <div class="fcol"><h4>Contact</h4><ul><li><a href="/cdn-cgi/l/email-protection#d4bcb1b8b8bb94b9b5babba6b7bba0a0b5b3b1bcbba4a0bbbafab7bbfaa1bf"><svg class="icon" width="13" height="13"><use href="#i-mail"/></svg>Email Us</a></li></ul></div>
     </div>
-    <div class="foot-bottom"><span>&copy; 2025 Manor Cottage, Hopton</span><span>Superhost &starf; 4.91</span></div>
+    <div class="foot-bottom"><span>&copy; 2025 Manor Cottage, Hopton</span><span>Superhost &starf; 4.91</span><button class="admin-btn" onclick="adminEntry()" title="Admin">&#x2022;</button></div>
   </footer>
 </div>
 
@@ -864,7 +866,7 @@ footer{background:var(--green);padding:3rem 2.5rem 1.5rem}
       <div class="fcol"><h4>Reviews</h4><ul><li><a href="https://www.google.com/maps" target="_blank"><svg class="icon" width="13" height="13"><use href="#i-google"/></svg>Google Reviews</a></li><li><a href="https://www.tripadvisor.co.uk" target="_blank"><svg class="icon" width="13" height="13"><use href="#i-star"/></svg>TripAdvisor</a></li></ul></div>
       <div class="fcol"><h4>Contact</h4><ul><li><a href="/cdn-cgi/l/email-protection#c9a1aca5a5a689a4a8a7a6bbaaa6bdbda8aeaca1a6b9bda6a7e7aaa6e7bca2"><svg class="icon" width="13" height="13"><use href="#i-mail"/></svg>Email Us</a></li></ul></div>
     </div>
-    <div class="foot-bottom"><span>&copy; 2025 Manor Cottage, Hopton</span><span>Superhost &starf; 4.91</span></div>
+    <div class="foot-bottom"><span>&copy; 2025 Manor Cottage, Hopton</span><span>Superhost &starf; 4.91</span><button class="admin-btn" onclick="adminEntry()" title="Admin">&#x2022;</button></div>
   </footer>
 </div>
 
@@ -932,7 +934,31 @@ footer{background:var(--green);padding:3rem 2.5rem 1.5rem}
           <div class="settings-card" style="grid-column:1/-1">
             <div class="settings-card-head"><svg class="icon" width="15" height="15"><use href="#i-leaf"/></svg><h4>Image Manager &mdash; All Site Photos</h4></div>
             <div class="settings-card-body">
-              <p style="font-size:.82rem;color:var(--mid);margin-bottom:1.2rem">Replace any photo on the site. Upload your own file or paste a URL. Changes apply instantly and are saved for next time.</p>
+
+              <!-- How it works banner -->
+              <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:.8rem;margin-bottom:1.5rem">
+                <div style="background:var(--green);border-radius:var(--r);padding:1.1rem 1.2rem">
+                  <div style="font-size:.65rem;letter-spacing:.15em;text-transform:uppercase;color:var(--amber2);margin-bottom:.4rem">Step 1 — Recommended</div>
+                  <div style="font-size:.88rem;font-weight:500;color:#fff;margin-bottom:.35rem">Upload to Cloudinary</div>
+                  <p style="font-size:.76rem;color:rgba(255,255,255,.55);line-height:1.6;margin-bottom:.7rem">Free image hosting that gives everyone a permanent public URL. Upload your cottage photos there first.</p>
+                  <a href="https://cloudinary.com/users/register_free" target="_blank" style="display:inline-flex;align-items:center;gap:.4rem;background:var(--amber);color:#fff;font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;padding:.4rem .9rem;border-radius:var(--r);text-decoration:none"><svg class="icon" width="12" height="12"><use href="#i-globe"/></svg>Open Cloudinary</a>
+                </div>
+                <div style="background:var(--cream2);border:1px solid var(--stone);border-radius:var(--r);padding:1.1rem 1.2rem">
+                  <div style="font-size:.65rem;letter-spacing:.15em;text-transform:uppercase;color:var(--amber);margin-bottom:.4rem">Step 2</div>
+                  <div style="font-size:.88rem;font-weight:500;color:var(--green);margin-bottom:.35rem">Copy the image URL</div>
+                  <p style="font-size:.76rem;color:var(--mid);line-height:1.6">After uploading to Cloudinary, click the image and copy the URL. It will look like:<br><code style="font-size:.7rem;background:var(--white);padding:.1rem .3rem;border-radius:2px;word-break:break-all">https://res.cloudinary.com/...</code></p>
+                </div>
+                <div style="background:var(--cream2);border:1px solid var(--stone);border-radius:var(--r);padding:1.1rem 1.2rem">
+                  <div style="font-size:.65rem;letter-spacing:.15em;text-transform:uppercase;color:var(--amber);margin-bottom:.4rem">Step 3</div>
+                  <div style="font-size:.88rem;font-weight:500;color:var(--green);margin-bottom:.35rem">Paste URL below</div>
+                  <p style="font-size:.76rem;color:var(--mid);line-height:1.6">Select the photo you want to change, paste the Cloudinary URL into the URL field, and click <strong>Add</strong>. Everyone visiting the site will see it instantly.</p>
+                </div>
+              </div>
+
+              <div style="background:rgba(154,120,48,.08);border:1px solid rgba(154,120,48,.25);border-radius:var(--r);padding:.75rem 1rem;margin-bottom:1.3rem;display:flex;align-items:flex-start;gap:.6rem">
+                <svg class="icon" width="15" height="15" style="color:var(--amber);flex-shrink:0;margin-top:.1rem"><use href="#i-star"/></svg>
+                <p style="font-size:.78rem;color:var(--mid);line-height:1.6"><strong style="color:var(--green)">Why Cloudinary?</strong> Photos uploaded directly here are only saved in your browser — nobody else sees them. Cloudinary hosts the image on the internet so the URL works for all visitors, on all devices, permanently. It&rsquo;s free for up to 25GB.</p>
+              </div>
 
               <div class="img-section-tabs" id="img-tabs">
                 <button class="img-tab active" onclick="switchImgTab('hero',this)">Hero</button>
@@ -956,8 +982,9 @@ footer{background:var(--green);padding:3rem 2.5rem 1.5rem}
                 <!-- rendered by JS -->
               </div>
 
-              <div style="margin-top:1.2rem;padding:1rem;background:var(--cream2);border-radius:var(--r)">
-                <p style="font-size:.78rem;color:var(--mid)"><strong>Tips:</strong> Use landscape photos (wider than tall) for best results. Free high-quality photos: <a href="https://unsplash.com" target="_blank" style="color:var(--amber)">Unsplash.com</a>. Your own photos can be dragged straight onto the upload area. Max recommended file size: 3MB per image.</p>
+              <div style="margin-top:1.2rem;padding:.9rem 1rem;background:var(--cream2);border-radius:var(--r);display:flex;flex-wrap:wrap;gap:1rem;align-items:center;justify-content:space-between">
+                <p style="font-size:.76rem;color:var(--mid)">Need free photos while testing? <a href="https://unsplash.com" target="_blank" style="color:var(--amber)">Unsplash.com</a> — right-click any photo &rarr; Copy image address &rarr; paste below.</p>
+                <a href="https://cloudinary.com/users/register_free" target="_blank" style="display:inline-flex;align-items:center;gap:.4rem;background:var(--green);color:#fff;font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;padding:.45rem 1rem;border-radius:var(--r);text-decoration:none;white-space:nowrap"><svg class="icon" width="12" height="12"><use href="#i-globe"/></svg>Go to Cloudinary &rarr;</a>
               </div>
             </div>
           </div>
@@ -1030,6 +1057,9 @@ function hashStr(s){let h=0;for(let i=0;i<s.length;i++)h=Math.imul(31,h)+s.charC
 function getStoredPwHash(){try{return localStorage.getItem("mc_pw_hash")||hashStr("manorcottage2025");}catch(e){return hashStr("manorcottage2025");}}
 let adminUnlocked=false;
 
+function adminEntry(){
+  if(adminUnlocked){goAdmin();}else{showPwModal();}
+}
 function showPwModal(){
   document.getElementById("pw-input").value="";
   document.getElementById("pw-error").textContent="";
@@ -1348,18 +1378,31 @@ function buildImgPanel(section){
   return `
     <p style="font-size:.8rem;color:var(--mid);margin-bottom:.9rem">${meta.desc}</p>
     ${thumbs}
-    <label class="img-upload-area" id="${dropId}">
-      <input type="file" accept="image/*"${multi} onchange="handleFileUpload(event,'${section}')"/>
-      <span class="img-upload-label">
-        <svg class="icon" width="24" height="24" style="color:var(--stone2)"><use href="#i-leaf"/></svg>
-        <strong>Click to upload${meta.multi?' (multiple OK)':''}</strong> or drag &amp; drop here
-      </span>
-    </label>
-    <div class="img-add-row">
-      <div class="sfg" style="margin:0;flex:1"><label>Or paste an image URL</label><input type="url" id="url-in-${section}" placeholder="https://..." onkeydown="if(event.key==='Enter')addImgUrl('${section}')"/></div>
+    <div style="background:rgba(154,120,48,.07);border:1px solid rgba(154,120,48,.2);border-radius:var(--r);padding:.65rem .9rem;margin-bottom:.8rem;display:flex;align-items:flex-start;gap:.5rem">
+      <svg class="icon" width="13" height="13" style="color:var(--amber);flex-shrink:0;margin-top:2px"><use href="#i-star"/></svg>
+      <p style="font-size:.73rem;color:var(--mid);line-height:1.55"><strong>Best way:</strong> Upload your photo to <a href="https://cloudinary.com/users/register_free" target="_blank" style="color:var(--amber)">Cloudinary</a> first, then paste the URL below &mdash; so <em>everyone</em> visiting the site sees it, not just you on this device.</p>
+    </div>
+    <div class="img-add-row" style="margin-top:0">
+      <div class="sfg" style="margin:0;flex:1">
+        <label>Paste Cloudinary URL (or any public image URL)</label>
+        <input type="url" id="url-in-${section}" placeholder="https://res.cloudinary.com/your-account/image/upload/..." onkeydown="if(event.key==='Enter')addImgUrl('${section}')"/>
+      </div>
       <button class="btn btn-amber" onclick="addImgUrl('${section}')">Add</button>
-      ${imgs.length>0&&!meta.multi?'<button class="btn" style="border:1px solid var(--stone);color:var(--mid);white-space:nowrap" onclick="resetImgDefault(''+section+'')">Reset default</button>':''}
-    </div>`;
+      ${imgs.length>0&&!meta.multi?'<button class="btn" style="border:1px solid var(--stone);color:var(--mid);white-space:nowrap" onclick="resetImgDefault(\'' + section + '\')">Reset default</button>':''}
+    </div>
+    <details style="margin-top:.9rem">
+      <summary style="font-size:.74rem;color:var(--light);cursor:pointer;user-select:none">&#9654;&nbsp; Upload from this device instead <span style="color:var(--amber);opacity:.7">(this browser only &mdash; others won&rsquo;t see it)</span></summary>
+      <div style="margin-top:.7rem">
+        <label class="img-upload-area" id="${dropId}">
+          <input type="file" accept="image/*"${multi} onchange="handleFileUpload(event,'${section}')"/>
+          <span class="img-upload-label">
+            <svg class="icon" width="22" height="22" style="color:var(--stone2)"><use href="#i-leaf"/></svg>
+            <strong>Click to upload${meta.multi?' (multiple OK)':''}</strong> or drag &amp; drop
+          </span>
+        </label>
+        <p style="font-size:.72rem;color:var(--light);margin-top:.3rem">&#9888;&nbsp;Direct uploads are stored in your browser only. Use Cloudinary above for images everyone can see.</p>
+      </div>
+    </details>`;
 }
 
 function renderImgPanel(section){
