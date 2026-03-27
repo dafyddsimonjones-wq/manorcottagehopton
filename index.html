@@ -1328,7 +1328,7 @@ async function sendChat(){
   const loader=document.createElement("div");loader.className="cmsg ai loading";loader.textContent="Thinking…";
   document.getElementById("chat-msgs").appendChild(loader);scrollChat();
   try{
-    const res=await fetch("https://api.anthropic.com/v1/messages",{
+    const res=await fetch("https://manor-cottage-proxy.dafydd-simon-jones.workers.dev",{
       method:"POST",headers:{"Content-Type":"application/json"},
       body:JSON.stringify({model:"claude-sonnet-4-20250514",max_tokens:1000,
         system:"You are a helpful assistant for the owner of Manor Cottage, a holiday cottage website in Hopton, Peak District, Derbyshire. Help the owner (Libba) manage their website practically and concisely. Topics: updating prices, descriptions, connecting Supercontrol or Beds24 booking widgets, photos, house rules, contact details, SEO, general website management. Be brief and specific.",
