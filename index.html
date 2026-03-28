@@ -287,14 +287,10 @@ footer{background:var(--green);padding:3rem 2.5rem 1.5rem}
 .modal-det{background:var(--cream2);border-radius:var(--r);padding:1rem 1.2rem;text-align:left;margin-bottom:1.4rem;font-size:.83rem;color:var(--mid);line-height:2}
 
 
-/* DOORSTEP CARDS */
-.doorstep-card{display:flex;align-items:flex-start;gap:1rem;padding:1.3rem 1.5rem;background:var(--white);border:1px solid var(--stone);border-radius:var(--r);text-decoration:none;transition:border-color .2s,box-shadow .2s,transform .2s}
-.doorstep-card:hover{border-color:var(--amber);box-shadow:0 6px 20px rgba(0,0,0,.08);transform:translateY(-2px)}
-.dc-icon{font-size:1.8rem;flex-shrink:0;line-height:1;margin-top:.1rem}
-.dc-cat{font-size:.65rem;font-weight:400;letter-spacing:.15em;text-transform:uppercase;color:var(--amber);margin-bottom:.25rem}
-.dc-name{font-family:"Cormorant Garamond",serif;font-size:1.15rem;font-weight:400;color:var(--green);margin-bottom:.4rem;line-height:1.2}
-.dc-desc{font-size:.82rem;color:var(--mid);line-height:1.65;font-weight:300}
-@media(max-width:600px){.doorstep-card{flex-direction:column;gap:.6rem}}
+/* LOCAL GRID (On Your Doorstep) */
+.local-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.2rem;margin-top:0}
+@media(max-width:960px){.local-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:600px){.local-grid{grid-template-columns:1fr}}
 
 /* IMAGE MANAGER */
 .img-section-tabs{display:flex;gap:.5rem;margin-bottom:1.2rem;flex-wrap:wrap}
@@ -641,33 +637,16 @@ footer{background:var(--green);padding:3rem 2.5rem 1.5rem}
   <section style="background:var(--cream2);padding:4rem 0">
     <div class="wrap">
       <p class="lbl">Hopton &amp; Nearby</p>
-      <h2 class="h2" style="margin-top:.5rem;margin-bottom:.5rem">On your <em>doorstep</em></h2>
-      <p class="body" style="margin-bottom:2rem">The very best of the immediate area &mdash; within minutes of the cottage.</p>
-      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.2rem">
-        <a href="https://www.hoptonhall.co.uk/gardens" target="_blank" rel="noopener" class="doorstep-card">
-          <div class="dc-icon">&#9752;</div>
-          <div class="dc-body"><div class="dc-cat">Gardens &middot; 2 min walk</div><div class="dc-name">Hopton Hall Gardens</div><div class="dc-desc">Grade II listed estate on your doorstep. Famous snowdrop walk in February, walled rose garden in July with over 2,000 rose bushes. Caf&eacute; on site.</div></div>
-        </a>
-        <a href="https://www.theminerscarsington.co.uk" target="_blank" rel="noopener" class="doorstep-card">
-          <div class="dc-icon">&#127866;</div>
-          <div class="dc-body"><div class="dc-cat">Pub &amp; Food &middot; 5 min drive</div><div class="dc-name">The Miners Arms, Carsington</div><div class="dc-desc">Family-run freehouse by the reservoir. Home-cooked food, real ales, log fires and a beer garden. Dogs and walkers very welcome.</div></div>
-        </a>
-        <a href="https://www.theoldegateinne.co.uk" target="_blank" rel="noopener" class="doorstep-card">
-          <div class="dc-icon">&#127981;</div>
-          <div class="dc-body"><div class="dc-cat">Historic Pub &middot; 10 min drive</div><div class="dc-name">Ye Olde Gate Inne, Brassington</div><div class="dc-desc">Built in 1616 and barely changed since. Flagstone floors, inglenook fireplace, real ales. &lsquo;Wonderfully unspoilt&rsquo; &mdash; The Good Pub Guide.</div></div>
-        </a>
-        <a href="https://www.nationalstonecentre.org.uk" target="_blank" rel="noopener" class="doorstep-card">
-          <div class="dc-icon">&#128270;</div>
-          <div class="dc-body"><div class="dc-cat">Museum &amp; Nature &middot; 5 min drive</div><div class="dc-name">National Stone Centre, Wirksworth</div><div class="dc-desc">40 acres of fossil-rich trails and geology walks set in six former limestone quarries. Hands-on activities great for families and curious minds.</div></div>
-        </a>
-        <a href="https://tramway.co.uk" target="_blank" rel="noopener" class="doorstep-card">
-          <div class="dc-icon">&#128653;</div>
-          <div class="dc-body"><div class="dc-cat">Family Day Out &middot; 20 min drive</div><div class="dc-name">National Tramway Museum, Crich</div><div class="dc-desc">Ride vintage trams through a recreated Victorian street into open countryside. A unique, unmissable day out for all ages.</div></div>
-        </a>
-        <a href="https://www.e-v-r.co.uk" target="_blank" rel="noopener" class="doorstep-card">
-          <div class="dc-icon">&#128685;</div>
-          <div class="dc-body"><div class="dc-cat">Heritage Railway &middot; 5 min drive</div><div class="dc-name">Ecclesbourne Valley Railway</div><div class="dc-desc">Heritage steam and diesel trains running from Wirksworth through the beautiful Ecclesbourne Valley to Duffield. A lovely way to see the countryside.</div></div>
-        </a>
+      <h2 class="h2" style="margin-top:.5rem;margin-bottom:1.5rem">On your <em>doorstep</em></h2>
+      <div class="local-grid">
+        <a class="acard" href="https://www.hoptonhall.co.uk/gardens" target="_blank" rel="noopener"><img data-img-id="local-1" src="https://images.unsplash.com/photo-1585320806297-9794b3e4aaae?w=600&q=80" alt="Hopton Hall Gardens"/><div class="aov"><div class="acat">Gardens &middot; 2 min walk</div><div class="aname">Hopton Hall Gardens</div><div class="adist">Famous snowdrop walk &amp; walled rose garden. Caf&eacute; on site.</div><span class="avisit"><svg class="icon" width="11" height="11"><use href="#i-globe"/></svg>Visit website</span></div></a>
+        <a class="acard" href="https://www.theminerscarsington.co.uk" target="_blank" rel="noopener"><img data-img-id="local-2" src="https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=600&q=80" alt="The Miners Arms"/><div class="aov"><div class="acat">Pub &amp; Food &middot; 10 min walk</div><div class="aname">The Miners Arms, Carsington</div><div class="adist">Home-cooked food, real ales &amp; log fires. Dogs &amp; walkers welcome.</div><span class="avisit"><svg class="icon" width="11" height="11"><use href="#i-globe"/></svg>Visit website</span></div></a>
+        <a class="acard" href="https://www.theoldegateinne.co.uk" target="_blank" rel="noopener"><img data-img-id="local-3" src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80" alt="Ye Olde Gate Inne"/><div class="aov"><div class="acat">Historic Pub &middot; 10 min drive</div><div class="aname">Ye Olde Gate Inne, Brassington</div><div class="adist">Built 1616 &amp; barely changed. &lsquo;Wonderfully unspoilt&rsquo; &mdash; Good Pub Guide.</div><span class="avisit"><svg class="icon" width="11" height="11"><use href="#i-globe"/></svg>Visit website</span></div></a>
+        <a class="acard" href="https://www.nationalstonecentre.org.uk" target="_blank" rel="noopener"><img data-img-id="local-4" src="https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?w=600&q=80" alt="National Stone Centre"/><div class="aov"><div class="acat">Museum &amp; Nature &middot; 5 min drive</div><div class="aname">National Stone Centre</div><div class="adist">40-acre SSSI with fossil trails &amp; geology walks. Great for families.</div><span class="avisit"><svg class="icon" width="11" height="11"><use href="#i-globe"/></svg>Visit website</span></div></a>
+        <a class="acard" href="https://tramway.co.uk" target="_blank" rel="noopener"><img data-img-id="local-5" src="https://images.unsplash.com/photo-1474487548417-781cb71495f3?w=600&q=80" alt="National Tramway Museum"/><div class="aov"><div class="acat">Family Day Out &middot; 20 min drive</div><div class="aname">National Tramway Museum, Crich</div><div class="adist">Ride vintage trams through a recreated Victorian street. Unmissable for all ages.</div><span class="avisit"><svg class="icon" width="11" height="11"><use href="#i-globe"/></svg>Visit website</span></div></a>
+        <a class="acard" href="https://www.e-v-r.co.uk" target="_blank" rel="noopener"><img data-img-id="local-6" src="https://images.unsplash.com/photo-1474487548417-781cb71495f3?w=600&q=80" alt="Ecclesbourne Valley Railway"/><div class="aov"><div class="acat">Heritage Railway &middot; 5 min drive</div><div class="aname">Ecclesbourne Valley Railway</div><div class="adist">Heritage steam trains from Wirksworth through beautiful valley scenery to Duffield.</div><span class="avisit"><svg class="icon" width="11" height="11"><use href="#i-globe"/></svg>Visit website</span></div></a>
+        <a class="acard" href="https://www.gulliverskingdoms.co.uk" target="_blank" rel="noopener"><img data-img-id="local-7" src="https://images.unsplash.com/photo-1575539665743-38ee4ef4d19c?w=600&q=80" alt="Gullivers Kingdom"/><div class="aov"><div class="acat">Theme Park &middot; 20 min drive</div><div class="aname">Gulliver&apos;s Kingdom, Matlock Bath</div><div class="adist">Family-friendly theme park with rides and attractions for younger children. Nestled in the hillside above Matlock Bath.</div><span class="avisit"><svg class="icon" width="11" height="11"><use href="#i-globe"/></svg>Visit website</span></div></a>
+        <a class="acard" href="https://www.visitpeakdistrict.com/things-to-do/black-rocks-cromford-p681391" target="_blank" rel="noopener"><img data-img-id="local-8" src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=600&q=80" alt="Black Rocks"/><div class="aov"><div class="acat">Walking &amp; Views &middot; 10 min drive</div><div class="aname">Black Rocks, Cromford</div><div class="adist">Dramatic gritstone outcrops with panoramic Peak District views. On the High Peak Trail &mdash; free to visit, dogs welcome.</div><span class="avisit"><svg class="icon" width="11" height="11"><use href="#i-globe"/></svg>Visit website</span></div></a>
       </div>
     </div>
   </section>
@@ -1024,6 +1003,14 @@ footer{background:var(--green);padding:3rem 2.5rem 1.5rem}
                 <button class="img-tab" onclick="switchImgTab('explore-5',this)">Cromford</button>
                 <button class="img-tab" onclick="switchImgTab('explore-6',this)">Heights</button>
                 <button class="img-tab" onclick="switchImgTab('host-photo',this)">Host Photo</button>
+                <button class="img-tab" onclick="switchImgTab('local-1',this)">Hopton Hall</button>
+                <button class="img-tab" onclick="switchImgTab('local-2',this)">Miners Arms</button>
+                <button class="img-tab" onclick="switchImgTab('local-3',this)">Olde Gate</button>
+                <button class="img-tab" onclick="switchImgTab('local-4',this)">Stone Centre</button>
+                <button class="img-tab" onclick="switchImgTab('local-5',this)">Tramway</button>
+                <button class="img-tab" onclick="switchImgTab('local-6',this)">EVR Railway</button>
+                <button class="img-tab" onclick="switchImgTab('local-7',this)">Gullivers</button>
+                <button class="img-tab" onclick="switchImgTab('local-8',this)">Black Rocks</button>
               </div>
 
               <div id="img-panel-area">
@@ -1455,6 +1442,14 @@ const IMG_META = {
   'explore-5':      {label:'Explore — Cromford',         multi:false, desc:'Cromford Mill activity card photo.'},
   'explore-6':      {label:'Explore — Heights',          multi:false, desc:'Heights of Abraham activity card photo.'},
   'host-photo':     {label:'Host Photo',         multi:false, desc:'Libba\'s profile photo on the Your Host tab.'},
+  'local-1':        {label:'Doorstep — Hopton Hall',     multi:false, desc:'Hopton Hall Gardens card photo.'},
+  'local-2':        {label:'Doorstep — Miners Arms',     multi:false, desc:'The Miners Arms pub card photo.'},
+  'local-3':        {label:'Doorstep — Olde Gate Inne',  multi:false, desc:'Ye Olde Gate Inne card photo.'},
+  'local-4':        {label:'Doorstep — Stone Centre',    multi:false, desc:'National Stone Centre card photo.'},
+  'local-5':        {label:'Doorstep — Tramway Museum',  multi:false, desc:'National Tramway Museum card photo.'},
+  'local-6':        {label:'Doorstep — EVR Railway',     multi:false, desc:'Ecclesbourne Valley Railway card photo.'},
+  'local-7':        {label:'Doorstep — Gullivers',       multi:false, desc:'Gulliver\'s Kingdom card photo.'},
+  'local-8':        {label:'Doorstep — Black Rocks',     multi:false, desc:'Black Rocks, Cromford card photo.'},
 };
 
 const IMG_DEFAULTS = {
@@ -1473,6 +1468,14 @@ const IMG_DEFAULTS = {
   'explore-5':      ['https://images.unsplash.com/photo-1588880331179-bc9b93a8cb5e?w=700&q=80'],
   'explore-6':      ['https://images.unsplash.com/photo-1558452919-08ae4aea8e29?w=700&q=80'],
   'host-photo':     ['https://a0.muscache.com/im/pictures/user/User/original/4492dd38-f27e-4cd1-8f39-f083d71c6ef6.jpeg'],
+  'local-1':        ['https://images.unsplash.com/photo-1585320806297-9794b3e4aaae?w=600&q=80'],
+  'local-2':        ['https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=600&q=80'],
+  'local-3':        ['https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80'],
+  'local-4':        ['https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?w=600&q=80'],
+  'local-5':        ['https://images.unsplash.com/photo-1474487548417-781cb71495f3?w=600&q=80'],
+  'local-6':        ['https://images.unsplash.com/photo-1474487548417-781cb71495f3?w=600&q=80'],
+  'local-7':        ['https://images.unsplash.com/photo-1575539665743-38ee4ef4d19c?w=600&q=80'],
+  'local-8':        ['https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=600&q=80'],
 };
 
 // ── STORAGE ──
