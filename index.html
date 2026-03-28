@@ -286,6 +286,16 @@ footer{background:var(--green);padding:3rem 2.5rem 1.5rem}
 .modal p{font-size:.88rem;color:var(--mid);margin-bottom:1.1rem}
 .modal-det{background:var(--cream2);border-radius:var(--r);padding:1rem 1.2rem;text-align:left;margin-bottom:1.4rem;font-size:.83rem;color:var(--mid);line-height:2}
 
+
+/* DOORSTEP CARDS */
+.doorstep-card{display:flex;align-items:flex-start;gap:1rem;padding:1.3rem 1.5rem;background:var(--white);border:1px solid var(--stone);border-radius:var(--r);text-decoration:none;transition:border-color .2s,box-shadow .2s,transform .2s}
+.doorstep-card:hover{border-color:var(--amber);box-shadow:0 6px 20px rgba(0,0,0,.08);transform:translateY(-2px)}
+.dc-icon{font-size:1.8rem;flex-shrink:0;line-height:1;margin-top:.1rem}
+.dc-cat{font-size:.65rem;font-weight:400;letter-spacing:.15em;text-transform:uppercase;color:var(--amber);margin-bottom:.25rem}
+.dc-name{font-family:"Cormorant Garamond",serif;font-size:1.15rem;font-weight:400;color:var(--green);margin-bottom:.4rem;line-height:1.2}
+.dc-desc{font-size:.82rem;color:var(--mid);line-height:1.65;font-weight:300}
+@media(max-width:600px){.doorstep-card{flex-direction:column;gap:.6rem}}
+
 /* IMAGE MANAGER */
 .img-section-tabs{display:flex;gap:.5rem;margin-bottom:1.2rem;flex-wrap:wrap}
 .img-tab{padding:.38rem 1rem;border-radius:var(--r);font-size:.72rem;font-weight:400;letter-spacing:.1em;text-transform:uppercase;border:1px solid var(--stone);color:var(--mid);background:none;cursor:pointer;transition:all .2s;font-family:inherit}
@@ -626,6 +636,42 @@ footer{background:var(--green);padding:3rem 2.5rem 1.5rem}
     </div>
   </section>
 
+  
+  <!-- ON YOUR DOORSTEP -->
+  <section style="background:var(--cream2);padding:4rem 0">
+    <div class="wrap">
+      <p class="lbl">Hopton &amp; Nearby</p>
+      <h2 class="h2" style="margin-top:.5rem;margin-bottom:.5rem">On your <em>doorstep</em></h2>
+      <p class="body" style="margin-bottom:2rem">The very best of the immediate area &mdash; within minutes of the cottage.</p>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.2rem">
+        <a href="https://www.hoptonhall.co.uk/gardens" target="_blank" rel="noopener" class="doorstep-card">
+          <div class="dc-icon">&#9752;</div>
+          <div class="dc-body"><div class="dc-cat">Gardens &middot; 2 min walk</div><div class="dc-name">Hopton Hall Gardens</div><div class="dc-desc">Grade II listed estate on your doorstep. Famous snowdrop walk in February, walled rose garden in July with over 2,000 rose bushes. Caf&eacute; on site.</div></div>
+        </a>
+        <a href="https://www.theminerscarsington.co.uk" target="_blank" rel="noopener" class="doorstep-card">
+          <div class="dc-icon">&#127866;</div>
+          <div class="dc-body"><div class="dc-cat">Pub &amp; Food &middot; 5 min drive</div><div class="dc-name">The Miners Arms, Carsington</div><div class="dc-desc">Family-run freehouse by the reservoir. Home-cooked food, real ales, log fires and a beer garden. Dogs and walkers very welcome.</div></div>
+        </a>
+        <a href="https://www.theoldegateinne.co.uk" target="_blank" rel="noopener" class="doorstep-card">
+          <div class="dc-icon">&#127981;</div>
+          <div class="dc-body"><div class="dc-cat">Historic Pub &middot; 10 min drive</div><div class="dc-name">Ye Olde Gate Inne, Brassington</div><div class="dc-desc">Built in 1616 and barely changed since. Flagstone floors, inglenook fireplace, real ales. &lsquo;Wonderfully unspoilt&rsquo; &mdash; The Good Pub Guide.</div></div>
+        </a>
+        <a href="https://www.nationalstonecentre.org.uk" target="_blank" rel="noopener" class="doorstep-card">
+          <div class="dc-icon">&#128270;</div>
+          <div class="dc-body"><div class="dc-cat">Museum &amp; Nature &middot; 5 min drive</div><div class="dc-name">National Stone Centre, Wirksworth</div><div class="dc-desc">40 acres of fossil-rich trails and geology walks set in six former limestone quarries. Hands-on activities great for families and curious minds.</div></div>
+        </a>
+        <a href="https://tramway.co.uk" target="_blank" rel="noopener" class="doorstep-card">
+          <div class="dc-icon">&#128653;</div>
+          <div class="dc-body"><div class="dc-cat">Family Day Out &middot; 20 min drive</div><div class="dc-name">National Tramway Museum, Crich</div><div class="dc-desc">Ride vintage trams through a recreated Victorian street into open countryside. A unique, unmissable day out for all ages.</div></div>
+        </a>
+        <a href="https://www.e-v-r.co.uk" target="_blank" rel="noopener" class="doorstep-card">
+          <div class="dc-icon">&#128685;</div>
+          <div class="dc-body"><div class="dc-cat">Heritage Railway &middot; 5 min drive</div><div class="dc-name">Ecclesbourne Valley Railway</div><div class="dc-desc">Heritage steam and diesel trains running from Wirksworth through the beautiful Ecclesbourne Valley to Duffield. A lovely way to see the countryside.</div></div>
+        </a>
+      </div>
+    </div>
+  </section>
+
   <footer>
     <div class="foot-inner">
       <div class="foot-brand"><a href="#" class="logo" onclick="go('home');return false">Manor <em>Cottage</em></a><p>Grade&nbsp;II listed retreat in Hopton village, Derbyshire.</p></div>
@@ -652,7 +698,7 @@ footer{background:var(--green);padding:3rem 2.5rem 1.5rem}
       <div class="loc-grid">
         <div>
           <div class="map-box">
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d9731.06!2d-1.5627!3d53.0850!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4879e2b6e9d55db3%3A0x8a40bbf5c7a6bc00!2sHopton%2C%20Wirksworth%2C%20Matlock%20DE4%204DF!5e0!3m2!1sen!2suk!4v1711000000000" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Manor Cottage map"></iframe>
+            <iframe src="https://maps.google.com/maps?q=Hopton,+Wirksworth,+Derbyshire,+DE4+4DF&t=&z=15&ie=UTF8&iwloc=&output=embed" allowfullscreen title="Manor Cottage, Hopton"></iframe>
           </div>
           <p style="font-size:.77rem;color:var(--light);margin-top:.6rem;display:flex;align-items:center;gap:.4rem"><svg class="icon" width="13" height="13"><use href="#i-pin"/></svg>Hopton, Wirksworth, Derbyshire &middot; DE4 4DF</p>
 
@@ -838,6 +884,7 @@ footer{background:var(--green);padding:3rem 2.5rem 1.5rem}
             <div class="srow"><span id="s-nl">Nights</span><span id="s-nights">&mdash;</span></div>
             <div class="srow"><span>Cleaning fee</span><span id="s-clean">&pound;80</span></div>
             <div class="srow" id="s-dog-r" style="display:none"><span>Dog supplement</span><span id="s-dog">&mdash;</span></div>
+              <div class="srow" id="s-bed-r" style="display:none"><span>Extra child bed</span><span id="s-bed">&mdash;</span></div>
             <div class="srow"><span><strong>Estimated total</strong></span><span id="s-total"><strong>&mdash;</strong></span></div>
           </div>
           <button class="btn-full" onclick="submitBook()">Send Booking Request</button>
@@ -1279,7 +1326,10 @@ function calc(){
   let dogs=0;
   if(document.getElementById("dog1").checked)dogs+=cfg.dogfee;
   if(document.getElementById("dog2").checked)dogs+=cfg.dogfee;
-  const total=nights*cfg.rate+cfg.clean+dogs;
+  let xbed=0;
+  const xbedEl=document.getElementById("extrabed");
+  if(xbedEl&&xbedEl.checked)xbed=nights*cfg.bedfee;
+  const total=nights*cfg.rate+cfg.clean+dogs+xbed;
   document.getElementById("s-rate").textContent="£"+cfg.rate+"/night";
   document.getElementById("s-nl").textContent=nights+" night"+(nights>1?"s":"");
   document.getElementById("s-nights").textContent="£"+(nights*cfg.rate);
@@ -1288,21 +1338,53 @@ function calc(){
   const dr=document.getElementById("s-dog-r");
   dr.style.display=dogs>0?"flex":"none";
   document.getElementById("s-dog").textContent="£"+dogs;
+  const br=document.getElementById("s-bed-r");
+  if(br)br.style.display=xbed>0?"flex":"none";
+  const be=document.getElementById("s-bed");
+  if(be)be.textContent="£"+xbed;
   document.getElementById("summary").classList.add("show");
 }
-function submitBook(){
+async function submitBook(){
   const ci=document.getElementById("ci").value,co=document.getElementById("co").value;
   const name=document.getElementById("gname").value.trim();
+  const email=document.getElementById("gemail").value.trim();
+  const msg=document.getElementById("gmsg").value.trim();
   if(!ci||!co){alert("Please select your check-in and check-out dates.");return;}
   if(!name){alert("Please enter your name.");return;}
+  if(!email){alert("Please enter your email address.");return;}
   const nights=Math.round((new Date(co)-new Date(ci))/86400000);
   const fmt=d=>new Date(d).toLocaleDateString("en-GB",{weekday:"short",day:"numeric",month:"long",year:"numeric"});
+  const guests=document.getElementById("guests").value;
+  const dogs=(document.getElementById("dog1").checked?"1 dog ":"")+(document.getElementById("dog2").checked?"2nd dog":"");
+  const xbed=document.getElementById("extrabed")&&document.getElementById("extrabed").checked?"Yes":"No";
+
+  // Send to Formspree
+  const FORMSPREE_ID = "PASTE_YOUR_FORMSPREE_ID_HERE";
+  if(FORMSPREE_ID !== "PASTE_YOUR_FORMSPREE_ID_HERE"){
+    try {
+      await fetch("https://formspree.io/f/"+FORMSPREE_ID, {
+        method:"POST",
+        headers:{"Content-Type":"application/json","Accept":"application/json"},
+        body:JSON.stringify({
+          name, email,
+          checkin: fmt(ci),
+          checkout: fmt(co),
+          nights, guests, dogs: dogs||"None",
+          extra_child_bed: xbed,
+          message: msg||"No message",
+          _subject: "New booking enquiry from "+name
+        })
+      });
+    } catch(e){ console.log("Formspree error:", e); }
+  }
+
   document.getElementById("modal-det").innerHTML=
     "<strong>Guest:</strong> "+name+"<br>"+
+    "<strong>Email:</strong> "+email+"<br>"+
     "<strong>Check-in:</strong> "+fmt(ci)+" (from 4pm)<br>"+
     "<strong>Check-out:</strong> "+fmt(co)+" (by 10am)<br>"+
     "<strong>Duration:</strong> "+nights+" night"+(nights>1?"s":"")+"<br>"+
-    "<strong>Guests:</strong> "+document.getElementById("guests").value;
+    "<strong>Guests:</strong> "+guests;
   document.getElementById("modal").classList.add("open");
 }
 function closeModal(){document.getElementById("modal").classList.remove("open");}
